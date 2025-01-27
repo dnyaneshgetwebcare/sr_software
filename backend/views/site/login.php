@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
   <meta name="description" content="">
   <meta name="author" content="">
   <!-- Favicon icon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
   <title>Soyara Rental Couture </title>
   <!-- Bootstrap Core CSS -->
 
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="wrapper wrapper-login wrapper-login-full p-0">
   <div class="login-aside w-50 d-flex flex-column align-items-center justify-content-center text-center
   " style="background-color: #5C2431">
-    <img src = "assets/images/logo2.jpg" style="height: auto; width: 230px;" />
+    <img src = "img/logo2.jpg" style="height: auto; width: 230px;" />
 			<h3 class="title fw-bold text-white mb-3">Soyara Rental Couture</h3>
 			<p class="subtitle text-white op-7">Rent. Rock. Return. Repeat the Style!</p>
 		</div>

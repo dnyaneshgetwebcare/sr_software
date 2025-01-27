@@ -28,11 +28,11 @@ $is_admin = ($user->user_type == "admin") ? true : false;
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?php $this->registerCsrfMetaTags() ?>
   <title><?= Html::encode($this->title) ?></title>
-  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
   <?php $this->head() ?>
   <link
     rel="icon"
-    href="assets/images/favicon.ico"
+    href="img/favicon.ico"
     type="image/x-icon"
   />
   <script src="kai-admin-assets/js/plugin/webfont/webfont.min.js"></script>
@@ -106,7 +106,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
       <div class="logo-header" data-background-color="dark">
         <a href="index.php" class="logo">
           <img
-            src="assets/images/logo.png"
+            src="img/logo.png"
             alt="navbar brand"
             class="navbar-brand"
             height="20"
@@ -459,7 +459,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
         <div class="logo-header" data-background-color="dark">
           <a href="index.html" class="logo">
             <img
-              src="assets/images/logo.png"
+              src="img/logo.png"
               alt="navbar brand"
               class="navbar-brand"
               height="20"
