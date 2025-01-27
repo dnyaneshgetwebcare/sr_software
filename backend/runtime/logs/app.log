@@ -1,0 +1,1926 @@
+2021-12-27 09:19:17 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][error][yii\base\InvalidArgumentException] yii\base\InvalidArgumentException: Operator 'TYPE' requires two operands. in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\conditions\SimpleCondition.php:79
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1606): yii\db\conditions\SimpleCondition::fromArrayDefinition('TYPE', Array)
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1576): yii\db\QueryBuilder->createConditionFromArray(Array)
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\conditions\ConjunctionConditionBuilder.php(60): yii\db\QueryBuilder->buildCondition(Array, '<span class="st...')
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\conditions\ConjunctionConditionBuilder.php(35): yii\db\conditions\ConjunctionConditionBuilder->buildExpressionsFrom(Array, '<span class="st...')
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(288): yii\db\conditions\ConjunctionConditionBuilder->build(Object(yii\db\conditions\AndCondition), '<span class="st...')
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1580): yii\db\QueryBuilder->buildExpression(Object(yii\db\conditions\AndCondition), '<span class="st...')
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1357): yii\db\QueryBuilder->buildCondition(Object(yii\db\conditions\AndCondition), '<span class="st...')
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(235): yii\db\QueryBuilder->buildWhere(Array, '<span class="st...')
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveQuery.php(328): yii\db\QueryBuilder->build(Object(yii\db\Query))
+#9 C:\xampp\htdocs\panache_bill\backend\models\PaymentMasterSearch.php(93): yii\db\ActiveQuery->createCommand()
+#10 C:\xampp\htdocs\panache_bill\backend\controllers\PaymentController.php(135): backend\models\PaymentMasterSearch->searchReport(Array)
+#11 [internal function]: backend\controllers\PaymentController->actionPaymentReport()
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams(Array)
+#14 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(534): yii\base\Controller->runAction('payment-report', Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('payment/payment...', Array)
+#16 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#17 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->run()
+#18 {main}
+2021-12-27 09:19:17 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][info][application] $_GET = [
+    'r' => 'payment/payment-report'
+]
+
+$_POST = [
+    '_csrf-backend' => 'zN2HC7WVpAJK2Ji7xyNbkpUDaokyb5Q8KbtfenrgmrmtutRl2eb3bBzq3PqAVw333m4Tzwsa_n0c02YtOJXUgA=='
+    'PaymentMasterSearch' => [
+        'from_date' => '01-09-2021'
+        'to_date' => '10-09-2021'
+        'booking_id' => ''
+        'type' => [
+            0 => 'Advance'
+            1 => 'Per-payment'
+            2 => 'Final-Payment'
+            3 => 'Return-Deposit'
+            4 => 'Cancel-Charge'
+            5 => 'Other-Charges'
+            6 => 'Return-Payment'
+        ]
+        'mode_of_payment' => ''
+        'search_cust' => ''
+    ]
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => '6tc4qd50u1jkd0rolqkc08qr9p'
+    '_csrf-backend' => 'ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '688'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/panache_bill/index.php?r=payment/payment-search'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=6tc4qd50u1jkd0rolqkc08qr9p; _csrf-backend=ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '52670'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=payment%2Fpayment-report'
+    'REQUEST_URI' => '/panache_bill/index.php?r=payment%2Fpayment-report'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1640593157.182
+    'REQUEST_TIME' => 1640593157
+]
+2021-12-27 09:20:25 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][error][yii\base\InvalidArgumentException] yii\base\InvalidArgumentException: Operator 'TYPE' requires two operands. in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\conditions\SimpleCondition.php:79
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1606): yii\db\conditions\SimpleCondition::fromArrayDefinition('TYPE', Array)
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1576): yii\db\QueryBuilder->createConditionFromArray(Array)
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\conditions\ConjunctionConditionBuilder.php(60): yii\db\QueryBuilder->buildCondition(Array, '<span class="st...')
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\conditions\ConjunctionConditionBuilder.php(35): yii\db\conditions\ConjunctionConditionBuilder->buildExpressionsFrom(Array, '<span class="st...')
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(288): yii\db\conditions\ConjunctionConditionBuilder->build(Object(yii\db\conditions\AndCondition), '<span class="st...')
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1580): yii\db\QueryBuilder->buildExpression(Object(yii\db\conditions\AndCondition), '<span class="st...')
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1357): yii\db\QueryBuilder->buildCondition(Object(yii\db\conditions\AndCondition), '<span class="st...')
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(235): yii\db\QueryBuilder->buildWhere(Array, '<span class="st...')
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveQuery.php(328): yii\db\QueryBuilder->build(Object(yii\db\Query))
+#9 C:\xampp\htdocs\panache_bill\backend\models\PaymentMasterSearch.php(93): yii\db\ActiveQuery->createCommand()
+#10 C:\xampp\htdocs\panache_bill\backend\controllers\PaymentController.php(135): backend\models\PaymentMasterSearch->searchReport(Array)
+#11 [internal function]: backend\controllers\PaymentController->actionPaymentReport()
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams(Array)
+#14 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(534): yii\base\Controller->runAction('payment-report', Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('payment/payment...', Array)
+#16 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#17 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->run()
+#18 {main}
+2021-12-27 09:20:24 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][info][application] $_GET = [
+    'r' => 'payment/payment-report'
+]
+
+$_POST = [
+    '_csrf-backend' => 'zN2HC7WVpAJK2Ji7xyNbkpUDaokyb5Q8KbtfenrgmrmtutRl2eb3bBzq3PqAVw333m4Tzwsa_n0c02YtOJXUgA=='
+    'PaymentMasterSearch' => [
+        'from_date' => '01-09-2021'
+        'to_date' => '10-09-2021'
+        'booking_id' => ''
+        'type' => [
+            0 => 'Advance'
+            1 => 'Per-payment'
+            2 => 'Final-Payment'
+            3 => 'Return-Deposit'
+            4 => 'Cancel-Charge'
+            5 => 'Other-Charges'
+            6 => 'Return-Payment'
+        ]
+        'mode_of_payment' => ''
+        'search_cust' => ''
+    ]
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => '6tc4qd50u1jkd0rolqkc08qr9p'
+    '_csrf-backend' => 'ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '688'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/panache_bill/index.php?r=payment/payment-search'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=6tc4qd50u1jkd0rolqkc08qr9p; _csrf-backend=ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '52728'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=payment%2Fpayment-report'
+    'REQUEST_URI' => '/panache_bill/index.php?r=payment%2Fpayment-report'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1640593224.804
+    'REQUEST_TIME' => 1640593224
+]
+2021-12-27 09:21:04 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][error][yii\base\InvalidArgumentException] yii\base\InvalidArgumentException: Operator 'CUSTOMER_MASTER.NAME' requires two operands. in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\conditions\SimpleCondition.php:79
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1606): yii\db\conditions\SimpleCondition::fromArrayDefinition('CUSTOMER_MASTER...', Array)
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1576): yii\db\QueryBuilder->createConditionFromArray(Array)
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\conditions\ConjunctionConditionBuilder.php(60): yii\db\QueryBuilder->buildCondition(Array, '<span class="st...')
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\conditions\ConjunctionConditionBuilder.php(35): yii\db\conditions\ConjunctionConditionBuilder->buildExpressionsFrom(Array, '<span class="st...')
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(288): yii\db\conditions\ConjunctionConditionBuilder->build(Object(yii\db\conditions\AndCondition), '<span class="st...')
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1580): yii\db\QueryBuilder->buildExpression(Object(yii\db\conditions\AndCondition), '<span class="st...')
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(1357): yii\db\QueryBuilder->buildCondition(Object(yii\db\conditions\AndCondition), '<span class="st...')
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\QueryBuilder.php(235): yii\db\QueryBuilder->buildWhere(Array, '<span class="st...')
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveQuery.php(328): yii\db\QueryBuilder->build(Object(yii\db\Query))
+#9 C:\xampp\htdocs\panache_bill\backend\models\PaymentMasterSearch.php(93): yii\db\ActiveQuery->createCommand()
+#10 C:\xampp\htdocs\panache_bill\backend\controllers\PaymentController.php(135): backend\models\PaymentMasterSearch->searchReport(Array)
+#11 [internal function]: backend\controllers\PaymentController->actionPaymentReport()
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams(Array)
+#14 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(534): yii\base\Controller->runAction('payment-report', Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('payment/payment...', Array)
+#16 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#17 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->run()
+#18 {main}
+2021-12-27 09:21:04 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][info][application] $_GET = [
+    'r' => 'payment/payment-report'
+]
+
+$_POST = [
+    '_csrf-backend' => 'zN2HC7WVpAJK2Ji7xyNbkpUDaokyb5Q8KbtfenrgmrmtutRl2eb3bBzq3PqAVw333m4Tzwsa_n0c02YtOJXUgA=='
+    'PaymentMasterSearch' => [
+        'from_date' => '01-09-2021'
+        'to_date' => '10-09-2021'
+        'booking_id' => ''
+        'type' => [
+            0 => 'Advance'
+            1 => 'Per-payment'
+            2 => 'Final-Payment'
+            3 => 'Return-Deposit'
+            4 => 'Cancel-Charge'
+            5 => 'Other-Charges'
+            6 => 'Return-Payment'
+        ]
+        'mode_of_payment' => ''
+        'search_cust' => ''
+    ]
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => '6tc4qd50u1jkd0rolqkc08qr9p'
+    '_csrf-backend' => 'ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '688'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/panache_bill/index.php?r=payment/payment-search'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=6tc4qd50u1jkd0rolqkc08qr9p; _csrf-backend=ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '52755'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=payment%2Fpayment-report'
+    'REQUEST_URI' => '/panache_bill/index.php?r=payment%2Fpayment-report'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1640593264.738
+    'REQUEST_TIME' => 1640593264
+]
+2021-12-27 09:27:16 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: backend\models\PaymentMasterSearch::VIEW_LEVEL in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Component.php:155
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('VIEW_LEVEL')
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\helpers\BaseHtml.php(2248): yii\db\BaseActiveRecord->__get('VIEW_LEVEL')
+#2 C:\xampp\htdocs\panache_bill\vendor\kartik-v\yii2-krajee-base\src\InputWidget.php(131): yii\helpers\BaseHtml::getAttributeValue(Object(backend\models\PaymentMasterSearch), 'VIEW_LEVEL')
+#3 C:\xampp\htdocs\panache_bill\vendor\kartik-v\yii2-krajee-base\src\InputWidget.php(110): kartik\base\InputWidget->initInputWidget()
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): kartik\base\InputWidget->init()
+#5 [internal function]: yii\base\BaseObject->__construct(Array)
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(420): ReflectionClass->newInstanceArgs(Array)
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('kartik\\select2\\...', Array, Array)
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('kartik\\select2\\...', Array, Array)
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Widget.php(138): yii\BaseYii::createObject(Array)
+#10 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\widgets\ActiveField.php(795): yii\base\Widget::widget(Array)
+#11 C:\xampp\htdocs\panache_bill\backend\views\payment\payment_search.php(47): yii\widgets\ActiveField->widget('kartik\\select2\\...', Array)
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(348): require('C:\\xampp\\htdocs...')
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('C:\\xampp\\htdocs...', Array)
+#14 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('C:\\xampp\\htdocs...', Array, Object(backend\controllers\PaymentController))
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(410): yii\base\View->render('payment_search', Array, Object(backend\controllers\PaymentController))
+#16 C:\xampp\htdocs\panache_bill\backend\controllers\PaymentController.php(89): yii\base\Controller->render('payment_search', Array)
+#17 [internal function]: backend\controllers\PaymentController->actionPaymentSearch()
+#18 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#19 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams(Array)
+#20 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(534): yii\base\Controller->runAction('payment-search', Array)
+#21 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('payment/payment...', Array)
+#22 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#23 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->run()
+#24 {main}
+2021-12-27 09:27:16 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][info][application] $_GET = [
+    'r' => 'payment/payment-search'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => '6tc4qd50u1jkd0rolqkc08qr9p'
+    '_csrf-backend' => 'ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/panache_bill/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=6tc4qd50u1jkd0rolqkc08qr9p; _csrf-backend=ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '53100'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=payment/payment-search'
+    'REQUEST_URI' => '/panache_bill/index.php?r=payment/payment-search'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1640593636.193
+    'REQUEST_TIME' => 1640593636
+]
+2021-12-27 14:02:34 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined index: booking_id in C:\xampp\htdocs\panache_bill\backend\models\PaymentMaster.php:73
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\backend\models\PaymentMaster.php(73): yii\web\ErrorHandler->handleError()
+#1 C:\xampp\htdocs\panache_bill\backend\views\payment\payment_report.php(293): backend\models\PaymentMaster::getTotal()
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(348): yii\web\View->unknown()
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(257): yii\web\View->renderPhpFile()
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(156): yii\web\View->renderFile()
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(410): yii\web\View->render()
+#6 C:\xampp\htdocs\panache_bill\backend\controllers\PaymentController.php(134): backend\controllers\PaymentController->render()
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): backend\controllers\PaymentController->actionPaymentReport()
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): ::call_user_func_array:{C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php:57}()
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams()
+#10 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(534): backend\controllers\PaymentController->runAction()
+#11 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(104): yii\web\Application->runAction()
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest()
+#13 C:\xampp\htdocs\panache_bill\index.php(17): yii\web\Application->run()
+#14 {main}
+2021-12-27 14:02:33 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][info][application] $_GET = [
+    'r' => 'payment/payment-report'
+]
+
+$_POST = [
+    '_csrf-backend' => 'rVPTf7aSsFHrKIbYljX_3fKV23he6luQo1tlmqUhWWbMNIAR2uHjP70awpnRQam4ufiiPmefMdGWM1zN51QXXw=='
+    'PaymentMasterSearch' => [
+        'view_level' => 'CASH_FLOW'
+        'from_date' => '01-10-2021'
+        'to_date' => '30-10-2021'
+        'booking_id' => ''
+        'type' => ''
+        'mode_of_payment' => ''
+        'search_cust' => ''
+    ]
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => '6tc4qd50u1jkd0rolqkc08qr9p'
+    '_csrf-backend' => 'ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '390'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/panache_bill/index.php?r=payment/payment-search'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=6tc4qd50u1jkd0rolqkc08qr9p; _csrf-backend=ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '56537'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=payment%2Fpayment-report'
+    'REQUEST_URI' => '/panache_bill/index.php?r=payment%2Fpayment-report'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1640610153.896
+    'REQUEST_TIME' => 1640610153
+]
+2021-12-27 14:16:15 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][error][ParseError] ParseError: syntax error, unexpected ',' in C:\xampp\htdocs\panache_bill\backend\controllers\PaymentController.php:134
+Stack trace:
+#0 [internal function]: yii\BaseYii::autoload('backend\\control...')
+#1 [internal function]: spl_autoload_call('backend\\control...')
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(643): class_exists('backend\\control...')
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(602): yii\base\Module->createControllerByID('payment')
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Module->createController('payment-report')
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('payment/payment...', Array)
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->run()
+#8 {main}
+2021-12-27 14:16:15 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][info][application] $_GET = [
+    'r' => 'payment/payment-report'
+]
+
+$_POST = [
+    '_csrf-backend' => 'rVPTf7aSsFHrKIbYljX_3fKV23he6luQo1tlmqUhWWbMNIAR2uHjP70awpnRQam4ufiiPmefMdGWM1zN51QXXw=='
+    'PaymentMasterSearch' => [
+        'view_level' => 'CASH_FLOW'
+        'from_date' => '01-10-2021'
+        'to_date' => '30-10-2021'
+        'booking_id' => ''
+        'type' => ''
+        'mode_of_payment' => ''
+        'search_cust' => ''
+    ]
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => '6tc4qd50u1jkd0rolqkc08qr9p'
+    '_csrf-backend' => 'ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '390'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/panache_bill/index.php?r=payment/payment-search'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=6tc4qd50u1jkd0rolqkc08qr9p; _csrf-backend=ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '57155'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=payment%2Fpayment-report'
+    'REQUEST_URI' => '/panache_bill/index.php?r=payment%2Fpayment-report'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1640610975.54
+    'REQUEST_TIME' => 1640610975
+]
+2021-12-27 14:16:47 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined index: pickup_date in C:\xampp\htdocs\panache_bill\backend\views\payment\cash_flow_report.php:130
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\backend\views\payment\cash_flow_report.php(130): yii\web\ErrorHandler->handleError()
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\grid\DataColumn.php(248): yii\web\View->{closure:C:\xampp\htdocs\panache_bill\backend\views\payment\cash_flow_report.php:129-131}()
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\grid\DataColumn.php(248): ::call_user_func:{C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\grid\DataColumn.php:248}()
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\grid\DataColumn.php(262): kartik\grid\DataColumn->getDataCellValue()
+#4 C:\xampp\htdocs\panache_bill\vendor\kartik-v\yii2-grid\src\DataColumn.php(246): kartik\grid\DataColumn->renderDataCellContent()
+#5 C:\xampp\htdocs\panache_bill\vendor\kartik-v\yii2-grid\src\GridViewTrait.php(1093): kartik\grid\DataColumn->renderDataCell()
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\grid\GridView.php(494): kartik\grid\GridView->renderTableRow()
+#7 C:\xampp\htdocs\panache_bill\vendor\kartik-v\yii2-grid\src\GridView.php(100): kartik\grid\GridView->renderTableBody()
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\grid\GridView.php(358): kartik\grid\GridView->renderTableBody()
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\widgets\BaseListView.php(160): kartik\grid\GridView->renderItems()
+#10 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\grid\GridView.php(326): kartik\grid\GridView->renderSection()
+#11 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\widgets\BaseListView.php(135): kartik\grid\GridView->renderSection()
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\widgets\BaseListView.php(138): kartik\grid\GridView->yii\widgets\{closure:C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\widgets\BaseListView.php:134-138}()
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\widgets\BaseListView.php(138): ::preg_replace_callback()
+#14 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\grid\GridView.php(301): kartik\grid\GridView->run()
+#15 C:\xampp\htdocs\panache_bill\vendor\kartik-v\yii2-grid\src\GridView.php(87): kartik\grid\GridView->run()
+#16 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Widget.php(141): kartik\grid\GridView->run()
+#17 C:\xampp\htdocs\panache_bill\backend\views\payment\cash_flow_report.php(47): yii\base\Widget::widget()
+#18 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(348): yii\web\View->unknown()
+#19 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(257): yii\web\View->renderPhpFile()
+#20 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(156): yii\web\View->renderFile()
+#21 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(410): yii\web\View->render()
+#22 C:\xampp\htdocs\panache_bill\backend\controllers\PaymentController.php(136): backend\controllers\PaymentController->render()
+#23 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): backend\controllers\PaymentController->actionPaymentReport()
+#24 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): ::call_user_func_array:{C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php:57}()
+#25 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams()
+#26 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(534): backend\controllers\PaymentController->runAction()
+#27 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(104): yii\web\Application->runAction()
+#28 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest()
+#29 C:\xampp\htdocs\panache_bill\index.php(17): yii\web\Application->run()
+#30 {main}
+2021-12-27 14:16:47 [::1][1][6tc4qd50u1jkd0rolqkc08qr9p][info][application] $_GET = [
+    'r' => 'payment/payment-report'
+]
+
+$_POST = [
+    '_csrf-backend' => 'rVPTf7aSsFHrKIbYljX_3fKV23he6luQo1tlmqUhWWbMNIAR2uHjP70awpnRQam4ufiiPmefMdGWM1zN51QXXw=='
+    'PaymentMasterSearch' => [
+        'view_level' => 'CASH_FLOW'
+        'from_date' => '01-10-2021'
+        'to_date' => '30-10-2021'
+        'booking_id' => ''
+        'type' => ''
+        'mode_of_payment' => ''
+        'search_cust' => ''
+    ]
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => '6tc4qd50u1jkd0rolqkc08qr9p'
+    '_csrf-backend' => 'ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '390'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/panache_bill/index.php?r=payment/payment-search'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=6tc4qd50u1jkd0rolqkc08qr9p; _csrf-backend=ad648246fe4059a0749b79772e2e5c534a4095533f865f15b6c32dbb4cd10811a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22agSnlsSnV2DAGtVeKmyF9ujA5h9WBuN9%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '57158'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=payment%2Fpayment-report'
+    'REQUEST_URI' => '/panache_bill/index.php?r=payment%2Fpayment-report'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1640611007.121
+    'REQUEST_TIME' => 1640611007
+]
+2021-12-28 15:54:21 [::1][1][aqthun6tafrg9t38h2fpurdnfa][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: backend\models\BookingHeader::id1 in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Component.php:210
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\BaseActiveRecord.php(324): yii\base\Component->__set('id1', '')
+#1 C:\xampp\htdocs\panache_bill\backend\views\booking\_form.php(740): yii\db\BaseActiveRecord->__set('id1', '')
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(348): require('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('C:\\xampp\\htdocs...', Array)
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('C:\\xampp\\htdocs...', Array, NULL)
+#5 C:\xampp\htdocs\panache_bill\backend\views\booking\create.php(30): yii\base\View->render('_form', Array)
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(348): require('C:\\xampp\\htdocs...')
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('C:\\xampp\\htdocs...', Array)
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('C:\\xampp\\htdocs...', Array, Object(backend\controllers\BookingController))
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(410): yii\base\View->render('create', Array, Object(backend\controllers\BookingController))
+#10 C:\xampp\htdocs\panache_bill\backend\controllers\BookingController.php(585): yii\base\Controller->render('create', Array)
+#11 [internal function]: backend\controllers\BookingController->actionCreate()
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams(Array)
+#14 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(534): yii\base\Controller->runAction('create', Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('booking/create', Array)
+#16 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#17 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->run()
+#18 {main}
+2021-12-28 15:54:20 [::1][1][aqthun6tafrg9t38h2fpurdnfa][info][application] $_GET = [
+    'r' => 'booking/create'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => 'aqthun6tafrg9t38h2fpurdnfa'
+    '_csrf-backend' => '63475bcc619e93a34940251534cda3d772fbeeea7ff442b4eea2341992859255a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"ed_MRS0N14UseU3_-HXj_MQz1IxPcjRA\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/panache_bill/index.php?r=booking/index'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=aqthun6tafrg9t38h2fpurdnfa; _csrf-backend=63475bcc619e93a34940251534cda3d772fbeeea7ff442b4eea2341992859255a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22ed_MRS0N14UseU3_-HXj_MQz1IxPcjRA%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '56009'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=booking%2Fcreate'
+    'REQUEST_URI' => '/panache_bill/index.php?r=booking%2Fcreate'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1640703260.901
+    'REQUEST_TIME' => 1640703260
+]
+2021-12-28 15:54:31 [::1][1][aqthun6tafrg9t38h2fpurdnfa][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: backend\models\BookingHeader::id in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Component.php:155
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\BaseActiveRecord.php(298): yii\base\Component->__get('id')
+#1 C:\xampp\htdocs\panache_bill\backend\views\booking\_form.php(740): yii\db\BaseActiveRecord->__get('id')
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(348): require('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('C:\\xampp\\htdocs...', Array)
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('C:\\xampp\\htdocs...', Array, NULL)
+#5 C:\xampp\htdocs\panache_bill\backend\views\booking\create.php(30): yii\base\View->render('_form', Array)
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(348): require('C:\\xampp\\htdocs...')
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('C:\\xampp\\htdocs...', Array)
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('C:\\xampp\\htdocs...', Array, Object(backend\controllers\BookingController))
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(410): yii\base\View->render('create', Array, Object(backend\controllers\BookingController))
+#10 C:\xampp\htdocs\panache_bill\backend\controllers\BookingController.php(585): yii\base\Controller->render('create', Array)
+#11 [internal function]: backend\controllers\BookingController->actionCreate()
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams(Array)
+#14 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(534): yii\base\Controller->runAction('create', Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('booking/create', Array)
+#16 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#17 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->run()
+#18 {main}
+2021-12-28 15:54:31 [::1][1][aqthun6tafrg9t38h2fpurdnfa][info][application] $_GET = [
+    'r' => 'booking/create'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => 'aqthun6tafrg9t38h2fpurdnfa'
+    '_csrf-backend' => '63475bcc619e93a34940251534cda3d772fbeeea7ff442b4eea2341992859255a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"ed_MRS0N14UseU3_-HXj_MQz1IxPcjRA\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/panache_bill/index.php?r=booking/index'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=aqthun6tafrg9t38h2fpurdnfa; _csrf-backend=63475bcc619e93a34940251534cda3d772fbeeea7ff442b4eea2341992859255a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22ed_MRS0N14UseU3_-HXj_MQz1IxPcjRA%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '56019'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=booking%2Fcreate'
+    'REQUEST_URI' => '/panache_bill/index.php?r=booking%2Fcreate'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1640703271.335
+    'REQUEST_TIME' => 1640703271
+]
+2021-12-28 16:16:22 [::1][1][aqthun6tafrg9t38h2fpurdnfa][error][yii\base\ErrorException:2] yii\base\ErrorException: Use of undefined constant fasle - assumed 'fasle' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\panache_bill\backend\controllers\BookingController.php:797
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\backend\controllers\BookingController.php(797): yii\web\ErrorHandler->handleError()
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): backend\controllers\BookingController->actionDeliveryItem()
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php(57): ::call_user_func_array:{C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\InlineAction.php:57}()
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams()
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(534): backend\controllers\BookingController->runAction()
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(104): yii\web\Application->runAction()
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest()
+#7 C:\xampp\htdocs\panache_bill\index.php(17): yii\web\Application->run()
+#8 {main}
+2021-12-28 16:16:22 [::1][1][aqthun6tafrg9t38h2fpurdnfa][info][application] $_GET = [
+    'r' => 'booking/delivery-item'
+]
+
+$_POST = [
+    '_csrf-backend' => 'hqupk-3fNvLCV2z9e7MWhh9kcGHzrja2SQryIKH6maTjz_bev4wGvPNjOY4e5iXZMiwoC6zjZ8x4Q4pwwpDL5Q=='
+    'item_status' => 'Returned'
+    'booking_id' => '1089'
+    'delivery_date' => '08-12-2021'
+    'selection' => [
+        0 => '1778'
+        1 => '1779'
+    ]
+    'BookingHeader' => [
+        'net_value' => '6500.00'
+        'deposite_amount' => '2500.00'
+        'paid_amount' => '6500'
+        'pending_amount' => '0'
+        'return_amount' => '0.00'
+        'cancellation_charges' => '0.00'
+        'other_charges' => '0.00'
+        'refunded' => '0'
+    ]
+    'PaymentMaster' => [
+        0 => [
+            'date' => '2021-12-28'
+            'payment_id' => ''
+            'booking_id' => ''
+            'remark' => ''
+            'type' => 'Advance'
+            'mode_of_payment' => 'Cash'
+            'received_by' => 'Varsha'
+            'sendto' => 'Company'
+            'received_during' => 'Booking'
+            'amount' => ''
+        ]
+        1 => [
+            'date' => '2021-10-18'
+            'payment_id' => '1999'
+            'booking_id' => '1089'
+            'remark' => ''
+            'type' => 'Advance'
+            'mode_of_payment' => 'Google Pay'
+            'received_by' => 'Varsha'
+            'sendto' => 'Company'
+            'received_during' => 'Booking'
+            'amount' => '2500'
+        ]
+        2 => [
+            'date' => '2021-11-15'
+            'payment_id' => '2260'
+            'booking_id' => '1089'
+            'remark' => ''
+            'type' => 'Final-Payment'
+            'mode_of_payment' => 'Cash'
+            'received_by' => 'Varsha'
+            'sendto' => 'Company'
+            'received_during' => 'Booking'
+            'amount' => '1500'
+        ]
+        3 => [
+            'date' => '2021-11-15'
+            'payment_id' => '2261'
+            'booking_id' => '1089'
+            'remark' => ''
+            'type' => 'Final-Payment'
+            'mode_of_payment' => 'Google Pay'
+            'received_by' => 'Varsha'
+            'sendto' => 'Company'
+            'received_during' => 'Booking'
+            'amount' => '2500'
+        ]
+    ]
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => 'aqthun6tafrg9t38h2fpurdnfa'
+    '_csrf-backend' => '63475bcc619e93a34940251534cda3d772fbeeea7ff442b4eea2341992859255a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"ed_MRS0N14UseU3_-HXj_MQz1IxPcjRA\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '2205'
+    'HTTP_SEC_CH_UA' => '\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"'
+    'HTTP_X_CSRF_TOKEN' => 'hqupk-3fNvLCV2z9e7MWhh9kcGHzrja2SQryIKH6maTjz_bev4wGvPNjOY4e5iXZMiwoC6zjZ8x4Q4pwwpDL5Q=='
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_ACCEPT' => 'application/json, text/javascript, */*; q=0.01'
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_REFERER' => 'http://localhost/panache_bill/index.php?r=booking/return-item&id=1089'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=aqthun6tafrg9t38h2fpurdnfa; _csrf-backend=63475bcc619e93a34940251534cda3d772fbeeea7ff442b4eea2341992859255a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22ed_MRS0N14UseU3_-HXj_MQz1IxPcjRA%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '56880'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=booking%2Fdelivery-item'
+    'REQUEST_URI' => '/panache_bill/index.php?r=booking%2Fdelivery-item'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1640704582.698
+    'REQUEST_TIME' => 1640704582
+]
+2022-01-25 14:11:44 [::1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php:723
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(723): PDO->__construct('mysql:host=loca...', 'root', '7B3RUJHdAapCFDc...', NULL)
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(638): yii\db\Connection->createPdoInstance()
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1063): yii\db\Connection->open()
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1050): yii\db\Connection->getMasterPdo()
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(410): yii\db\Command->queryInternal('fetchAll', NULL)
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(758): yii\db\mysql\Schema->loadTableSchema('user')
+#10 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(194): yii\db\Schema->getTableMetadata('{{%user}}', 'schema', false)
+#11 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('{{%user}}')
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#14 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition(Array, Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition(Array)
+#16 C:\xampp\htdocs\panache_bill\common\models\User.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#17 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(602): common\models\User::findIdentity(1)
+#18 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#19 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(726): yii\web\User->loginByCookie()
+#20 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(199): yii\web\User->renewAuthStatus()
+#21 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(367): yii\web\User->getIdentity()
+#22 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Component.php(140): yii\web\User->getIsGuest()
+#23 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\panels\UserPanel.php(83): yii\base\Component->__get('isGuest')
+#24 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#25 [internal function]: yii\base\BaseObject->__construct(Array)
+#26 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(420): ReflectionClass->newInstanceArgs(Array)
+#27 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#28 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#29 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(255): yii\BaseYii::createObject(Array)
+#30 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(226): yii\debug\Module->initPanels()
+#31 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\Module->init()
+#32 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(158): yii\base\BaseObject->__construct(Array)
+#33 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#34 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(412): ReflectionClass->newInstanceArgs(Array)
+#35 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#36 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#37 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(427): yii\BaseYii::createObject(Array, Array)
+#38 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(321): yii\base\Module->getModule('debug')
+#39 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(70): yii\base\Application->bootstrap()
+#40 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(279): yii\web\Application->bootstrap()
+#41 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\base\Application->init()
+#42 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(212): yii\base\BaseObject->__construct(Array)
+#43 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->__construct('[<span class="s...')
+#44 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php:649
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1063): yii\db\Connection->open()
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1050): yii\db\Connection->getMasterPdo()
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(410): yii\db\Command->queryInternal('fetchAll', NULL)
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(758): yii\db\mysql\Schema->loadTableSchema('user')
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(194): yii\db\Schema->getTableMetadata('{{%user}}', 'schema', false)
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('{{%user}}')
+#10 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#11 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition(Array, Array)
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition(Array)
+#14 C:\xampp\htdocs\panache_bill\common\models\User.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(602): common\models\User::findIdentity(1)
+#16 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#17 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(726): yii\web\User->loginByCookie()
+#18 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(199): yii\web\User->renewAuthStatus()
+#19 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(367): yii\web\User->getIdentity()
+#20 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Component.php(140): yii\web\User->getIsGuest()
+#21 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\panels\UserPanel.php(83): yii\base\Component->__get('isGuest')
+#22 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#23 [internal function]: yii\base\BaseObject->__construct(Array)
+#24 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(420): ReflectionClass->newInstanceArgs(Array)
+#25 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#26 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#27 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(255): yii\BaseYii::createObject(Array)
+#28 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(226): yii\debug\Module->initPanels()
+#29 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\Module->init()
+#30 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(158): yii\base\BaseObject->__construct(Array)
+#31 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#32 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(412): ReflectionClass->newInstanceArgs(Array)
+#33 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#34 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#35 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(427): yii\BaseYii::createObject(Array, Array)
+#36 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(321): yii\base\Module->getModule('debug')
+#37 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(70): yii\base\Application->bootstrap()
+#38 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(279): yii\web\Application->bootstrap()
+#39 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\base\Application->init()
+#40 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(212): yii\base\BaseObject->__construct(Array)
+#41 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->__construct('[<span class="s...')
+#42 {main}
+Additional Information:
+
+2022-01-25 14:11:36 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\" Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"97\", \"Chromium\";v=\"97\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '58909'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/panache_bill/'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1643116294.431
+    'REQUEST_TIME' => 1643116294
+]
+2022-01-25 14:12:14 [::1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php:723
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(723): PDO->__construct('mysql:host=loca...', 'root', '7B3RUJHdAapCFDc...', NULL)
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(638): yii\db\Connection->createPdoInstance()
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1063): yii\db\Connection->open()
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1050): yii\db\Connection->getMasterPdo()
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(410): yii\db\Command->queryInternal('fetchAll', NULL)
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(758): yii\db\mysql\Schema->loadTableSchema('user')
+#10 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(194): yii\db\Schema->getTableMetadata('{{%user}}', 'schema', false)
+#11 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('{{%user}}')
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#14 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition(Array, Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition(Array)
+#16 C:\xampp\htdocs\panache_bill\common\models\User.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#17 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(602): common\models\User::findIdentity(1)
+#18 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#19 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(726): yii\web\User->loginByCookie()
+#20 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(199): yii\web\User->renewAuthStatus()
+#21 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(367): yii\web\User->getIdentity()
+#22 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Component.php(140): yii\web\User->getIsGuest()
+#23 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\panels\UserPanel.php(83): yii\base\Component->__get('isGuest')
+#24 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#25 [internal function]: yii\base\BaseObject->__construct(Array)
+#26 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(420): ReflectionClass->newInstanceArgs(Array)
+#27 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#28 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#29 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(255): yii\BaseYii::createObject(Array)
+#30 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(226): yii\debug\Module->initPanels()
+#31 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\Module->init()
+#32 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(158): yii\base\BaseObject->__construct(Array)
+#33 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#34 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(412): ReflectionClass->newInstanceArgs(Array)
+#35 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#36 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#37 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(427): yii\BaseYii::createObject(Array, Array)
+#38 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(321): yii\base\Module->getModule('debug')
+#39 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(70): yii\base\Application->bootstrap()
+#40 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(279): yii\web\Application->bootstrap()
+#41 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\base\Application->init()
+#42 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(212): yii\base\BaseObject->__construct(Array)
+#43 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->__construct('[<span class="s...')
+#44 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php:649
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1063): yii\db\Connection->open()
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1050): yii\db\Connection->getMasterPdo()
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(410): yii\db\Command->queryInternal('fetchAll', NULL)
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(758): yii\db\mysql\Schema->loadTableSchema('user')
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(194): yii\db\Schema->getTableMetadata('{{%user}}', 'schema', false)
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('{{%user}}')
+#10 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#11 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition(Array, Array)
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition(Array)
+#14 C:\xampp\htdocs\panache_bill\common\models\User.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(602): common\models\User::findIdentity(1)
+#16 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#17 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(726): yii\web\User->loginByCookie()
+#18 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(199): yii\web\User->renewAuthStatus()
+#19 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(367): yii\web\User->getIdentity()
+#20 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Component.php(140): yii\web\User->getIsGuest()
+#21 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\panels\UserPanel.php(83): yii\base\Component->__get('isGuest')
+#22 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#23 [internal function]: yii\base\BaseObject->__construct(Array)
+#24 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(420): ReflectionClass->newInstanceArgs(Array)
+#25 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#26 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#27 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(255): yii\BaseYii::createObject(Array)
+#28 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(226): yii\debug\Module->initPanels()
+#29 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\Module->init()
+#30 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(158): yii\base\BaseObject->__construct(Array)
+#31 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#32 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(412): ReflectionClass->newInstanceArgs(Array)
+#33 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#34 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#35 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(427): yii\BaseYii::createObject(Array, Array)
+#36 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(321): yii\base\Module->getModule('debug')
+#37 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(70): yii\base\Application->bootstrap()
+#38 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(279): yii\web\Application->bootstrap()
+#39 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\base\Application->init()
+#40 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(212): yii\base\BaseObject->__construct(Array)
+#41 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->__construct('[<span class="s...')
+#42 {main}
+Additional Information:
+
+2022-01-25 14:12:09 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\" Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"97\", \"Chromium\";v=\"97\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '58940'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/panache_bill/'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1643116329.798
+    'REQUEST_TIME' => 1643116329
+]
+2022-02-07 15:13:01 [::1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php:723
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(723): PDO->__construct('mysql:host=loca...', 'root', '7B3RUJHdAapCFDc...', NULL)
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(638): yii\db\Connection->createPdoInstance()
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1063): yii\db\Connection->open()
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1050): yii\db\Connection->getMasterPdo()
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(410): yii\db\Command->queryInternal('fetchAll', NULL)
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(758): yii\db\mysql\Schema->loadTableSchema('user')
+#10 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(194): yii\db\Schema->getTableMetadata('{{%user}}', 'schema', false)
+#11 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('{{%user}}')
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#14 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition(Array, Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition(Array)
+#16 C:\xampp\htdocs\panache_bill\common\models\User.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#17 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(602): common\models\User::findIdentity(1)
+#18 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#19 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(726): yii\web\User->loginByCookie()
+#20 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(199): yii\web\User->renewAuthStatus()
+#21 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(367): yii\web\User->getIdentity()
+#22 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Component.php(140): yii\web\User->getIsGuest()
+#23 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\panels\UserPanel.php(83): yii\base\Component->__get('isGuest')
+#24 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#25 [internal function]: yii\base\BaseObject->__construct(Array)
+#26 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(420): ReflectionClass->newInstanceArgs(Array)
+#27 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#28 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#29 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(255): yii\BaseYii::createObject(Array)
+#30 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(226): yii\debug\Module->initPanels()
+#31 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\Module->init()
+#32 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(158): yii\base\BaseObject->__construct(Array)
+#33 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#34 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(412): ReflectionClass->newInstanceArgs(Array)
+#35 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#36 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#37 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(427): yii\BaseYii::createObject(Array, Array)
+#38 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(321): yii\base\Module->getModule('debug')
+#39 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(70): yii\base\Application->bootstrap()
+#40 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(279): yii\web\Application->bootstrap()
+#41 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\base\Application->init()
+#42 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(212): yii\base\BaseObject->__construct(Array)
+#43 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->__construct('[<span class="s...')
+#44 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ in C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php:649
+Stack trace:
+#0 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1063): yii\db\Connection->open()
+#1 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Connection.php(1050): yii\db\Connection->getMasterPdo()
+#2 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#3 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#4 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Command.php(410): yii\db\Command->queryInternal('fetchAll', NULL)
+#5 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#6 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#7 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(758): yii\db\mysql\Schema->loadTableSchema('user')
+#8 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\Schema.php(194): yii\db\Schema->getTableMetadata('{{%user}}', 'schema', false)
+#9 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('{{%user}}')
+#10 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#11 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#12 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition(Array, Array)
+#13 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition(Array)
+#14 C:\xampp\htdocs\panache_bill\common\models\User.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#15 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(602): common\models\User::findIdentity(1)
+#16 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#17 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(726): yii\web\User->loginByCookie()
+#18 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(199): yii\web\User->renewAuthStatus()
+#19 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\User.php(367): yii\web\User->getIdentity()
+#20 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Component.php(140): yii\web\User->getIsGuest()
+#21 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\panels\UserPanel.php(83): yii\base\Component->__get('isGuest')
+#22 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#23 [internal function]: yii\base\BaseObject->__construct(Array)
+#24 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(420): ReflectionClass->newInstanceArgs(Array)
+#25 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#26 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#27 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(255): yii\BaseYii::createObject(Array)
+#28 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2-debug\src\Module.php(226): yii\debug\Module->initPanels()
+#29 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\debug\Module->init()
+#30 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(158): yii\base\BaseObject->__construct(Array)
+#31 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#32 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(412): ReflectionClass->newInstanceArgs(Array)
+#33 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\di\Container.php(171): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#34 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#35 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Module.php(427): yii\BaseYii::createObject(Array, Array)
+#36 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(321): yii\base\Module->getModule('debug')
+#37 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\web\Application.php(70): yii\base\Application->bootstrap()
+#38 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(279): yii\web\Application->bootstrap()
+#39 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\BaseObject.php(109): yii\base\Application->init()
+#40 C:\xampp\htdocs\panache_bill\vendor\yiisoft\yii2\base\Application.php(212): yii\base\BaseObject->__construct(Array)
+#41 C:\xampp\htdocs\panache_bill\index.php(17): yii\base\Application->__construct('[<span class="s...')
+#42 {main}
+Additional Information:
+
+2022-02-07 15:12:53 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'ext_name' => 'ojplmecpdpgccookcobabopnaifgidhf'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\" Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"97\", \"Chromium\";v=\"97\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8'
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\csvn\\bin\\;C:\\csvn\\Python25\\;D:\\My Program\\Subversion Client;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\program\\bin;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\Users\\desk014\\composer;C:\\Users\\desk014\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\desk014\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014\\AppData\\Local\\Programs\\Git\\cmd;'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.34 (Win32) OpenSSL/1.1.0i PHP/7.2.10'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/panache_bill/index.php'
+    'REMOTE_PORT' => '60029'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/panache_bill/'
+    'SCRIPT_NAME' => '/panache_bill/index.php'
+    'PHP_SELF' => '/panache_bill/index.php'
+    'REQUEST_TIME_FLOAT' => 1644243170.457
+    'REQUEST_TIME' => 1644243170
+]
+2025-01-22 13:16:08 [::1][-][09fsr3m4fmg1iir6qio3ejjqa4][error][yii\db\Exception] PDOException: SQLSTATE[HY000] [1049] Unknown database 'billing_application' in C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Connection.php:723
+Stack trace:
+#0 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Connection.php(723): PDO->__construct('mysql:host=loca...', 'root', '', NULL)
+#1 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Connection.php(638): yii\db\Connection->createPdoInstance()
+#2 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Connection.php(1063): yii\db\Connection->open()
+#3 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Connection.php(1050): yii\db\Connection->getMasterPdo()
+#4 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#5 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#6 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Command.php(410): yii\db\Command->queryInternal('fetchAll', NULL)
+#7 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#8 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#9 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Schema.php(758): yii\db\mysql\Schema->loadTableSchema('user')
+#10 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Schema.php(194): yii\db\Schema->getTableMetadata('{{%user}}', 'schema', false)
+#11 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('{{%user}}')
+#12 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#13 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#14 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition(Array, Array)
+#15 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition(Array)
+#16 C:\xampp\htdocs\soyara_rental\common\models\User.php(86): yii\db\BaseActiveRecord::findOne(Array)
+#17 C:\xampp\htdocs\soyara_rental\common\models\LoginForm.php(73): common\models\User::findByUsername('admin')
+#18 C:\xampp\htdocs\soyara_rental\common\models\LoginForm.php(44): common\models\LoginForm->getUser()
+#19 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\validators\InlineValidator.php(84): common\models\LoginForm->validatePassword('password', NULL, Object(yii\validators\InlineValidator), 'password')
+#20 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\validators\Validator.php(261): yii\validators\InlineValidator->validateAttribute(Object(common\models\LoginForm), 'password')
+#21 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Model.php(368): yii\validators\Validator->validateAttributes(Object(common\models\LoginForm), Array)
+#22 C:\xampp\htdocs\soyara_rental\common\models\LoginForm.php(58): yii\base\Model->validate()
+#23 C:\xampp\htdocs\soyara_rental\backend\controllers\SiteController.php(118): common\models\LoginForm->login()
+#24 [internal function]: backend\controllers\SiteController->actionLogin()
+#25 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#26 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams(Array)
+#27 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Module.php(534): yii\base\Controller->runAction('login', Array)
+#28 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('site/login', Array)
+#29 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#30 C:\xampp\htdocs\soyara_rental\index.php(17): yii\base\Application->run()
+#31 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000] [1049] Unknown database 'billing_application' in C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Connection.php:649
+Stack trace:
+#0 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Connection.php(1063): yii\db\Connection->open()
+#1 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Connection.php(1050): yii\db\Connection->getMasterPdo()
+#2 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#3 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#4 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Command.php(410): yii\db\Command->queryInternal('fetchAll', NULL)
+#5 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\mysql\Schema.php(319): yii\db\Command->queryAll()
+#6 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\mysql\Schema.php(125): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#7 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Schema.php(758): yii\db\mysql\Schema->loadTableSchema('user')
+#8 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\Schema.php(194): yii\db\Schema->getTableMetadata('{{%user}}', 'schema', false)
+#9 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\ActiveRecord.php(435): yii\db\Schema->getTableSchema('{{%user}}')
+#10 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\ActiveRecord.php(262): yii\db\ActiveRecord::getTableSchema()
+#11 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\ActiveRecord.php(234): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#12 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\ActiveRecord.php(191): yii\db\ActiveRecord::filterCondition(Array, Array)
+#13 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\db\BaseActiveRecord.php(112): yii\db\ActiveRecord::findByCondition(Array)
+#14 C:\xampp\htdocs\soyara_rental\common\models\User.php(86): yii\db\BaseActiveRecord::findOne(Array)
+#15 C:\xampp\htdocs\soyara_rental\common\models\LoginForm.php(73): common\models\User::findByUsername('admin')
+#16 C:\xampp\htdocs\soyara_rental\common\models\LoginForm.php(44): common\models\LoginForm->getUser()
+#17 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\validators\InlineValidator.php(84): common\models\LoginForm->validatePassword('password', NULL, Object(yii\validators\InlineValidator), 'password')
+#18 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\validators\Validator.php(261): yii\validators\InlineValidator->validateAttribute(Object(common\models\LoginForm), 'password')
+#19 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Model.php(368): yii\validators\Validator->validateAttributes(Object(common\models\LoginForm), Array)
+#20 C:\xampp\htdocs\soyara_rental\common\models\LoginForm.php(58): yii\base\Model->validate()
+#21 C:\xampp\htdocs\soyara_rental\backend\controllers\SiteController.php(118): common\models\LoginForm->login()
+#22 [internal function]: backend\controllers\SiteController->actionLogin()
+#23 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#24 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams(Array)
+#25 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Module.php(534): yii\base\Controller->runAction('login', Array)
+#26 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('site/login', Array)
+#27 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#28 C:\xampp\htdocs\soyara_rental\index.php(17): yii\base\Application->run()
+#29 {main}
+Additional Information:
+
+2025-01-22 13:16:08 [::1][-][09fsr3m4fmg1iir6qio3ejjqa4][info][application] $_GET = [
+    'r' => 'site/login'
+]
+
+$_POST = [
+    '_csrf-backend' => 'Bl5tyd3nxuQHkLbrxY6BjaYYbZhBpWNljB6TefjR15pybwPwvsr1gEvGgIrx9-vXyVAv8nXxL1HNWcccsZSGyw=='
+    'LoginForm' => [
+        'username' => 'admin'
+        'password' => 'password'
+        'rememberMe' => '1'
+    ]
+    'login-button' => ''
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-deed6c8a' => 'f58117f9-787f-458a-8836-318161317a3f'
+    '_csrf-backend' => '9764c976decf44bc269f741f659152ef61127f199c3f89bf18522812634a93f3a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"t1n9c-3dLV6a4yjZoHBj4TL4AGTeIEQQ\";}'
+    'advanced-backend' => '09fsr3m4fmg1iir6qio3ejjqa4'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/soyara_rental/index.php'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '239'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/soyara_rental/index.php?r=site%2Flogin'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8,hi;q=0.7'
+    'HTTP_COOKIE' => 'Phpstorm-deed6c8a=f58117f9-787f-458a-8836-318161317a3f; _csrf-backend=9764c976decf44bc269f741f659152ef61127f199c3f89bf18522812634a93f3a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22t1n9c-3dLV6a4yjZoHBj4TL4AGTeIEQQ%22%3B%7D; advanced-backend=09fsr3m4fmg1iir6qio3ejjqa4'
+    'PATH' => 'C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\PuTTY\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\Microsoft SQL Server\\120\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\170\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\150\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\150\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\150\\DTS\\Binn\\;C:\\Program Files\\dotnet\\;C:\\xampp\\php;C:\\composer;C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\90\\Tools\\binn\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\IDM Computer Solutions\\UltraEdit;C:\\Users\\desk014.QHPL\\AppData\\Local\\Programs\\Python\\Launcher\\;C:\\Users\\desk014.QHPL\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014.QHPL\\AppData\\Local\\Programs\\Git\\cmd;C:\\Users\\desk014.QHPL\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.38 (Win64) OpenSSL/1.1.1b PHP/7.3.2 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.38 (Win64) OpenSSL/1.1.1b PHP/7.3.2'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs/'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs/'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/soyara_rental/index.php'
+    'REMOTE_PORT' => '51516'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=site%2Flogin'
+    'REQUEST_URI' => '/soyara_rental/index.php?r=site%2Flogin'
+    'SCRIPT_NAME' => '/soyara_rental/index.php'
+    'PHP_SELF' => '/soyara_rental/index.php'
+    'REQUEST_TIME_FLOAT' => 1737548168.578
+    'REQUEST_TIME' => 1737548168
+]
+2025-01-23 10:15:13 [::1][1][kkf3rruo3nl1jruflir31rhcug][error][yii\web\HttpException:405] yii\web\MethodNotAllowedHttpException: Method Not Allowed. This URL can only handle the following request methods: POST. in C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\filters\VerbFilter.php:108
+Stack trace:
+#0 [internal function]: yii\filters\VerbFilter->beforeAction(Object(yii\base\ActionEvent))
+#1 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Component.php(628): call_user_func(Array, Object(yii\base\ActionEvent))
+#2 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Controller.php(300): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#3 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\web\Controller.php(216): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#4 C:\xampp\htdocs\soyara_rental\backend\controllers\CaterController.php(53): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#5 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Controller.php(179): backend\controllers\CaterController->beforeAction(Object(yii\base\InlineAction))
+#6 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Module.php(534): yii\base\Controller->runAction('delete', Array)
+#7 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('cater/delete', Array)
+#8 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 C:\xampp\htdocs\soyara_rental\index.php(17): yii\base\Application->run()
+#10 {main}
+2025-01-23 10:15:13 [::1][1][kkf3rruo3nl1jruflir31rhcug][info][application] $_GET = [
+    'r' => 'cater/delete'
+    'id' => '4'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-deed6c8a' => 'f58117f9-787f-458a-8836-318161317a3f'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    'advanced-backend' => 'kkf3rruo3nl1jruflir31rhcug'
+    '_csrf-backend' => 'b3a8ce93e91daa952aa1cefbb2f0cfb313408773555a9edd7c8a506959e773b4a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"uiOABOCQmLvbcc6z0eA9g5jfcOK-uBPK\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/soyara_rental/index.php?r=cater%2Findex'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8,hi;q=0.7'
+    'HTTP_COOKIE' => 'Phpstorm-deed6c8a=f58117f9-787f-458a-8836-318161317a3f; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; advanced-backend=kkf3rruo3nl1jruflir31rhcug; _csrf-backend=b3a8ce93e91daa952aa1cefbb2f0cfb313408773555a9edd7c8a506959e773b4a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22uiOABOCQmLvbcc6z0eA9g5jfcOK-uBPK%22%3B%7D'
+    'PATH' => 'C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\PuTTY\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\Microsoft SQL Server\\120\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\170\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\150\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\150\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\150\\DTS\\Binn\\;C:\\Program Files\\dotnet\\;C:\\xampp\\php;C:\\composer;C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\90\\Tools\\binn\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\IDM Computer Solutions\\UltraEdit;C:\\Users\\desk014.QHPL\\AppData\\Local\\Programs\\Python\\Launcher\\;C:\\Users\\desk014.QHPL\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014.QHPL\\AppData\\Local\\Programs\\Git\\cmd;C:\\Users\\desk014.QHPL\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.38 (Win64) OpenSSL/1.1.1b PHP/7.3.2 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.38 (Win64) OpenSSL/1.1.1b PHP/7.3.2'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs/'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs/'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/soyara_rental/index.php'
+    'REMOTE_PORT' => '57010'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=cater%2Fdelete&id=4'
+    'REQUEST_URI' => '/soyara_rental/index.php?r=cater%2Fdelete&id=4'
+    'SCRIPT_NAME' => '/soyara_rental/index.php'
+    'PHP_SELF' => '/soyara_rental/index.php'
+    'REQUEST_TIME_FLOAT' => 1737623713.004
+    'REQUEST_TIME' => 1737623713
+]
+2025-01-23 14:58:44 [::1][1][85oh2jnk50onj57grfntb41gof][error][yii\base\InvalidCallException] yii\base\InvalidCallException: Unexpected yii\widgets\ActiveForm::end() call. A matching begin() is not found. in C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Widget.php:121
+Stack trace:
+#0 C:\xampp\htdocs\soyara_rental\backend\views\layouts\main.php(782): yii\base\Widget::end()
+#1 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\View.php(348): require('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('C:\\xampp\\htdocs...', Array)
+#3 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Controller.php(425): yii\base\View->renderFile('C:\\xampp\\htdocs...', Array, Object(backend\controllers\SiteController))
+#4 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Controller.php(411): yii\base\Controller->renderContent('<style type="te...')
+#5 C:\xampp\htdocs\soyara_rental\backend\controllers\SiteController.php(103): yii\base\Controller->render('index', Array)
+#6 [internal function]: backend\controllers\SiteController->actionIndex()
+#7 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#8 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Controller.php(181): yii\base\InlineAction->runWithParams(Array)
+#9 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Module.php(534): yii\base\Controller->runAction('', Array)
+#10 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\web\Application.php(104): yii\base\Module->runAction('', Array)
+#11 C:\xampp\htdocs\soyara_rental\vendor\yiisoft\yii2\base\Application.php(392): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 C:\xampp\htdocs\soyara_rental\index.php(17): yii\base\Application->run()
+#13 {main}
+2025-01-23 14:58:43 [::1][1][85oh2jnk50onj57grfntb41gof][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-deed6c8a' => 'f58117f9-787f-458a-8836-318161317a3f'
+    'advanced-backend' => '85oh2jnk50onj57grfntb41gof'
+    '_identity-backend' => '7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1\",2592000]\";}'
+    '_csrf-backend' => '623ee1bdf5920f2ee450d467f8000bc0766d60719f5dc7983ce00446a97383aca:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"DRlg7eyRQyks692n6MJsiNb7Nxerth4r\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/soyara_rental/'
+    '__id' => 1
+    '__authKey' => 'gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1'
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/soyara_rental/index.php?r=site%2Flogin'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8,hi;q=0.7'
+    'HTTP_COOKIE' => 'Phpstorm-deed6c8a=f58117f9-787f-458a-8836-318161317a3f; advanced-backend=85oh2jnk50onj57grfntb41gof; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; _csrf-backend=623ee1bdf5920f2ee450d467f8000bc0766d60719f5dc7983ce00446a97383aca%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22DRlg7eyRQyks692n6MJsiNb7Nxerth4r%22%3B%7D'
+    'PATH' => 'C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\PuTTY\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\Microsoft SQL Server\\120\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\170\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\150\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\150\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\150\\DTS\\Binn\\;C:\\Program Files\\dotnet\\;C:\\xampp\\php;C:\\composer;C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\90\\Tools\\binn\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\IDM Computer Solutions\\UltraEdit;C:\\Users\\desk014.QHPL\\AppData\\Local\\Programs\\Python\\Launcher\\;C:\\Users\\desk014.QHPL\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\desk014.QHPL\\AppData\\Local\\Programs\\Git\\cmd;C:\\Users\\desk014.QHPL\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.38 (Win64) OpenSSL/1.1.1b PHP/7.3.2 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.38 (Win64) OpenSSL/1.1.1b PHP/7.3.2'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs/'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs/'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/soyara_rental/index.php'
+    'REMOTE_PORT' => '52977'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/soyara_rental/'
+    'SCRIPT_NAME' => '/soyara_rental/index.php'
+    'PHP_SELF' => '/soyara_rental/index.php'
+    'REQUEST_TIME_FLOAT' => 1737640723.644
+    'REQUEST_TIME' => 1737640723
+]

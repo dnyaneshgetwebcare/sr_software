@@ -1,0 +1,308 @@
+[03-Jun-2019 13:38:44 UTC] PHP Fatal error:  Cannot redeclare backend\controllers\BookingController::short_url() in /home/mnrpzy2gvczm/public_html/panache/backend/controllers/BookingController.php on line 123
+[14-Jun-2019 10:06:08 UTC] An Error occurred while handling another error:
+yii\web\HeadersAlreadySentException: Headers already sent in /home/mnrpzy2gvczm/public_html/panache/backend/controllers/ItemController.php on line 198. in /home/mnrpzy2gvczm/public_html/panache/vendor/yiisoft/yii2/web/Response.php:366
+Stack trace:
+#0 /home/mnrpzy2gvczm/public_html/panache/vendor/yiisoft/yii2/web/Response.php(339): yii\web\Response->sendHeaders()
+#1 /home/mnrpzy2gvczm/public_html/panache/vendor/yiisoft/yii2/web/ErrorHandler.php(135): yii\web\Response->send()
+#2 /home/mnrpzy2gvczm/public_html/panache/vendor/yiisoft/yii2/base/ErrorHandler.php(111): yii\web\ErrorHandler->renderException(Object(yii\web\HeadersAlreadySentException))
+#3 [internal function]: yii\base\ErrorHandler->handleException(Object(yii\web\HeadersAlreadySentException))
+#4 {main}
+Previous exception:
+yii\web\HeadersAlreadySentException: Headers already sent in /home/mnrpzy2gvczm/public_html/panache/backend/controllers/ItemController.php on line 198. in /home/mnrpzy2gvczm/public_html/panache/vendor/yiisoft/yii2/web/Response.php:366
+Stack trace:
+#0 /home/mnrpzy2gvczm/public_html/panache/vendor/yiisoft/yii2/web/Response.php(339): yii\web\Response->sendHeaders()
+#1 /home/mnrpzy2gvczm/public_html/panache/vendor/yiisoft/yii2/base/Application.php(392): yii\web\Response->send()
+#2 /home/mnrpzy2gvczm/public_html/panache/index.php(17): yii\base\Application->run()
+#3 {main}
+$_SERVER = [
+    'LSPHP_ENABLE_USER_INI' => 'on',
+    'PATH' => '/usr/local/bin:/usr/bin:/bin',
+    'TEMP' => '/tmp',
+    'TMP' => '/tmp',
+    'TMPDIR' => '/tmp',
+    'PWD' => '/',
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9',
+    'HTTP_CONNECTION' => 'keep-alive',
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded',
+    'CONTENT_LENGTH' => '943',
+    'HTTP_COOKIE' => '_identity-backend=99e13d4cf90a15bae4a4b3789aaf4608c116fbc4ce61c33832a3b4ce734e7a84a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B3%2C%22ObCA-Lflqep1OO1pcdn3PU63gb5QkweR%22%2C2592000%5D%22%3B%7D; _csrf-backend=0ea49fab5d098788c37d36f5172eaa852c6356335311cf8c844e96c6290aa870a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22LjyDyHn5mzSVckLJ_7GXOu4dsOvkVA2A%22%3B%7D; advanced-backend=bac9a3218d1cbc1d06302ae7c6bfc37f; menuIsCollapsed=false',
+    'HTTP_HOST' => 'buchadepatildevelopers.in',
+    'HTTP_REFERER' => 'http://buchadepatildevelopers.in/panache/index.php?r=item%2Fcreate',
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
+    'HTTP_CACHE_CONTROL' => 'max-age=0',
+    'HTTP_ORIGIN' => 'http://buchadepatildevelopers.in',
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1',
+    'UNIQUE_ID' => 'XQNxkEi2vStxgPK-MmSnkwAAAUk',
+    'SCRIPT_URL' => '/panache/index.php',
+    'SCRIPT_URI' => 'http://buchadepatildevelopers.in/panache/index.php',
+    'SERVER_SIGNATURE' => '',
+    'SERVER_SOFTWARE' => 'Apache',
+    'SERVER_NAME' => 'buchadepatildevelopers.in',
+    'SERVER_ADDR' => '148.66.136.212',
+    'SERVER_PORT' => '80',
+    'REMOTE_ADDR' => '103.121.68.55',
+    'DOCUMENT_ROOT' => '/home/mnrpzy2gvczm/public_html',
+    'REQUEST_SCHEME' => 'http',
+    'CONTEXT_PREFIX' => '',
+    'CONTEXT_DOCUMENT_ROOT' => '/home/mnrpzy2gvczm/public_html',
+    'SERVER_ADMIN' => 'webmaster@buchadepatildevelopers.in',
+    'SCRIPT_FILENAME' => '/home/mnrpzy2gvczm/public_html/panache/index.php',
+    'REMOTE_PORT' => '50857',
+    'SERVER_PROTOCOL' => 'HTTP/1.1',
+    'REQUEST_METHOD' => 'POST',
+    'QUERY_STRING' => 'r=item%2Fcreate',
+    'REQUEST_URI' => '/panache/index.php?r=item%2Fcreate',
+    'SCRIPT_NAME' => '/panache/index.php',
+    'PHP_SELF' => '/panache/index.php',
+    'REQUEST_TIME_FLOAT' => 1560506768.1629350185394287109375,
+    'REQUEST_TIME' => 1560506768,
+]
+[11-Dec-2020 13:42:02 UTC] PHP Fatal error:  Cannot use yii\helpers\Html as Html because the name is already in use in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/views/booking/check_item.php on line 83
+[11-Dec-2020 13:42:33 UTC] PHP Fatal error:  Cannot use yii\helpers\Html as Html because the name is already in use in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/views/booking/check_item.php on line 83
+[19-Dec-2020 13:25:23 UTC] An Error occurred while handling another error:
+yii\web\HeadersAlreadySentException: Headers already sent in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 103. in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/Response.php:366
+Stack trace:
+#0 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/Response.php(339): yii\web\Response->sendHeaders()
+#1 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/ErrorHandler.php(135): yii\web\Response->send()
+#2 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/ErrorHandler.php(111): yii\web\ErrorHandler->renderException(Object(yii\base\ErrorException))
+#3 [internal function]: yii\base\ErrorHandler->handleException(Object(yii\base\ErrorException))
+#4 {main}
+Previous exception:
+yii\base\ErrorException: A non-numeric value encountered in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php:105
+Stack trace:
+#0 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php(105): yii\base\ErrorHandler->handleError(2, 'A non-numeric v...', '/home/mnrpzy2gv...', 105, Array)
+#1 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php(503): backend\controllers\BookingController->checkBooking('292', '2020-12-20', '2020-12-22')
+#2 [internal function]: backend\controllers\BookingController->actionCreate()
+#3 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#4 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('create', Array)
+#6 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('booking/create', Array)
+#7 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/index.php(17): yii\base\Application->run()
+#9 {main}
+$_SERVER = [
+    'LSPHP_ENABLE_USER_INI' => 'on',
+    'PATH' => '/usr/local/bin:/usr/bin:/bin',
+    'TEMP' => '/tmp',
+    'TMP' => '/tmp',
+    'TMPDIR' => '/tmp',
+    'PWD' => '/',
+    'HTTP_ACCEPT' => 'application/json, text/javascript, */*; q=0.01',
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8',
+    'HTTP_CONNECTION' => 'keep-alive',
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8',
+    'CONTENT_LENGTH' => '2902',
+    'HTTP_COOKIE' => 'ext_name=ojplmecpdpgccookcobabopnaifgidhf; _tccl_visitor=231a6f18-5570-4c95-b9d7-0a05df125f22; _identity-backend=7d62596acbe682f340576fe63c8aa6f3255fb866f89eebd15cd0a2ff221d8714a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22gpx-OIkdkDw2_RKVAGo-_kxQJ7hMbsv1%22%2C2592000%5D%22%3B%7D; _csrf-backend=86dc9e83c5b1ec013d745740a69dd7f124e929b35eb28fbab8acb0579c2cb45aa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22tkAy3WBs5uabSDrQkaN6ttpIFA96l734%22%3B%7D; advanced-backend=877a0dfab85a0b181ab0e8a86a162975; _tccl_visit=244333f1-5463-4fd9-adbf-035e1b325948',
+    'HTTP_HOST' => 'billing.panachewears.in',
+    'HTTP_REFERER' => 'http://billing.panachewears.in/index.php?r=booking%2Fcreate',
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
+    'HTTP_X_CSRF_TOKEN' => 'YslKtOG4ojlEsXObBHFaEAjpyqU7uMXtDW-KKLZSAmYWogvN0u_gSnHEEvlXNShBY4iEk0_MtaRLLrMe2mUxUg==',
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
+    'HTTP_ORIGIN' => 'http://billing.panachewears.in',
+    'UNIQUE_ID' => 'X93-Q29Q2W9c7oovQ17PsAAAA9Y',
+    'SCRIPT_URL' => '/index.php',
+    'SCRIPT_URI' => 'http://billing.panachewears.in/index.php',
+    'SERVER_SIGNATURE' => '',
+    'SERVER_SOFTWARE' => 'Apache',
+    'SERVER_NAME' => 'billing.panachewears.in',
+    'SERVER_ADDR' => '148.66.136.212',
+    'SERVER_PORT' => '80',
+    'REMOTE_ADDR' => '103.121.69.205',
+    'DOCUMENT_ROOT' => '/home/mnrpzy2gvczm/public_html/billing.panachewears.in',
+    'REQUEST_SCHEME' => 'http',
+    'CONTEXT_PREFIX' => '',
+    'CONTEXT_DOCUMENT_ROOT' => '/home/mnrpzy2gvczm/public_html/billing.panachewears.in',
+    'SERVER_ADMIN' => 'webmaster@billing.panachewears.in',
+    'SCRIPT_FILENAME' => '/home/mnrpzy2gvczm/public_html/billing.panachewears.in/index.php',
+    'REMOTE_PORT' => '62069',
+    'SERVER_PROTOCOL' => 'HTTP/1.1',
+    'REQUEST_METHOD' => 'POST',
+    'QUERY_STRING' => 'r=booking%2Fcreate',
+    'REQUEST_URI' => '/index.php?r=booking%2Fcreate',
+    'SCRIPT_NAME' => '/index.php',
+    'PHP_SELF' => '/index.php',
+    'REQUEST_TIME_FLOAT' => 1608384323.5327908992767333984375,
+    'REQUEST_TIME' => 1608384323,
+]
+[14-Sep-2021 15:06:41 UTC] An Error occurred while handling another error:
+yii\web\HeadersAlreadySentException: Headers already sent in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 20. in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/Response.php:366
+Stack trace:
+#0 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/Response.php(339): yii\web\Response->sendHeaders()
+#1 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/ErrorHandler.php(135): yii\web\Response->send()
+#2 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/ErrorHandler.php(111): yii\web\ErrorHandler->renderException(Object(yii\base\ErrorException))
+#3 [internal function]: yii\base\ErrorHandler->handleException(Object(yii\base\ErrorException))
+#4 {main}
+Previous exception:
+yii\base\ErrorException: Undefined variable: model in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php:184
+Stack trace:
+#0 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php(184): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/home/mnrpzy2gv...', 184, Array)
+#1 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/BaseYii.php(293): include('/home/mnrpzy2gv...')
+#2 [internal function]: yii\BaseYii::autoload('backend\\control...')
+#3 [internal function]: spl_autoload_call('backend\\control...')
+#4 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Module.php(637): class_exists('backend\\control...')
+#5 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Module.php(596): yii\base\Module->createControllerByID('booking')
+#6 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Module.php(522): yii\base\Module->createController('update')
+#7 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('booking/update', Array)
+#8 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/index.php(17): yii\base\Application->run()
+#10 {main}
+$_SERVER = [
+    'LSPHP_ENABLE_USER_INI' => 'on',
+    'PATH' => '/usr/local/bin:/usr/bin:/bin',
+    'TEMP' => '/tmp',
+    'TMP' => '/tmp',
+    'TMPDIR' => '/tmp',
+    'PWD' => '/',
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8',
+    'HTTP_CONNECTION' => 'keep-alive',
+    'CONTENT_LENGTH' => '0',
+    'HTTP_COOKIE' => '_tccl_visitor=251ca0c1-3168-48e4-a68b-076d90ff256e; ext_name=ojplmecpdpgccookcobabopnaifgidhf; advanced-backend=191f2553fe978a0e2272ed9c260a236e; _identity-backend=38588a0a8e47fb1dcf81f7b4880502c56546da8f16bf6a6e657e3bc959cf291aa%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B6%2C%22ltLsEAD0shSlhC7cTn3o5Ock5GiL4Ehg%22%2C2592000%5D%22%3B%7D; _csrf-backend=e5a5afbb8d1bebe25bbf803b00474e52a5fb096a8570e33da08671c0817fab68a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22W_sWY2OCEGBTAUsu0ZjxV2GafjoRT-Ct%22%3B%7D; _tccl_visit=25a5ee00-0217-4743-999f-0bd72c851bd6',
+    'HTTP_HOST' => 'billing.panachewears.in',
+    'HTTP_REFERER' => 'http://billing.panachewears.in/index.php?r=booking/index',
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36',
+    'HTTP_CACHE_CONTROL' => 'max-age=0',
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1',
+    'UNIQUE_ID' => 'YUC6gavLGJk1f-TAaFImrAAAAUE',
+    'SCRIPT_URL' => '/index.php',
+    'SCRIPT_URI' => 'http://billing.panachewears.in/index.php',
+    'GD-USERNAME' => 'mnrpzy2gvczm',
+    'SERVER_SIGNATURE' => '',
+    'SERVER_SOFTWARE' => 'Apache',
+    'SERVER_NAME' => 'billing.panachewears.in',
+    'SERVER_ADDR' => '148.66.136.212',
+    'SERVER_PORT' => '80',
+    'REMOTE_ADDR' => '49.248.86.174',
+    'DOCUMENT_ROOT' => '/home/mnrpzy2gvczm/public_html/billing.panachewears.in',
+    'REQUEST_SCHEME' => 'http',
+    'CONTEXT_PREFIX' => '',
+    'CONTEXT_DOCUMENT_ROOT' => '/home/mnrpzy2gvczm/public_html/billing.panachewears.in',
+    'SERVER_ADMIN' => 'webmaster@billing.panachewears.in',
+    'SCRIPT_FILENAME' => '/home/mnrpzy2gvczm/public_html/billing.panachewears.in/index.php',
+    'REMOTE_PORT' => '44495',
+    'SERVER_PROTOCOL' => 'HTTP/1.1',
+    'REQUEST_METHOD' => 'GET',
+    'QUERY_STRING' => 'r=booking%2Fupdate&id=928',
+    'REQUEST_URI' => '/index.php?r=booking%2Fupdate&id=928',
+    'SCRIPT_NAME' => '/index.php',
+    'PHP_SELF' => '/index.php',
+    'REQUEST_TIME_FLOAT' => 1631632001.5641028881072998046875,
+    'REQUEST_TIME' => 1631632001,
+]
+[14-Sep-2021 15:06:55 UTC] An Error occurred while handling another error:
+yii\web\HeadersAlreadySentException: Headers already sent in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 20. in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/Response.php:366
+Stack trace:
+#0 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/Response.php(339): yii\web\Response->sendHeaders()
+#1 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/ErrorHandler.php(135): yii\web\Response->send()
+#2 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/ErrorHandler.php(111): yii\web\ErrorHandler->renderException(Object(yii\base\ErrorException))
+#3 [internal function]: yii\base\ErrorHandler->handleException(Object(yii\base\ErrorException))
+#4 {main}
+Previous exception:
+yii\base\ErrorException: Undefined variable: model in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php:184
+Stack trace:
+#0 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php(184): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/home/mnrpzy2gv...', 184, Array)
+#1 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/BaseYii.php(293): include('/home/mnrpzy2gv...')
+#2 [internal function]: yii\BaseYii::autoload('backend\\control...')
+#3 [internal function]: spl_autoload_call('backend\\control...')
+#4 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Module.php(637): class_exists('backend\\control...')
+#5 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Module.php(596): yii\base\Module->createControllerByID('booking')
+#6 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Module.php(522): yii\base\Module->createController('update')
+#7 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('booking/update', Array)
+#8 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /home/mnrpzy2gvczm/public_html/billing.panachewears.in/index.php(17): yii\base\Application->run()
+#10 {main}
+$_SERVER = [
+    'LSPHP_ENABLE_USER_INI' => 'on',
+    'PATH' => '/usr/local/bin:/usr/bin:/bin',
+    'TEMP' => '/tmp',
+    'TMP' => '/tmp',
+    'TMPDIR' => '/tmp',
+    'PWD' => '/',
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',
+    'HTTP_ACCEPT_LANGUAGE' => 'en,en-GB;q=0.9,en-US;q=0.8',
+    'HTTP_CONNECTION' => 'keep-alive',
+    'CONTENT_LENGTH' => '0',
+    'HTTP_COOKIE' => '_tccl_visitor=251ca0c1-3168-48e4-a68b-076d90ff256e; ext_name=ojplmecpdpgccookcobabopnaifgidhf; advanced-backend=191f2553fe978a0e2272ed9c260a236e; _identity-backend=38588a0a8e47fb1dcf81f7b4880502c56546da8f16bf6a6e657e3bc959cf291aa%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B6%2C%22ltLsEAD0shSlhC7cTn3o5Ock5GiL4Ehg%22%2C2592000%5D%22%3B%7D; _csrf-backend=e5a5afbb8d1bebe25bbf803b00474e52a5fb096a8570e33da08671c0817fab68a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22W_sWY2OCEGBTAUsu0ZjxV2GafjoRT-Ct%22%3B%7D; _tccl_visit=25a5ee00-0217-4743-999f-0bd72c851bd6',
+    'HTTP_HOST' => 'billing.panachewears.in',
+    'HTTP_REFERER' => 'http://billing.panachewears.in/index.php?r=booking/index',
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36',
+    'HTTP_CACHE_CONTROL' => 'max-age=0',
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1',
+    'UNIQUE_ID' => 'YUC6j70COFhFvDawlfa8KAAAAhU',
+    'SCRIPT_URL' => '/index.php',
+    'SCRIPT_URI' => 'http://billing.panachewears.in/index.php',
+    'GD-USERNAME' => 'mnrpzy2gvczm',
+    'SERVER_SIGNATURE' => '',
+    'SERVER_SOFTWARE' => 'Apache',
+    'SERVER_NAME' => 'billing.panachewears.in',
+    'SERVER_ADDR' => '148.66.136.212',
+    'SERVER_PORT' => '80',
+    'REMOTE_ADDR' => '49.248.86.174',
+    'DOCUMENT_ROOT' => '/home/mnrpzy2gvczm/public_html/billing.panachewears.in',
+    'REQUEST_SCHEME' => 'http',
+    'CONTEXT_PREFIX' => '',
+    'CONTEXT_DOCUMENT_ROOT' => '/home/mnrpzy2gvczm/public_html/billing.panachewears.in',
+    'SERVER_ADMIN' => 'webmaster@billing.panachewears.in',
+    'SCRIPT_FILENAME' => '/home/mnrpzy2gvczm/public_html/billing.panachewears.in/index.php',
+    'REMOTE_PORT' => '3960',
+    'SERVER_PROTOCOL' => 'HTTP/1.1',
+    'REQUEST_METHOD' => 'GET',
+    'QUERY_STRING' => 'r=booking%2Fupdate&id=928',
+    'REQUEST_URI' => '/index.php?r=booking%2Fupdate&id=928',
+    'SCRIPT_NAME' => '/index.php',
+    'PHP_SELF' => '/index.php',
+    'REQUEST_TIME_FLOAT' => 1631632015.33434200286865234375,
+    'REQUEST_TIME' => 1631632015,
+]
+[14-Sep-2021 15:25:29 UTC] PHP Fatal error:  Cannot declare class backend\controllers\BookingController, because the name is already in use in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/models/BookingHeader.php on line 1439
+[14-Sep-2021 15:25:49 UTC] PHP Fatal error:  Cannot declare class backend\controllers\BookingController, because the name is already in use in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/models/BookingHeader.php on line 1439
+[13-Nov-2021 10:38:10 UTC] PHP Fatal error:  Cannot use temporary expression in write context in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/views/booking/_form.php on line 375
+[17-Nov-2021 09:08:33 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:33 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:33 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:33 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:34 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:36 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:38 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:41 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:47 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:48 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:48 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:48 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:49 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:08:52 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:09:10 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:09:10 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:09:11 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:09:11 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:09:11 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:09:15 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:09:15 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:24:35 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:31:52 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:31:55 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:32:14 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:33:08 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:33:23 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 09:34:07 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 10:15:03 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 10:23:25 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 10:23:32 UTC] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/backend/controllers/BookingController.php on line 1446
+[17-Nov-2021 10:26:11 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 969
+[17-Nov-2021 10:26:19 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 969
+[17-Nov-2021 10:26:34 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 969
+[17-Nov-2021 10:26:50 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 969
+[17-Nov-2021 10:27:08 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 969
+[17-Nov-2021 10:28:14 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 969
+[17-Nov-2021 10:30:43 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 1104
+[17-Nov-2021 10:32:23 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 1121
+[17-Nov-2021 10:33:50 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 1137
+[17-Nov-2021 10:35:50 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 969
+[17-Nov-2021 10:36:16 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 969
+[17-Nov-2021 10:38:50 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 969
+[17-Nov-2021 10:43:22 UTC] PHP Parse error:  syntax error, unexpected ':', expecting ';' or '{' in /home/mnrpzy2gvczm/public_html/billing.panachewears.in/vendor/symfony/dom-crawler/Crawler.php on line 969
