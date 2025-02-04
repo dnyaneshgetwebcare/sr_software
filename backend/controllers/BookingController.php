@@ -313,7 +313,7 @@ class BookingController extends Controller
         }
         $business_partner = $model->customer;
         $item = $model->bookingItems;
-        return $this->renderPartial('invoice_print_new', [
+        return $this->renderPartial('invoice_soyara', [
             'model' => $model,
             'business_partner' => $business_partner,
             'item' => $item

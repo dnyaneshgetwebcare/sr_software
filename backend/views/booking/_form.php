@@ -2469,7 +2469,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
     }
 
     function printInvoice(id) {
-        window.open("http://billing.thesoyara.com/index.php?r=booking/invoice-view&id=" + id, "_blank");
+        window.open("http://app.thesoyara.com/index.php?r=booking/invoice-view&id=" + id, "_blank");
     }
 
     function addPaymentitem() {
