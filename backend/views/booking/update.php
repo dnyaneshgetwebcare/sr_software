@@ -92,8 +92,8 @@ $this->title = 'Update Booking: #' . $model->booking_id;
                 <?php //echo Html::a('Create New Booking', ['create'], ['class' => 'btn btn-success pull-right']) ?>
                 <button type="button" class="btn btn-secondary btn-border" title="Send Invoice"
                         onclick="sendwhatsapp('<?= $model->booking_id; ?>')"><i class="fab fa-whatsapp"></i></button>
-                <button type="button" class="btn btn-secondary btn-border" title="Send Invoice"
-                        onclick="printInvoiceSend()"><i class="far fa-paper-plane"></i></button>
+                <!--<button type="button" class="btn btn-secondary btn-border" title="Send Invoice"
+                        onclick="printInvoiceSend()"><i class="far fa-paper-plane"></i></button>-->
                 <button type="button" class="btn btn-secondary btn-border" title="Send Invoice"
                         onclick="printInvoice('<?= $model->encryted_id ?>')"><i class="fas fa-print"></i></button>
             </div>
