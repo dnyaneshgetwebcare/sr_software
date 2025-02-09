@@ -30,10 +30,17 @@ $sales_location_string=($model_company->MULTI_SALES_LOCATION==1)?'':'display:non
     .page-titles {
         margin-bottom: 10px !important;
     }
+    .table>tbody>tr>td{
+        padding: 5px !important;
+    }
+    .table thead th{
+        padding: 5px !important;
+    }
 
     .form-control {
         font-size: 15px;
         font-weight: 500;
+        line-height: 1.5 !important;
     }
 
     th {

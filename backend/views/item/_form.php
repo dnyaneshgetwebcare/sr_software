@@ -31,7 +31,9 @@ $is_admin = ($user->user_type == "admin") ? true : false;
     .imager-edit-container .toolbar {
         position: absolute;
     }
-
+    .btn-secondary {
+        color: white !important;
+    }
     #imagers {
         display: flex;
         align-items: flex-start;
@@ -407,7 +409,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
                             'options' => ['placeholder' => 'Select  ...', 'multiple' => true],
                             'pluginOptions' => [
                               'tags' => true,
-                              'maximumInputLength' => 10,
+                              //'maximumInputLength' => 10,
                               'class' => 'form-control'
                             ],
                           ]);
