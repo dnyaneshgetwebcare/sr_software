@@ -1564,6 +1564,7 @@ Form-control
 .form-control {
   color: #131517;
   min-height: 38px;
+  border-color: #939393 !important;
   display: initial; }
 
 .form-control-sm {
