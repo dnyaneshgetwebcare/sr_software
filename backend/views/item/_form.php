@@ -21,10 +21,10 @@ use kartik\file\FileInput;
 $user = Yii::$app->user->identity;
 $is_admin = ($user->user_type == "admin") ? true : false;
 ?>
-<link rel="stylesheet" type="text/css" href="css/gccsite.css">
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<!--<link rel="stylesheet" type="text/css" href="css/gccsite.css">-->
+<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
 
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="dist_crop/imagerJs.js"></script>
 <link href="dist_crop/imagerJs.css" rel="stylesheet">
 <style type="text/css">
