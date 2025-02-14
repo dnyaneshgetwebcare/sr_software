@@ -69,7 +69,15 @@ $is_admin = ($user->user_type == "admin") ? true : false;
         width: 100%;
         height: 100%;
     }
-
+    .table>tbody>tr>td{
+        padding: 5px !important;
+    }
+    .page-inner {
+        padding: 10px !important;
+    }
+    .table thead th{
+        padding: 5px !important;
+    }
     .overlay {
         z-index: 1100;
         background: rgba(0, 0, 0, 0.3);
@@ -106,7 +114,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
       <div class="logo-header" data-background-color="dark">
         <a href="index.php" class="logo">
           <img
-            src="img/logo.PNG"
+            src="img/logo.png"
             alt="navbar brand"
             class="navbar-brand"
             height="20"
@@ -459,7 +467,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
         <div class="logo-header" data-background-color="dark">
           <a href="index.html" class="logo">
             <img
-              src="img/logo.PNG"
+              src="img/logo.png"
               alt="navbar brand"
               class="navbar-brand"
               height="20"

@@ -30,12 +30,7 @@ $sales_location_string=($model_company->MULTI_SALES_LOCATION==1)?'':'display:non
     .page-titles {
         margin-bottom: 10px !important;
     }
-    .table>tbody>tr>td{
-        padding: 5px !important;
-    }
-    .table thead th{
-        padding: 5px !important;
-    }
+
 
     .form-control {
         font-size: 15px;
@@ -1030,7 +1025,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                     </div>
                     <div class="tab-pane " id="operation-pills" role="tabpanel" aria-labelledby="pills-payment-tab">
 
-                        <div class="row  col-lg-12" style="padding-left: 0px;">
+                        <div class="row" style="padding-left: 0px;">
 
                             <div class="col-lg-12" id="sales_items_tab_payment" style="margin-top: 10px">
                                 <?php DynamicFormWidget::begin([
