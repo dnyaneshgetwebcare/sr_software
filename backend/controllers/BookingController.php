@@ -240,7 +240,7 @@ class BookingController extends Controller
 
     function short_url($booking_id)
     {
-        return "http://thesoyara.com/inv/?" . $booking_id;
+        return "http://inv.panachewears.in/?" . $booking_id;
         $appkey = 'R_e74b011fabe44b52a45c406d087dda35';
         $login = 'o_523d7el29b';
         $url = Url::base(true) . '' . Yii::$app->request->baseUrl . '/index.php?r=booking/invoice-view&id=' . $booking_id;
@@ -313,10 +313,12 @@ class BookingController extends Controller
         }
         $business_partner = $model->customer;
         $item = $model->bookingItems;
+        $payments = $model->payment;
         return $this->renderPartial('invoice_soyara', [
             'model' => $model,
             'business_partner' => $business_partner,
-            'item' => $item
+            'item' => $item,
+            'payments'=>$payments
         ]);
     }
 
@@ -670,8 +672,8 @@ class BookingController extends Controller
                 //$this->sendemail($booking_header);
             }
             if ($customer_model->contact_nos != '') {
-                // $message="Thanks ".$customer_model->name." for shopping with Soyara Rental Couture. Your order of Rs.".round($booking_header->net_value)."\nRent-Rs.".round($booking_header->rent_amount)."\nDeposit-Rs.".round($booking_header->deposite_amount)."";
-                $message = "Thanks " . $customer_model->name . " for shopping with Soyara Rental  Couture. Your order of Rs." . round($booking_header->net_value) . " Booked.\n For invoice please check " . $this->short_url($booking_header->encryted_id) . " ";
+                // $message="Thanks ".$customer_model->name." for shopping with Panache Rental Boutique. Your order of Rs.".round($booking_header->net_value)."\nRent-Rs.".round($booking_header->rent_amount)."\nDeposit-Rs.".round($booking_header->deposite_amount)."";
+                $message = "Thanks " . $customer_model->name . " for shopping with Panache Rental Boutique. Your order of Rs." . round($booking_header->net_value) . " Booked.\n For invoice please check " . $this->short_url($booking_header->encryted_id) . " ";
                 /* if($booking_header->discount!=0){
                  $message.="\nDiscount-Rs.".round($booking_header->discount);
              }*/
@@ -700,8 +702,8 @@ class BookingController extends Controller
                 //$this->sendemail($booking_header);
             }
             if ($customer_model->contact_nos != '') {
-                // $message="Thanks ".$customer_model->name." for shopping with Soyara Rental Couture. Your order of Rs.".round($booking_header->net_value)."\nRent-Rs.".round($booking_header->rent_amount)."\nDeposit-Rs.".round($booking_header->deposite_amount)."";
-                $message = "Thanks " . $customer_model->name . " for shopping with Soyara Rental Couture. Your order of Rs." . round($booking_header->net_value) . " Booked.\n For invoice please check " . $this->short_url($booking_header->encryted_id) . " ";
+                // $message="Thanks ".$customer_model->name." for shopping with Panache Rental Boutique. Your order of Rs.".round($booking_header->net_value)."\nRent-Rs.".round($booking_header->rent_amount)."\nDeposit-Rs.".round($booking_header->deposite_amount)."";
+                $message = "Thanks " . $customer_model->name . " for shopping with Panache Rental Boutique. Your order of Rs." . round($booking_header->net_value) . " Booked.\n For invoice please check " . $this->short_url($booking_header->encryted_id) . " ";
                 /* if($booking_header->discount!=0){
                  $message.="\nDiscount-Rs.".round($booking_header->discount);
              }*/

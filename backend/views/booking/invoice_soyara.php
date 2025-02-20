@@ -138,7 +138,7 @@
               <thead class="mt-40">
               <tr class="invo-tb-header bg-green-rental ">
                 <th class="font-md color-light-black rental-wid1 pl-10 ">#</th>
-                <th class="font-md color-light-black rental-wid2 " style="min-width: 250px" colspan="2">Description</th>
+                <th class="font-md color-light-black rental-wid2 " style="min-width: 250px">Description</th>
                 <th class="font-md color-light-black rental-wid3 ">Rent Amount</th>
                 <th class="font-md color-light-black rental-wid3 ">Deposit Amount</th>
                 <th class="font-md color-light-black rental-wid5 ">Total Amount</th>
@@ -153,8 +153,6 @@
               $grand_discount = 0;
 
               foreach ($item as $key => $data) {
-
-
                 $grand_total += $data->net_value;
                 $grand_deposite += $data->deposit_amount;
                 $grand_discount += $data->discount;
@@ -163,8 +161,10 @@
                 ?>
                 <tr class="invo-tb-row">
                   <td class="invo-tb-data font-sm"><?php echo $key + 1; ?></td>
-                  <td class="invo-tb-data rate-data font-sm"><img src="<?= $image_path; ?>" style="height:80px"></td>
-                  <td class="invo-tb-data rate-data font-sm"><?php echo $data->item['name']; ?></td>
+                  <td class="invo-tb-data rate-data font-sm"><img src="<?= $image_path; ?>" style="height:80px">
+                    <span
+                      style="padding: 5px;position: absolute;width: 225px;text-wrap: auto;">
+                      <?php echo $data->item['name']; ?> </span> </td>
                   <td class="invo-tb-data rate-data font-sm text-right"><?php echo number_format($data['amount'], 2); ?></td>
                   <td
                     class="invo-tb-data total-data font-sm text-right pr-10"><?php echo number_format($data['deposit_amount'], 2); ?></td>
@@ -198,42 +198,64 @@
                   <td class="font-md color-light-black ">Total Deposit:</td>
                   <td class="font-md-grey color-grey text-right pr-10">₹ <?= number_format($grand_deposite, 2) ?></td>
                 </tr>
-                <!--<tr class="tax-row bottom-border">
-                  <td class="font-md color-light-black  ">Discount <span class="color-grey">(18%)</span></td>
-                  <td class="font-md-grey color-grey text-right pr-10">₹ <?php /*= number_format($grand_discount, 2) */?></td>
-                </tr>-->
+                <?php if($grand_discount!=0 ){  ?>
+                <tr>
+                  <td class="font-md color-light-black  ">Discount</td>
+                  <td class="font-md-grey color-grey text-right pr-10">₹ <?= number_format($grand_discount, 2) ?></td>
+                </tr>
+                <?php } ?>
                 <tr class="invo-grand-total">
-                  <td class="color-green-rental  font-18-700 pt-20">Grand Total:</td>
-                  <td class="font-18-500 color-light-black text-right pr-10 pt-20">
+                  <td class="color-green-rental  font-18-700 pt-10">Grand Total:</td>
+                  <td class="font-18-500 color-light-black text-right pr-10 pt-10">
                     ₹ <?= number_format($grand_total, 2) ?></td>
                 </tr>
                 </tbody>
               </table>
             </div>
           </div>
+
           <!--Invoice additional info end here -->
-          <!--<div class="payment-table-wrap rental-table-wrap">
+          <h3 class="addi-info-title font-md color-light-black" style="background-color: #d7cfb4; padding: 5px
+          10px">Payment Details
+            :-</h3>
+          <div class="payment-table-wrap rental-table-wrap">
             <table class="invo-payment-table">
               <thead>
               <tr class="invo-tb-header">
-                <th class="font-md payemnt-wid font-md color-light-black">Patient ID</th>
-                <th class="font-md date-wid font-md color-light-black">Age</th>
-                <th class="font-md trans-wid font-md color-light-black">Admit Date</th>
-                <th class="font-md amount-wid font-md color-light-black text-right ">Insurance</th>
+                <th class="font-md date-wid font-md color-light-black">Date</th>
+                <th class="font-md payment-wid font-md color-light-black">Mode</th>
+                <th class="font-md trans-wid font-md color-light-black">Type</th>
+                <th class="font-md amount-wid font-md color-light-black text-center ">Amount</th>
               </tr>
               </thead>
               <tbody>
+              <?php foreach ($payments as $payment_item) {
+                $type = "Received";
+                $amount = $payment_item['amount'];
+                if($payment_item['type'] == "Return-Deposit" || $payment_item['type'] == "Return-Payment"){
+                  $amount = $amount * -1;
+                  $type = $payment_item['type'];
+                }
+                if($payment_item['type'] == "Cancel-Charge" || $payment_item['type'] == "Other-Charges"){
+                  $type = $payment_item['type'];
+                }
+
+                ?>
               <tr class="invo-paye-row">
-                <td class="font-sm payment-desc">45123</td>
-                <td class="font-sm payment-desc">35 Years</td>
-                <td class="font-sm payment-desc">30/11/2022</td>
-                <td class="font-sm payment-desc text-right">Yes</td>
+                <td class="font-sm payment-desc"><?php echo Yii::$app->formatter->asDate($payment_item['date'], 'dd-MM-yyyy'); ?></td>
+                <td class="font-sm payment-desc"><?= $payment_item['mode_of_payment']; ?></td>
+                <td class="font-sm payment-desc"><?= $type; ?></td>
+                <td class="font-sm payment-desc text-right"> <?= number_format($amount, 2) ?></td>
               </tr>
+                <?php
+              } ?>
               </tbody>
             </table>
-          </div>-->
-          <div class="invo-add-info-content bus-term-cond-content">
+          </div>
+          <div class="invo-add-info-content bus-term-cond-content" style="margin-top: 20px">
+
             <h3 class="addi-info-title font-md color-light-black">Terms & Conditions :-</h3>
+            <hr style="width:100%;text-align:left;margin-left:0">
             <div class="term-condi-list pt-10">
               <ul class="term-con-list">
                 <li class="font-sm">All dress shall remain the property of Soyara and must be returned upon demand.</li>
