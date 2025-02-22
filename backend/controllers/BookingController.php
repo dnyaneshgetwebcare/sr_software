@@ -240,7 +240,7 @@ class BookingController extends Controller
 
     function short_url($booking_id)
     {
-        return "http://inv.panachewears.in/?" . $booking_id;
+        return "https://thesoyara.com/inv?" . $booking_id;
         $appkey = 'R_e74b011fabe44b52a45c406d087dda35';
         $login = 'o_523d7el29b';
         $url = Url::base(true) . '' . Yii::$app->request->baseUrl . '/index.php?r=booking/invoice-view&id=' . $booking_id;
