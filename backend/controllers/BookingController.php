@@ -672,8 +672,8 @@ class BookingController extends Controller
                 //$this->sendemail($booking_header);
             }
             if ($customer_model->contact_nos != '') {
-                // $message="Thanks ".$customer_model->name." for shopping with Panache Rental Boutique. Your order of Rs.".round($booking_header->net_value)."\nRent-Rs.".round($booking_header->rent_amount)."\nDeposit-Rs.".round($booking_header->deposite_amount)."";
-                $message = "Thanks " . $customer_model->name . " for shopping with Panache Rental Boutique. Your order of Rs." . round($booking_header->net_value) . " Booked.\n For invoice please check " . $this->short_url($booking_header->encryted_id) . " ";
+                // $message="Thanks ".$customer_model->name." for shopping with Soyara Rental Couture. Your order of Rs.".round($booking_header->net_value)."\nRent-Rs.".round($booking_header->rent_amount)."\nDeposit-Rs.".round($booking_header->deposite_amount)."";
+                $message = "Thanks " . $customer_model->name . " for shopping with Soyara Rental Couture. Your order of Rs." . round($booking_header->net_value) . " Booked.\n For invoice please check " . $this->short_url($booking_header->encryted_id) . " ";
                 /* if($booking_header->discount!=0){
                  $message.="\nDiscount-Rs.".round($booking_header->discount);
              }*/
@@ -702,8 +702,8 @@ class BookingController extends Controller
                 //$this->sendemail($booking_header);
             }
             if ($customer_model->contact_nos != '') {
-                // $message="Thanks ".$customer_model->name." for shopping with Panache Rental Boutique. Your order of Rs.".round($booking_header->net_value)."\nRent-Rs.".round($booking_header->rent_amount)."\nDeposit-Rs.".round($booking_header->deposite_amount)."";
-                $message = "Thanks " . $customer_model->name . " for shopping with Panache Rental Boutique. Your order of Rs." . round($booking_header->net_value) . " Booked.\n For invoice please check " . $this->short_url($booking_header->encryted_id) . " ";
+                // $message="Thanks ".$customer_model->name." for shopping with Soyara Rental Couture. Your order of Rs.".round($booking_header->net_value)."\nRent-Rs.".round($booking_header->rent_amount)."\nDeposit-Rs.".round($booking_header->deposite_amount)."";
+                $message = "Thanks " . $customer_model->name . " for shopping with Soyara Rental Couture. Your order of Rs." . round($booking_header->net_value) . " Booked.\n For invoice please check " . $this->short_url($booking_header->encryted_id) . " ";
                 /* if($booking_header->discount!=0){
                  $message.="\nDiscount-Rs.".round($booking_header->discount);
              }*/
