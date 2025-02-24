@@ -165,7 +165,9 @@
                     <span
                       style="padding: 5px;position: absolute;width: 225px;text-wrap: auto;">
                       <?php echo $data->item['name']; ?> </span> </td>
-                  <td class="invo-tb-data rate-data font-sm text-right"><?php echo number_format($data['amount'], 2); ?></td>
+                  <td class="invo-tb-data rate-data font-sm text-right"><?php echo number_format($data['amount']
+                      -$data->discount, 2)
+                    ; ?></td>
                   <td
                     class="invo-tb-data total-data font-sm text-right pr-10"><?php echo number_format($data['deposit_amount'], 2); ?></td>
                   <td class="invo-tb-data total-data font-sm text-right">
@@ -190,20 +192,26 @@
             <div class="invo-bill-total w-40">
               <table class="invo-total-table ">
                 <tbody>
-                <tr>
-                  <td class="font-md color-light-black ">Total Rent:</td>
+
+                 <?php if($grand_discount!=0 ){  ?>
+                   <tr>
+                  <td class="font-md color-light-black ">Sub Total:</td>
                   <td class="font-md-grey color-grey text-right pr-10">₹ <?= number_format($grand_rent, 2) ?></td>
                 </tr>
-                <tr>
-                  <td class="font-md color-light-black ">Total Deposit:</td>
-                  <td class="font-md-grey color-grey text-right pr-10">₹ <?= number_format($grand_deposite, 2) ?></td>
-                </tr>
-                <?php if($grand_discount!=0 ){  ?>
                 <tr>
                   <td class="font-md color-light-black  ">Discount</td>
                   <td class="font-md-grey color-grey text-right pr-10">₹ <?= number_format($grand_discount, 2) ?></td>
                 </tr>
                 <?php } ?>
+                <tr>
+                  <td class="font-md color-light-black ">Total Rent:</td>
+                  <td class="font-md-grey color-grey text-right pr-10">₹ <?= number_format($grand_rent -$grand_discount, 2) ?></td>
+                </tr>
+                <tr>
+                  <td class="font-md color-light-black ">Total Deposit:</td>
+                  <td class="font-md-grey color-grey text-right pr-10">₹ <?= number_format($grand_deposite, 2) ?></td>
+                </tr>
+
                 <tr class="invo-grand-total">
                   <td class="color-green-rental  font-18-700 pt-10">Grand Total:</td>
                   <td class="font-18-500 color-light-black text-right pr-10 pt-10">
