@@ -104,6 +104,11 @@ $return_date_format=( $this->return_date!='')?date('Y-m-d',strtotime( $this->ret
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'booking_id' => SORT_DESC,
+                ]
+                ]
         ]);
 
         $this->load($params);

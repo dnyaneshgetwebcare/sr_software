@@ -191,7 +191,7 @@ if ($is_admin) { ?>
         <div class="card card-round card-outline-info card-annoucement">
             <div class="card-header">
                 <h4 class="card-title" style="color: white">Upcoming Deliveries </h4>
-                <h6 class="card-subtitle op-5" style="margin-bottom: 0; color: white">Next 3days</h6>
+                <h6 class="card-subtitle op-5" style="margin-bottom: 0; color: white">Next 5days</h6>
             </div>
             <!-- <div class="card-body bg-danger">
         <h4 class="text-white card-title">Upcoming Deliveries </h4>
@@ -247,7 +247,7 @@ if ($is_admin) { ?>
         <div class="card card-round card-outline-info">
             <div class="card-header">
                 <h4 class="card-title" style="color: white">Upcoming Returns </h4>
-                <h6 class="card-subtitle op-5" style="margin-bottom: 0; color: white">Next 3days</h6>
+                <h6 class="card-subtitle op-5" style="margin-bottom: 0; color: white">Next 5days</h6>
             </div>
             <div class="card-body client-card-body">
                 <div class="message-box contact-box">

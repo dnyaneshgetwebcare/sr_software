@@ -2,9 +2,10 @@
 
 namespace backend\models;
 
+use backend\models\BookingItem;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\BookingItem;
+
 use yii\data\ArrayDataProvider;
 
 
@@ -51,6 +52,11 @@ class BookingItemSearch extends BookingItem
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'pickup_date' => SORT_ASC
+                ]
+                ]
         ]);
 
         $this->load($params);
@@ -89,6 +95,59 @@ class BookingItemSearch extends BookingItem
 
         return $dataProvider;
     }
+
+    public function searchreturn($params)
+    {
+        $query = BookingItem::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'return_date' => SORT_ASC
+                ]
+            ]
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'booking_item.item_id' => $this->item_id,
+            'booking_item.booking_id' => $this->booking_id,
+            'booking_item.item_no' => $this->item_no,
+            'booking_item.product_id' => $this->product_id,
+            'booking_item.net_value' => $this->net_value,
+            'booking_item.item_type' => $this->item_type,
+            'booking_item.item_category' => $this->item_category,
+            'booking_item.amount' => $this->amount,
+            'booking_item.discount' => $this->discount,
+            'booking_item.deposit_amount' => $this->deposit_amount,
+            'booking_item.deposite_charge_status' => $this->deposite_charge_status,
+            'booking_item.pickup_date' => $this->pickup_date,
+            'booking_item.picked_date' => $this->picked_date,
+            'booking_item.return_date' => $this->return_date,
+            'booking_item.returned_date' => $this->returned_date,
+            'booking_item.payment_status' => $this->payment_status,
+        ]);
+
+        $query->andFilterWhere(['like', 'booking_item.description', $this->description])
+            ->andFilterWhere(['like', 'booking_item.image_name', $this->image_name])
+            ->andFilterWhere(['like', 'booking_item.item_status', $this->item_status])
+            ->andFilterWhere(['like', 'booking_item.note', $this->note])
+            ->andFilterWhere(['like', 'booking_item.deposite_status', $this->deposite_status]);
+
+        return $dataProvider;
+    }
+
 
     public function searchItem($params)
     {

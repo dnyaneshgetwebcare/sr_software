@@ -176,6 +176,12 @@ $is_admin = ($user->user_type == "admin") ? true : false;
                     </span>
                   </a>
                 </li>
+                  <li>
+                      <a href="index.php?r=booking-item/index">
+                        <span class="sub-item">Pickup Item
+                        </span>
+                      </a>
+                  </li>
                 <li>
                   <a href="index.php?r=booking-item/index-return">
                         <span class="sub-item">Return Item

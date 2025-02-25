@@ -106,7 +106,7 @@ $this->title = 'Pickup Items';
         'attribute' => 'item_status',
         'enableSorting' => false
          ],
-           // 'note:ntext',
+            'note:ntext',
             //'deposite_status',
             //'payment_status',
         ],

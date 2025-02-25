@@ -65,7 +65,7 @@ class BookingItemController extends Controller
     {
         $searchModel = new BookingItemSearch();
         $searchModel->item_status='Picked';
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchreturn(Yii::$app->request->queryParams);
 
         return $this->render('view', [
             'searchModel' => $searchModel,
