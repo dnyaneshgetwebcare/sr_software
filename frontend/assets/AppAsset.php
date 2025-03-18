@@ -12,9 +12,9 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        '../../kai-admin-assets/css/bootstrap.min.css',
-        '../../kai-admin-assets/css/plugins.min.css',
-        '../../kai-admin-assets/css/kaiadmin.min.css',
+        '../../kai-admin-assets/css_fr/bootstrap.min.css',
+        '../../kai-admin-assets/css_fr/plugins.min.css',
+        '../../kai-admin-assets/css_fr/kaiadmin.futuristic.min.css',
         '../../assets/plugins/icheck/skins/all.css',
         '../../css/style.css',
     ];
