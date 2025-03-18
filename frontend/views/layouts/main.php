@@ -23,12 +23,13 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
   <link rel="icon" type="image/x-icon" href="../../img/favicon.ico">
-  <st
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<div class="wrapper">
+  <!--<div class="main-header">
    <nav class="navbar navbar-expand-lg navbar-dark bg-warning" style ="background-color: #591f2d !important;">
   <div class="container-fluid">
      <img
@@ -37,26 +38,19 @@ AppAsset::register($this);
             class="navbar-brand"
             height="20"
           />
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <span class="mb-3 " id = "vend_name"></span>
 
   </div>
 </nav>
-
-    <div class="container">
+</div>-->
+  <div class="main-panel">
+    <div class="overlay bg-primary2" style="min-height: 120px !important; background-color: #5d2331 !important;"></div>
+    <div class="container container-futuristic">
 
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
+  </div>
 </div>
 
 <!--<footer class="footer">
