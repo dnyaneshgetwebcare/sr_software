@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon.png">
     <title>Soyara Rental Couture </title>
     <!-- Bootstrap Core CSS -->
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
 <section id="wrapper">
-    <div class="login-register" style="background-image:url(assets/images/background/login-register.jpg);">
+    <div class="login-register" style="background-image:url(img/background/login-register.jpg);">
         <div class="login-box card">
             <div class="card-body">
                 <!--<form class="form-horizontal form-material" id="loginform" action="index.html">-->

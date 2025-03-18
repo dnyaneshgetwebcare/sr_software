@@ -28,7 +28,7 @@ class VendorController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','view','create','update','delete'],
+                        'actions' => ['logout', 'index','view','create','update','delete','encrypt'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -80,8 +80,15 @@ class VendorController extends Controller
     {
         $model = new VendorMaster();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) ) {
+          if($model->group_id == 'Sharing'){
+            $model->encryption_id = $this->generateRandomString();
+          }else{
+            $model->encryption_id = '';
+          }
+          if($model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+          }
         }
 
         return $this->render('create', [
@@ -122,6 +129,24 @@ class VendorController extends Controller
         $vendor->status='In Active';
         $vendor->save();
         return $this->redirect(['index']);
+    }
+
+    public function actionEncrypt($id)
+    {
+        $vendor=$this->findModel($id);
+        $vendor->encryption_id = $this->generateRandomString();
+        $vendor->save();
+        return $this->redirect(['index']);
+    }
+    function generateRandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
     /**

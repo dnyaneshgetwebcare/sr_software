@@ -47,7 +47,8 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'contact_nos')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'group_id')->dropDownList([ 'None' => 'None', 'Supplier' => 'Supplier', 'Dry Cleaning' => 'Dry Cleaning', 'Alteration' => 'Alteration', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'group_id')->dropDownList([ 'None' => 'None', 'Supplier' => 'Supplier', 'Dry Cleaning'
+    => 'Dry Cleaning', 'Alteration' => 'Alteration', 'Sharing' => 'Sharing'], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
