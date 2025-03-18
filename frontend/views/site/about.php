@@ -23,7 +23,7 @@ $this->title = 'Soyara Rental Couture';
 
 					</div>
     <div class="me-3">
-        <h2 class="mb-3" style="color: #fff;">Soyara Rental Couture</h2>
+        <h2 class="mb-3" style="color: #fff;"><?= $vendor_name ?> </h2>
 
     </div>
 					<div class="ms-auto">
@@ -177,8 +177,3 @@ $this->title = 'Soyara Rental Couture';
 
     return $num;
 } ?>
-<script>
-  $(document).ready(function(){
-  $("#vend_name").html("test");
-});
-</script>

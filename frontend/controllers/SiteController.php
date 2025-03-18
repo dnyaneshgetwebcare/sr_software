@@ -32,7 +32,33 @@ class SiteController extends Controller
   /**
    * {@inheritdoc}
    */
-
+  public function behaviors()
+  {
+    return [
+      'access' => [
+        'class' => AccessControl::className(),
+        'only' => ['logout', 'signup', 'about', 'contact', 'index'],
+        'rules' => [
+          [
+            'actions' => ['signup'],
+            'allow' => true,
+            'roles' => ['?'],
+          ],
+          [
+            'actions' => ['logout', 'about', 'index'],
+            'allow' => true,
+            'roles' => ['@'],
+          ],
+        ],
+      ],
+      'verbs' => [
+        'class' => VerbFilter::className(),
+        'actions' => [
+          'logout' => ['post'],
+        ],
+      ],
+    ];
+  }
 
 
   /**
@@ -146,10 +172,11 @@ class SiteController extends Controller
     }
       $encryption = $_GET['encryption_id'];
     try {
-      $vendor_id = VendorMaster::find()->where(['encryption_id' => $encryption])->one()->id;
+      $vendor = VendorMaster::find()->where(['encryption_id' => $encryption])->one();
       /*$items = VendItemMaster::find()->select('item_id')->where(['vendor_id' => $vendor_id])->createCommand()->queryAll();*/
       //$items = ArrayHelper::getColumn($items, 'item_id');
-
+      $vendor_name = $vendor->name;
+        $vendor_id = $vendor->id;
       $itemmaster = ItemMaster::find()->where(['vendor_id' => $vendor_id])->asArray()->all();
       $items = ArrayHelper::getColumn($itemmaster, 'id');
       $item_by_type = ArrayHelper::index($itemmaster, null, 'category_id');
@@ -165,7 +192,7 @@ class SiteController extends Controller
     }
 
     return $this->render('about', ['item_master' => $itemmaster, 'booking_details' => $booking_details, 'mens' =>
-      $mens, 'women'=> $womens, 'jewellary' => $jewellary]);
+      $mens, 'women'=> $womens, 'jewellary' => $jewellary, 'vendor_name' =>$vendor_name]);
   }
 
   /**
