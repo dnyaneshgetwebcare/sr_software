@@ -185,7 +185,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
                                         <th>Pick Date</th>
                                         <th>Return Date</th>
                                         <th>Discount</th>
-                                        <th>Deposite</th>
+                                        <th>Deposit</th>
                                         <th>Amount</th>
                                         <th>Status</th>
 
@@ -194,10 +194,21 @@ $is_admin = ($user->user_type == "admin") ? true : false;
                                     <tbody>
                                     <?php
                                     $total_amount = 0;
+                                    $month_year ="";
                                     foreach ($booking_items as $key => $booking_item) {
                                         # code...
                                         $total_amount += $booking_item->amount;
+                                        $cur_month_year =  Yii::$app->formatter->asDate($booking_item->pickup_date,"MMM-yyyy");;
+                                        if($month_year=="" || $cur_month_year != $month_year) {
+                                          $month_year = $cur_month_year;
                                         ?>
+                                          <tr ><td colspan="8" style="text-align: center; line-height:
+                                          30px; background: antiquewhite; color: blue;"> <?= $cur_month_year; ?>
+                                            </td> </tr>
+                                          <?php
+                                        }
+                                        ?>
+
                                         <tr>
                                             <td><a target="_blank" rel="noopener noreferrer"
                                                    href="index.php?r=booking%2Fupdate&id=<?= $booking_item->booking_id; ?>">#<?= $booking_item->booking_id; ?></a>
@@ -206,11 +217,11 @@ $is_admin = ($user->user_type == "admin") ? true : false;
                                             <td><a target="_blank" rel="noopener noreferrer"
                                                    href="index.php?r=customer%2Fview&id=<?= $booking_item->booking['customer_id']; ?>"><?= $booking_item->booking->customer['name']; ?></a>
                                             </td>
-                                            <td><span class="text-muted"><i
-                                                            class="fa fa-clock-o"></i> <?= Yii::$app->formatter->asDate($booking_item->pickup_date, 'dd-MM-yyyy'); ?></span>
+                                            <td><span class="text"> <?= Yii::$app->formatter->asDate
+                                                ($booking_item->pickup_date, 'dd-MM-yyyy'); ?></span>
                                             </td>
-                                            <td><span class="text-muted"><i
-                                                            class="fa fa-clock-o"></i> <?= Yii::$app->formatter->asDate($booking_item->return_date, 'dd-MM-yyyy'); ?></span>
+                                            <td ><span class="text"> <?= Yii::$app->formatter->asDate
+                                                ($booking_item->return_date, 'dd-MM-yyyy'); ?></span>
                                             </td>
                                             <td><?= number_format($booking_item->discount); ?></td>
 

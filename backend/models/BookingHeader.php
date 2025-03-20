@@ -47,7 +47,7 @@ class BookingHeader extends \yii\db\ActiveRecord
             [['pickup_date', 'return_date'], 'required','when' => function ($model) { 
               return $model->postpond == 0; 
           }, ],
-            [['booking_date', 'pickup_date', 'picked_date', 'return_date', 'returned_date', 'picked_date', 'returned_date','deposite_amount', 'deposite_status', 'order_status','rent_amount','waist','hip','chest','payment_status','picked_up','complete_order','extra_amount', 'status','cancellation_charges','return_amount','cancel_flag','earning_amount','other_charges','pending_amount','postpond','issues_penalty','issues_reason','carry_frwd_app'], 'safe'],
+            [['booking_date', 'pickup_date', 'picked_date', 'return_date', 'returned_date', 'picked_date', 'returned_date','deposite_amount', 'deposite_status', 'order_status','rent_amount','waist','hip','chest','payment_status','picked_up','complete_order','extra_amount', 'status','cancellation_charges','return_amount','cancel_flag','earning_amount','other_charges','pending_amount','postpond','issues_penalty','issues_reason','carry_frwd_app', 'remark'], 'safe'],
             [['net_value', 'discount', 'deposite_amount'], 'number'],
             [['deposite_applicable',  'customer_id'], 'integer'],
             [['deposite_status', 'order_status', 'status'], 'string'],
@@ -81,6 +81,7 @@ class BookingHeader extends \yii\db\ActiveRecord
             'order_status' => 'Order Status',
             'status' => 'Status',
              'chest' => 'Chest',
+             'remark' => 'Enter Remark',
              'hip' => 'Hand',
              'waist' => 'Waist',
              'carry_frwd_app' => 'Apply Carry Forward',

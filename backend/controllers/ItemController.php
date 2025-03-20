@@ -49,7 +49,7 @@ class ItemController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'getimage-list', 'img-status', 'upload-mul', 'index', 'view', 'create', 'update', 'delete', 'vendor-list', 'get-type', 'file-upload', 'upload', 'remove', 'create-popup'],
+                        'actions' => ['logout', 'getimage-list', 'img-status', 'upload-mul', 'index', 'index-gallery',  'view', 'create', 'update', 'delete', 'vendor-list', 'get-type', 'file-upload', 'upload', 'remove', 'create-popup'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -279,6 +279,22 @@ class ItemController extends Controller
         ]);
     }
 
+    public function actionIndexGallery()
+    {
+
+        $type_master = ArrayHelper::map(TypeMaster::find()->all(), 'id', 'name');
+        $model_category = ArrayHelper::map(CategoryMaster::find()->all(), 'id', 'name');
+
+        // $dataProvider->pagination=false;
+        $item_master = ItemMaster::find()->where(['delete_status'=>0])->all();
+        return $this->render('index_gallery_view', [
+
+            'type_master' => $type_master,
+            'model_category' => $model_category,
+
+            'item_master' => $item_master,
+        ]);
+    }
     /**
      * Displays a single ItemMaster model.
      * @param integer $id
@@ -287,7 +303,7 @@ class ItemController extends Controller
      */
     public function actionView($id)
     {
-        $booking_items = BookingItem::find()->where(['product_id' => $id])->all();
+        $booking_items = BookingItem::find()->where(['product_id' => $id])->orderBy(['PICKUP_DATE'=>SORT_DESC])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'booking_items' => $booking_items,

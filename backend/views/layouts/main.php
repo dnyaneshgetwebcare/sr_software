@@ -822,7 +822,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
     <!-- Container fluid  -->
     <!-- ============================================================== -->
     <div class="page-inner">
-      <?= Alert::widget() ?>
+
       <?= $content ?>
     </div>
 
