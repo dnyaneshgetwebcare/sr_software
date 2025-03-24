@@ -69,15 +69,19 @@ $is_admin = ($user->user_type == "admin") ? true : false;
         width: 100%;
         height: 100%;
     }
-    .table>tbody>tr>td{
+
+    .table > tbody > tr > td {
         padding: 5px !important;
     }
+
     .page-inner {
         padding: 10px !important;
     }
-    .table thead th{
+
+    .table thead th {
         padding: 5px !important;
     }
+
     .overlay {
         z-index: 1100;
         background: rgba(0, 0, 0, 0.3);
@@ -176,12 +180,12 @@ $is_admin = ($user->user_type == "admin") ? true : false;
                     </span>
                   </a>
                 </li>
-                  <li>
-                      <a href="index.php?r=booking-item/index">
+                <li>
+                  <a href="index.php?r=booking-item/index">
                         <span class="sub-item">Pickup Item
                         </span>
-                      </a>
-                  </li>
+                  </a>
+                </li>
                 <li>
                   <a href="index.php?r=booking-item/index-return">
                         <span class="sub-item">Return Item
@@ -304,20 +308,24 @@ $is_admin = ($user->user_type == "admin") ? true : false;
 
             </a>
           </li>
-          <li class="nav-item">
-            <a href="index.php?r=vendor/index">
-              <i class="fas fa-users"></i>
-              <p>Vendor</p>
+          <?php if ($is_admin) { ?>
+            <li class="nav-item">
+              <a href="index.php?r=vendor/index">
+                <i class="fas fa-users"></i>
+                <p>Vendor</p>
 
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?r=formula/calculate">
-              <i class="fas fa-calculator"></i>
-              <p>Run Split</p>
+              </a>
+            </li>
 
-            </a>
-          </li>
+
+            <li class="nav-item">
+              <a href="index.php?r=formula/calculate">
+                <i class="fas fa-calculator"></i>
+                <p>Run Split</p>
+
+              </a>
+            </li>
+          <?php } ?>
           <li class="nav-section">
                 <span class="sidebar-mini-icon">
                   <i class="fa fa-file-archive"></i>
@@ -795,65 +803,65 @@ $is_admin = ($user->user_type == "admin") ? true : false;
 
                 <span class="profile-username">
                       <span class="op-7">Hi,</span>
-                      <span class="fw-bold"><?= Yii::$app->user->identity->username;;  ?></span>
+                      <span class="fw-bold"><?= Yii::$app->user->identity->username;; ?></span>
 
                     </span>
 
-              </li>
-<li class="nav-item topbar-icon dropdown hidden-caret">
-                 <?php $form = ActiveForm::begin(['action' => 'index.php?r=site/logout', 'id' => 'logout_form', 'options' => ['method' => 'post']]); ?>
+            </li>
+            <li class="nav-item topbar-icon dropdown hidden-caret">
+              <?php $form = ActiveForm::begin(['action' => 'index.php?r=site/logout', 'id' => 'logout_form', 'options' => ['method' => 'post']]); ?>
 
-                    <button href="#" class="btn btn-danger" type="submit"
-                            style="height: -webkit-fill-available;background: none; border: none;"><i
-                        class="fa fa-power-off"></i>
-                    </button>
-                    <?php ActiveForm::end(); ?>
+              <button href="#" class="btn btn-danger" type="submit"
+                      style="height: -webkit-fill-available;background: none; border: none;"><i
+                  class="fa fa-power-off"></i>
+              </button>
+              <?php ActiveForm::end(); ?>
             </li>
 
-        </ul>
-
-    </div>
-    </nav>
-    <!-- End Navbar -->
-  </div>
-
-  <div class="container">
-    <!-- ============================================================== -->
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
-    <div class="page-inner">
-
-      <?= $content ?>
-    </div>
-
-    <?php
-    yii\bootstrap\Modal::begin([
-      'id' => 'pModal',
-    ]);
-    echo "<div id='modalContent' ></div>";
-    yii\bootstrap\Modal::end();
-
-    ?>
-    <div class="modal fade bs-example-modal-lg" id="big_modal" tabindex="-1" role="dialog"
-         aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="myLargeModalLabel">Create Item</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          </div>
-          <div class="modal-body" id="bigmodalContent">
-
-
-          </div>
+          </ul>
 
         </div>
-        <!-- /.modal-content -->
+      </nav>
+      <!-- End Navbar -->
+    </div>
+
+    <div class="container">
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="page-inner">
+
+        <?= $content ?>
       </div>
-      <!-- /.modal-dialog -->
+
+      <?php
+      yii\bootstrap\Modal::begin([
+        'id' => 'pModal',
+      ]);
+      echo "<div id='modalContent' ></div>";
+      yii\bootstrap\Modal::end();
+
+      ?>
+      <div class="modal fade bs-example-modal-lg" id="big_modal" tabindex="-1" role="dialog"
+           aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myLargeModalLabel">Create Item</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" id="bigmodalContent">
+
+
+            </div>
+
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 
