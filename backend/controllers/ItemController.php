@@ -311,7 +311,7 @@ class ItemController extends Controller
         $model_category = ArrayHelper::map(CategoryMaster::find()->all(), 'id', 'name');
 
         // $dataProvider->pagination=false;
-        $item_master = ItemMaster::find()->where(['delete_status'=>0])->andFilterWhere(['type_id' => $where_type, 'category_id' => $where_category])->limit(20)->all();
+        $item_master = ItemMaster::find()->where(['delete_status'=>0])->andFilterWhere(['type_id' => $where_type, 'category_id' => $where_category])->all();
         return $this->render('index_gallery_view', [
 
             'type_master' => $type_master,
