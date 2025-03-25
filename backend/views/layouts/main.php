@@ -835,6 +835,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
       <?php
       yii\bootstrap\Modal::begin([
         'id' => 'pModal',
+        'header' => '<h4 id="modal-title">Default Title</h4>',
       ]);
       echo "<div id='modalContent' ></div>";
       yii\bootstrap\Modal::end();
@@ -870,6 +871,10 @@ $is_admin = ($user->user_type == "admin") ? true : false;
 <script type="text/javascript">
   $(window).on('load', function () {
     $('.overlay').hide();
+    $('.close').click(function () {
+
+      $('#pModal').modal('hide');
+    });
   });
 
   function addslashes(str) {
