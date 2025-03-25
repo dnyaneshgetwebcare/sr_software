@@ -129,7 +129,7 @@ class ItemController extends Controller
 
         }
 
-        $ifp = fopen($path . "\\" . $rand_no . "." . $file_ext, 'wb');
+        $ifp = fopen($path . "/" . $rand_no . "." . $file_ext, 'wb');
         $output_file .=  $rand_no . "." . $file_ext;
         // split the string on commas
         // $data[ 0 ] == "data:image/png;base64"
