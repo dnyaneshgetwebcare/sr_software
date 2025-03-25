@@ -1,3 +1,12 @@
+<?php
+$this->title = 'Item Masters';
+?>
+<style>
+  .close{
+      position: absolute;
+    right: 20px;
+  }
+</style>
 <div class="row">
   <div class="col-md-12">
     <div class="card">
@@ -18,14 +27,15 @@
                 <span class="text-bold col-9">
                   <?= $item_details->name;
                   ?>
-
                 </span>
                 <div class="col-3" style = "flex-direction: row; display: flex; padding-left: 5px;   padding-right:
                 5px;">
                 <button class="btn btn-icon" type="button" onclick="edit_item('<?= $item_details->id; ?>')"> <i
                     class="fa
                 fa-edit"></i></button>
-                  <button class="btn btn-icon" type="button" onclick="view_item('<?= $item_details->id; ?>')">  <i class="fa fa-eye"></i></button>
+                  <button class="btn btn-icon" type="button" onclick="view_item('<?= $item_details->id; ?>','<?= $item_details->name;
+                  ?>')">  <i
+                      class="fa fa-eye"></i></button>
                   </div>
               </div>
             </div>
@@ -49,6 +59,7 @@
 
 <script>
   // This will create a single gallery from all elements that have class "gallery-item"
+
   $('.image-gallery').magnificPopup({
     delegate: 'a',
     type: 'image',
@@ -66,13 +77,42 @@
       }
     }
   });
-  function edit_item($item_id) {
-    let url = "index.php?r=item/update&id="+$item_id;
+  function edit_item(item_id) {
+    let url = "index.php?r=item/update&id="+item_id;
      window.open(url, '_blank');
   }
-  function view_item($item_id) {
-    let url = "index.php?r=item/view&id="+$item_id;
-     window.open(url, '_blank');
+  function view_item(item_id, item_name) {
+    ///$('#pModal').modal('show');
+    /*let url = "index.php?r=item/view&id="+$item_id;
+     window.open(url, '_blank');*/
+
+     $.ajax({
+      url: "<?php echo \Yii::$app->getUrlManager()->createUrl('item/open-bookings') ?>",
+      type: 'get',
+      dataType: 'html',
+       data: {
+        item_id: item_id
+      },
+      beforeSend: function () {
+        $(".overlay").show();
+      },
+      complete: function () {
+        $(".overlay").hide();
+      },
+      success: function (data) {
+        // console.log(data);
+        $('#pModal').modal('show');
+        $('#modal-title').html(`Item History(${item_name}`);
+
+        $('#modalContent').html(data);
+      },
+      error: function (jqXhr, textStatus, errorThrown) {
+        // alert(errorThrown);
+        if (errorThrown == 'Forbidden') {
+          alert(YOU_DONT_HAVE_ACCESS);
+        }
+      }
+    });
   }
 
 </script>

@@ -10,6 +10,7 @@ use yii\grid\GridView;
 $this->title = 'Item Masters';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <style type="text/css">
   td,th{
     font-size: 15px; 
@@ -20,12 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 }
 </style>
 <div class="item-master-index">
-
-    <!-- <h1><?php // Html::encode($this->title) ?></h1>
-
-    <p>
-        <?php // Html::a('Create Item', ['create'], ['class' => 'btn btn-success pull-right']) ?>
-    </p> -->
   <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
                         <h3 class="text-themecolor m-b-0 m-t-0">Item Master</h3>
@@ -52,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <div id="lastmonthchart"></div>
                                 </div>
                             </div> -->
+                          <?= Html::a('<i class="fa fa-table"></i>', ['index-gallery'], ['class' => 'btn btn-icon pull-right btn-border', 'style'=> 'border-color: #059797; margin-right: 12px; margin-top: 5px;']) ?>
                              <?= Html::a('Create Item', ['create'], ['class' => 'btn btn-success pull-right']) ?>
                           
                         </div>
@@ -63,7 +59,8 @@ $this->params['breadcrumbs'][] = $this->title;
   <?php foreach ($item_summary as $key => $item_sum) {
     # code...
    ?>
-                    <div class="card">
+                    <div class="card" onclick="openGallery('<?= $item_sum['type_id']; ?>')" style="cursor:
+                    pointer;">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
@@ -90,7 +87,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'tableOptions' => [ 'id' => 'example','class' => 'display nowrap table table-hover table-striped table-bordered'],
 
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\SerialColumn',
+               'headerOptions' => ['style' => 'width:3%'],
+              ],
 
             //'id',
             [
@@ -100,12 +99,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 /* 'format' => 'image',
              'value'=>function($data) { return $data->imageurl; },*/
              'format' => 'html',
-              'value' => function($data) { return '<a class="image-popup-vertical-fit" href="'.$data->imageurl.'">'.Html::img($data->imageurl, ['width'=>'100','height'=>'80']).'</a>'; },
+              'value' => function($data) { return '<div class="image-gallery"><a class="image-popup-vertical-fit" href="'
+                .$data->imageurl.'"> '
+                .Html::img($data->imageurl, ['width'=>'100','height'=>'80']).'</a> </div>'; },
               
             ],
-            'item_code',
-            'name',
-            'details',
+            ['attribute'=> 'item_code',  'headerOptions' => ['style' => 'width:5%'],],
+            ['attribute'=> 'name',  'headerOptions' => ['style' => 'width:25%'],],
+
             [
               'attribute' => 'category.name',
               'headerOptions' => ['style' => 'width:10%'],
@@ -120,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
               'filter'=>Html::activeDropDownList($searchModel, 'type_id',($type_master),['class'=>'form-control','prompt'=>'Select Type']),
             ],
             
-            'size',
+            ['attribute'=> 'size',  'headerOptions' => ['style' => 'width:5%'],],
             //'purchase_date',
             //'purchase_amount',
             //'rent_amount',
@@ -129,11 +130,11 @@ $this->params['breadcrumbs'][] = $this->title;
             //'scrab_status',
             //'rent_times:datetime',
             //'expense_amount',
-            'item_status',
+
             //'colour_cat',
             //'nos_dry_cleaning',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',  'headerOptions' => ['style' => 'width:5%'],],
         ],
     ]); ?>
 </div>
@@ -141,6 +142,31 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
+  <script src="kai-admin-assets/js/core/jquery-3.7.1.min.js"></script>
+  <script src="kai-admin-assets/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript">
 
+  $(document).ready(function ($) {
+    $('.image-gallery').magnificPopup({
+      delegate: 'a',
+      type: 'image',
+      removalDelay: 300,
+      gallery: {
+        enabled: false,
+      },
+      mainClass: 'mfp-with-zoom',
+      zoom: {
+        enabled: true,
+        duration: 300,
+        easing: 'ease-in-out',
+        opener: function (openerElement) {
+          return openerElement.is('img') ? openerElement : openerElement.find('img');
+        }
+      }
+    });
+  });
+  function openGallery(type_id) {
+    let url = "index.php?r=item/index-gallery&type="+type_id;
+     window.open(url, '_blank');
+  }
 </script>

@@ -109,8 +109,6 @@ $is_admin = ($user->user_type == "admin") ? true : false;
 <?php $this->beginBody() ?>
 
 <div class="wrapper">
-
-
   <!-- ============================================================== -->
   <div class="sidebar sidebar-style-2" data-background-color="dark">
     <div class="sidebar-logo">
