@@ -23,6 +23,10 @@ $sales_location_string=($model_company->MULTI_SALES_LOCATION==1)?'':'display:non
     /*  .table-bordered>tbody>tr>td,.table-bordered>thead>tr>th{
   border:1px solid #eee !important;
  }*/
+      .close{
+      position: absolute;
+    right: 20px;
+  }
     .form-group {
         margin-bottom: 0px;
     }
@@ -409,11 +413,12 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3" >
                                 <div class="form-group row">
                                     <div class="col-md-9">
-                                        <?= $form->field($model, 'diplay_amount')
-                                            ->checkBox(['class' => 'deposite_applicable_class check control-label', 'data-checkbox' => "icheckbox_square-red"]); ?>
+                                      <?= $form->field($model, 'postpond')
+                                        ->checkBox(['class' => 'deposite_applicable_class check ']); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -553,14 +558,14 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     </b></h3>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="display: none">
                             <div class="form-group row">
 
                                 <div class="col-md-9">
 
 
-                                    <?= $form->field($model, 'postpond')
-                                        ->checkBox(['class' => 'deposite_applicable_class check ']); ?>
+                                    <?= $form->field($model, 'diplay_amount')
+                                            ->checkBox(['class' => 'deposite_applicable_class check control-label', 'data-checkbox' => "icheckbox_square-red", 'style'=> 'display: none']); ?>
                                 </div>
                             </div>
                         </div>
@@ -663,7 +668,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                         $active_div = ($model->booking_id != '' && $indexHouse != 0) ? '' : 'display:none;';
                                         $item_status = false;
                                         $item_master = $booking_item->item;
-                                        $image_pth= ($model->booking_id != '' && $indexHouse != 0) ? $def_image_path.''.$booking_item->item->imageurl : $image_path;
+                                        $image_pth= ($model->booking_id != '' && $indexHouse != 0) ? $booking_item->item->imageurl : $image_path;
                                         $booking_item->item_status = ($model->booking_id != '' && $indexHouse != 0) ? $booking_item->item_status : 'Booked';
                                         if ($model->booking_id != '' && $indexHouse != 0) {
                                             $item_status = ($booking_item->item_status != 'Booked');
@@ -675,7 +680,8 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
                                             </td>
                                             <td>
-                                                <img src="<?= $image_path ?>" height="70px" width="70px"/>
+                                                <img src="<?= $image_pth ?>" height="70px" width="70px" id='<?php
+                                                echo "bookingitem-{$indexHouse}-img"; ?>' onclick="show_image(this)"/>
                                             </td>
                                             <td class="vcenter desc"
                                                 style="width: 300px;max-width: 300px;overflow: visible;word-break: all;vertical-align: top !important;">
@@ -791,25 +797,28 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     <div class="card-body" <?= ($model->booking_id != "") ? '' : 'style="display: none;"'; ?>>
 
                                         <div class="col-md-12">
-                                          <div>
+                                          <label> Remark</label>
                                              <?php echo $form->field($model, 'remark')->textarea(['maxlength' => true,
                                                'class' => 'form-control', 'style'=> 'height:auto !important', 'row'=>3,
                                                'placeholder'
                                                =>
                                                $model->attributeLabels()
                                                ['remark']])->label(false); ?>
-                                          </div>
+
 
                                             <div class="form-group row">
-                                                <label class="control-label text-left col-md-3">Penalty:</label>
-                                                <div class="col-md-9">
-                                                    <?php echo $form->field($model, 'issues_penalty')->textInput(['maxlength' => true, 'class' => 'form-control text_first', 'onkeyup' => 'add()', 'placeholder' => $model->attributeLabels()['issues_penalty'], 'autocomplete' => "off"])->label(false); ?>
+                                                <label class="control-label text-left col-md-2">Penalty:</label>
+                                                <div class="col-md-3">
+                                                    <?php echo $form->field($model, 'issues_penalty')->textInput(['maxlength' => true, 'class' => 'form-control text_first', 'onkeyup' => 'add()', 'placeholder' => $model->attributeLabels()['issues_penalty'], 'autocomplete' => "off", 'style' => "text-align: end"])->label(false); ?>
                                                 </div>
+                                              <div class="col-md-7">
+                                               <?php echo $form->field($model, 'issues_reason')->textarea(['maxlength' => true, 'class' => 'form-control ', 'placeholder' => $model->attributeLabels()['issues_reason']])->label(false); ?>
+                                              </div>
                                             </div>
                                         </div>
 
 
-                                        <?php echo $form->field($model, 'issues_reason')->textarea(['maxlength' => true, 'class' => 'form-control', 'placeholder' => $model->attributeLabels()['issues_reason']])->label(false); ?>
+
                                     </div>
                                 </div>
                                 <div class="card"
@@ -1266,9 +1275,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                             <div class="row right_section">
 
                                 <div class="form-group cust-group">
-                                    <label class="col-lg-5 control-label"
+                                    <label class="col-lg-1 control-label"
                                            style="text-align: left"> <?= $model->attributeLabels()['chest'] ?> </label>
-                                    <div class="col-lg-6 form-group">
+                                    <div class="col-lg-3 form-group">
                                         <?php $model['chest'] = ($model['chest'] != '') ? $model['chest'] : '';
 
                                         echo $form->field($model, 'chest')->textInput(['maxlength' => true, 'class' => 'form-control text_first', 'placeholder' => $model->attributeLabels()['chest'], 'autocomplete' => "off"])->label(false); ?>
@@ -1279,9 +1288,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                             <div class="row right_section">
 
                                 <div class="form-group cust-group">
-                                    <label class="col-lg-5 control-label"
+                                    <label class="col-lg-1 control-label"
                                            style="text-align: left"> <?= $model->attributeLabels()['waist'] ?> </label>
-                                    <div class="col-lg-6 form-group">
+                                    <div class="col-lg-3 form-group">
                                         <?php $model['waist'] = ($model['waist'] != '') ? $model['waist'] : '';
 
                                         echo $form->field($model, 'waist')->textInput(['maxlength' => true, 'class' => 'form-control text_first', 'placeholder' => $model->attributeLabels()['waist'], 'autocomplete' => "off"])->label(false); ?>
@@ -1293,9 +1302,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                             <div class="row right_section">
 
                                 <div class="form-group cust-group">
-                                    <label class="col-lg-5 control-label"
+                                    <label class="col-lg-1 control-label"
                                            style="text-align: left"> <?= $model->attributeLabels()['hip'] ?> </label>
-                                    <div class="col-lg-6 form-group">
+                                    <div class="col-lg-3 form-group">
                                         <?php $model['hip'] = ($model['hip'] != '') ? $model['hip'] : '';
 
                                         echo $form->field($model, 'hip')->textInput(['maxlength' => true, 'class' => 'form-control text_first', 'placeholder' => $model->attributeLabels()['hip'], 'autocomplete' => "off"])->label(false); ?>
@@ -2213,12 +2222,15 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         var item_type = $("#itemselection-item_type").val();
         //alert(item_type);
         //alert($("#itemselection-rent_amount").val());
+
         $(result + 'item_category').val($("#itemselection-item_category").val());
         if (display_amt) {
             $(result + 'amount').val($("#itemselection-rent_amount").val());
         } else {
             $(result + 'amount').val(0);
         }
+        var imgsrc = $("#itemselection-img").attr("src");
+        $(result + 'img').attr("src", imgsrc);
 
         var deposite_applicable = $('#bookingheader-deposite_applicable').is(":checked");
 
@@ -2434,7 +2446,12 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             add_total_payment();
         });
     }
-
+    function show_image(imgelement){
+      $('#pModal').modal('show');
+        $('#modal-title').html(`Image`);
+        let path = $(imgelement).attr('src');
+        $('#modalContent').html(`<img src='${path}' style='width: 300px; height: 250px;'/>`);
+    }
     function addBookingitem() {
 
         if (order_status) {

@@ -48,7 +48,9 @@ $this->title = 'Pickup Items';
                 /* 'format' => 'image',
              'value'=>function($data) { return $data->imageurl; },*/
              'format' => 'html',
-              'value' => function($data) { return Html::img($data->item->imageurl, ['width'=>'100','height'=>'80']); },
+              'value' => function($data) { return '<div class="image-gallery"><a class="image-popup-vertical-fit" href="'
+                .$data->item->imageurl.'"> '
+                .Html::img($data->item->imageurl, ['width'=>'100','height'=>'80']).'</a> </div>'; },
               
             ],
            // 'booking.customer.name',
@@ -90,22 +92,24 @@ $this->title = 'Pickup Items';
         'attribute' => 'net_value',
         'enableSorting' => false
          ],
-            //'item_type',
-            //'item_category',
-            //'image_name',
-            //'amount',
-            //'discount',
-            //'deposit_amount',
-            //'deposite_charge_status',
-            
-            //'picked_date',
-            //'return_date',
-            //'returned_date',
-           // 'item_status',
+           [
+             'attribute' => 'Measurment',
+             'filter' => false,
+             'format' => 'raw',
+             'value' => function ($model) {
+                    $header = $model->booking;
+                    $remark = ($header->remark != null || $header->remark != "") ? "Remark: ".$header->remark: " ";
+                    if($header->chest == null || $header->chest == "0.00" ){
+                      return $remark;
+                    }
+                    return "C: ".$header->chest.", W: ".$header->waist.", H: ".$header->hip." <br> ".$remark;
+              },
+           ],
             [
         'attribute' => 'item_status',
         'enableSorting' => false
          ],
+
             'note:ntext',
             //'deposite_status',
             //'payment_status',
@@ -117,3 +121,29 @@ $this->title = 'Pickup Items';
 </div>
 </div>
 </div>
+<script src="kai-admin-assets/js/core/jquery-3.7.1.min.js"></script>
+  <script src="kai-admin-assets/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js"></script>
+
+<script type="text/javascript">
+
+  $(document).ready(function ($) {
+    $('.image-gallery').magnificPopup({
+      delegate: 'a',
+      type: 'image',
+      removalDelay: 300,
+      gallery: {
+        enabled: false,
+      },
+      mainClass: 'mfp-with-zoom',
+      zoom: {
+        enabled: true,
+        duration: 300,
+        easing: 'ease-in-out',
+        opener: function (openerElement) {
+          return openerElement.is('img') ? openerElement : openerElement.find('img');
+        }
+      }
+    });
+  });
+
+</script>

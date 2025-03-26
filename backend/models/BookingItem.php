@@ -93,6 +93,12 @@ class BookingItem extends \yii\db\ActiveRecord
     {
         return $this->hasOne(BookingHeader::className(), ['booking_id' => 'booking_id']);
     }
+    public function getMeasured()
+    {
+        return $this->hasOne(BookingHeader::className(), ['booking_id' => 'booking_id']);
+
+
+    }
 
     /**
      * @return \yii\db\ActiveQuery
