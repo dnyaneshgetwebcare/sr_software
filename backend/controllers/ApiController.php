@@ -34,8 +34,8 @@ class ApiController extends \yii\web\Controller
         0])->andFilterWhere(['item_master.category_id' => $category, 'type_id'=> $type])->limit($page_limt)
       ->offset($offset)->asArray
       ()->all();
-    $image_def_path =\Yii::$app->request->BaseUrl.'/uploads/';
-    $no_image_path = \Yii::$app->request->BaseUrl.'/img/no-image.jpg';
+    $image_def_path =\Yii::$app->request->BaseUrl.'../app.thesoyara.com/uploads/';
+    $no_image_path = \Yii::$app->request->BaseUrl.'../app.thesoyara.com/img/no-image.jpg';
 
     return array("item_master" => $item_master,'no_image_path' => $no_image_path, 'image_def_path' =>
       $image_def_path );
