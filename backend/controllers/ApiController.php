@@ -37,8 +37,8 @@ class ApiController extends \yii\web\Controller
     $image_def_path =\Yii::$app->request->BaseUrl.'/uploads/';
     $no_image_path = \Yii::$app->request->BaseUrl.'/img/no-image.jpg';
 
-    return json_encode(array("item_master" => $item_master,'no_image_path' => $no_image_path, 'image_def_path' =>
-      $image_def_path ));
+    return array("item_master" => $item_master,'no_image_path' => $no_image_path, 'image_def_path' =>
+      $image_def_path );
 
     }
     public function actionTypeList()
@@ -50,7 +50,7 @@ class ApiController extends \yii\web\Controller
     $type_master = TypeMaster::find()->andFilterWhere(['id' => $type, 'category_id' =>$category_id])->andWhere(['dispaly_main_site'
     =>
       '1' ]) ->asArray()->all();
-    return json_encode($type_master);
+    return $type_master;
 
   }
 
@@ -63,7 +63,7 @@ class ApiController extends \yii\web\Controller
     $category_master = CategoryMaster::find()->andFilterWhere(['id' => $category_id])->andWhere(['dispaly_main_site'
     =>
       '1' ]) ->asArray()->all();
-    return json_encode($category_master);
+    return $category_master;
 
   }
  public function actionImageView($filename)
