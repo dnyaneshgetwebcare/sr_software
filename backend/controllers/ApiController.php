@@ -6,11 +6,30 @@ use backend\models\CategoryMaster;
 use backend\models\ItemMaster;
 use backend\models\TypeMaster;
 use Yii;
+use yii\filters\Cors;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class ApiController extends \yii\web\Controller
 {
+      public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+
+        // CORS Filter
+        $behaviors['corsFilter'] = [
+            'class' => Cors::class,
+            'cors' => [
+                'Origin' => ['*'], // Allow all domains
+                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+                'Access-Control-Allow-Credentials' => true, // Allow credentials (cookies, auth)
+                'Access-Control-Allow-Headers' => ['Authorization', 'Content-Type', 'X-Requested-With'],
+            ],
+        ];
+
+        return $behaviors;
+    }
+
     public function actionIndex()
     {
         return $this->render('index');
