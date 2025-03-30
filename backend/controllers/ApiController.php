@@ -20,7 +20,7 @@ class ApiController extends \yii\web\Controller
         $behaviors['corsFilter'] = [
             'class' => Cors::class,
             'cors' => [
-                'Origin' => ['http://localhost'], // Allow all domains
+                'Origin' => ['http://localhost','http://localhost:3000'], // Allow all domains
                 'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
                 'Access-Control-Allow-Credentials' => true, // Allow credentials (cookies, auth)
                 'Access-Control-Allow-Headers' => ['Authorization', 'Content-Type', 'X-Requested-With'],
