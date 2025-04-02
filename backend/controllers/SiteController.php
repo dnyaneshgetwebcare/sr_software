@@ -68,8 +68,8 @@ class SiteController extends Controller
          $model_delivary=BookingHeader::find()->where(['order_status'=>'Open','status'=>'Booked'])->andWhere('pickup_date <= DATE_ADD(CURDATE(), INTERVAL 5 DAY)')->orderBy(['pickup_date'=>SORT_ASC])->all();
         $model_returns=BookingHeader::find()->where(['order_status'=>'Open','status'=>'Picked'])->andWhere('return_date <= DATE_ADD(CURDATE(), INTERVAL 5 DAY)')->orderBy(['return_date'=>SORT_ASC])->all();
         $dep_pending=BookingHeader::find()->where(['order_status'=>'Open','status'=>'Returned','payment_status'=>1])->all();
-        $booking_this_month=BookingHeader::find()->select(['count(*) as numb_booking','sum((rent_amount - discount) + cancellation_charges + extra_amount + other_charges  - issues_penalty) as total'])
-          ->where('MONTH(pickup_date)=MONTH(CURRENT_DATE())')->andWhere('YEAR(pickup_date)=YEAR(CURRENT_DATE())')
+        $booking_this_month=BookingHeader::find()->select(['count(*) as numb_booking','sum(rent_amount) as rent_amount',  'sum(discount) as discount', 'sum(cancellation_charges) as cancellation_charges' , 'sum(extra_amount) as extra_amount' ,'sum( other_charges) as other_charges' , 'sum(issues_penalty) as issues_penalty'])
+          ->where('MONTH(pickup_dat)=MONTH(CURRENT_DATE())')->andWhere('YEAR(pickup_date)=YEAR(CURRENT_DATE())')
           ->andWhere(['order_status'=>array('Open',
             'Cancelled','Closed')])->asArray()->one();
         $payment_cash=PaymentMaster::find()->select(['sum(amount) total'])->where(['mode_of_payment'=>'Cash'])
