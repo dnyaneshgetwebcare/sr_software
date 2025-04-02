@@ -40,6 +40,7 @@ class TypeMaster extends \yii\db\ActiveRecord
             [['intial_pre'], 'string', 'max' => 5],
             [['intial_pre'], 'unique'],
             [['dispaly_main_site'], 'default','value'=>0],
+            [['dry_cleaning_treshold'], 'default','value'=>1],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryMaster::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }

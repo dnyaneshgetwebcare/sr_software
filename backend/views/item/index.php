@@ -118,6 +118,11 @@ $this->params['breadcrumbs'][] = $this->title;
               'attribute' => 'type.name',
               'headerOptions' => ['style' => 'width:10%'],
               'label' => 'Type',
+                 'format' => 'raw',
+                 'value' => function($data) { return '<a target = "_blank"  href="index.php?r=item/index-gallery&type='.$data->type_id.'"  > '.$data->type->name.'
+                </a>'; },
+
+
               'filter'=>Html::activeDropDownList($searchModel, 'type_id',($type_master),['class'=>'form-control','prompt'=>'Select Type']),
             ],
             

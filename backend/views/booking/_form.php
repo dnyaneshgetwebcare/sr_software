@@ -17,6 +17,8 @@ use kartik\select2\Select2;
 /*$tax_active_string=($model_company->TAX_ACTIVE==1)?'':'display:none';
 $sales_departmnet_string=($model_company->MULTI_SALES_DEPARTMENT==1)?'':'display:none';
 $sales_location_string=($model_company->MULTI_SALES_LOCATION==1)?'':'display:none';*/
+$user = Yii::$app->user->identity;
+$is_admin = ($user->user_type == "admin") ? true : false;
 ?>
 <!-- <script src="js/sweetalert.min.js"></script> -->
 <style type="text/css">
@@ -488,7 +490,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     <div class="col-md-8">
                                         <?php //$model['pickup_date']=($model['pickup_date'] !='')?date('d-m-Y',strtotime($model['pickup_date'])):date('d-m-Y');
                                         $model['pickup_date'] = ($model['pickup_date'] != '') ? date('d-m-Y', strtotime($model['pickup_date'])) : null;
-
+                                        $startDate = $is_admin ? null : 'today';
                                         echo DatePicker::widget([
                                             'name' => 'BookingHeader[pickup_date]',
                                             'id' => 'bookingheader-pickup_date',
@@ -504,6 +506,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                 'format' => 'dd-mm-yyyy',
                                                 'todayHighlight' => true,
                                                 'orientation' => 'bottom',
+                                              'startDate' => $startDate,
                                             ],
 
                                         ]); ?>
@@ -535,6 +538,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                 'format' => 'dd-mm-yyyy',
                                                 'todayHighlight' => true,
                                                 'orientation' => 'bottom',
+                                              'startDate' => $startDate,
                                             ]
                                         ]); ?>
                                         <?php echo $form->field($model, 'booking_id')->hiddenInput(['maxlength' => true, 'class' => 'form-control text_first', 'placeholder' => $model->attributeLabels()['booking_id'], 'autocomplete' => "off"])->label(false); ?>

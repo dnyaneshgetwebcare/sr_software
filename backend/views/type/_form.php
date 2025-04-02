@@ -19,17 +19,17 @@ use yii\bootstrap\ActiveForm;
 </div>
     <?php $form = ActiveForm::begin(['enableClientValidation'=>false,'id'=>'type-form','layout' => 'horizontal', 'fieldConfig' => [
         'horizontalCssClasses' => [
-            'label' => 'col-sm-2 control-label',
+            'label' => 'col-sm-6 col-lg-4 control-label',
             'offset' => 'col-sm-offset-2',
-            'wrapper' => 'col-sm-6',
+            'wrapper' => 'col-sm-6 col-lg-6',
         ]]]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?=$form->field($model, 'category_id')->dropDownList($category,['prompt'=>'Select Category','class'=>'form-control']);?>
    <?= $form->field($model, 'intial_pre')->textInput(['maxlength' => true]) ?>
     <?=$form->field($model, 'dispaly_main_site')->dropDownList($status_array,['prompt'=>'Select','class'=>'form-control']);?>
-
-    <div class="box-footer pull-right">
+    <?= $form->field($model, 'dry_cleaning_treshold')->textInput(['maxlength' => true]) ?>
+    <div class="box-footer pull-right ">
          <button type="button" onclick="submitTypeForm()" class="btn btn-info save_submit" data-toggle="tooltip" data-original-title="Save"><img src="img/icons/save.png" style="height:12px"> Save</button>
     </div>
 

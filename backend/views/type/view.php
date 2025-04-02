@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'category_id',
+            'dry_cleaning_treshold',
         ],
     ]) ?>
 

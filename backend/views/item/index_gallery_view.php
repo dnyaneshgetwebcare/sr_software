@@ -1,4 +1,7 @@
 <?php
+
+use kartik\date\DatePicker;
+
 $this->title = 'Item Masters';
 ?>
 <style>
@@ -6,12 +9,50 @@ $this->title = 'Item Masters';
       position: absolute;
     right: 20px;
   }
+  .item_rent{
+      position: absolute;
+    right: 20px;
+    text-align: center;
+    bottom: 74px;
+    width: 70%;
+    background-color: #726f6f70;
+    color: #ffffff;
+  }
 </style>
 <div class="row">
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Item Master</h4>
+        <h4 class="card-title col-md-8"">Item Master</h4>
+        <div class="col-md-4">
+          <?php
+
+                                        echo DatePicker::widget([
+                                            'name' => 'filter_from_date',
+                                            'name2' => 'filter_from_date',
+                                            'attribute' => 'from_date',
+                                          'attribute2' => 'to_date',
+                                            'type' => DatePicker::TYPE_RANGE,
+                                            //'value' => $model['booking_date'],
+                                            //'disabled' =>($readonly_GOODS_header)?$readonly_GOODS_header:$readonly_closed_string,
+                                            'options' => [
+                                                'placeholder' => 'dd-mm-yyyy',
+                                                'autocomplete' => 'off',
+
+                                            ],
+                                            'options2' => [
+                                                'placeholder' => 'dd-mm-yyyy',
+                                                'autocomplete' => 'off',
+
+                                            ],
+                                            'pluginOptions' => [
+                                                'autoclose' => true,
+                                                'format' => 'dd-mm-yyyy',
+                                                'todayHighlight' => true,
+                                                'orientation' => 'bottom',
+                                            ]
+                                        ]); ?>
+          </div>
       </div>
       <div class="card-body">
         <div class="row image-gallery">
@@ -22,6 +63,7 @@ $this->title = 'Item Masters';
                   <img src="<?= $item_details->imageurl; ?>" class="img-fluid" style="max-height: 200px;
 											min-height: 200px; align-content: center">
                 </a>
+                <span class="item_rent"> ₹ <?= $item_details->rent_amount; ?></span>
               </div>
               <div class="card-footer" style="display: flex; flex-direction: row;">
                 <span class="text-bold col-9">

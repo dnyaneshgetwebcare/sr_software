@@ -88,6 +88,7 @@ $this->title = 'Item Type';
               //'value'=>'businessPartner.NAME',
             ],
             'intial_pre',
+            'dry_cleaning_treshold',
             ['class' => 'yii\grid\ActionColumn',
               'template' => '{view}{update}{delete}',
               'buttons' => [

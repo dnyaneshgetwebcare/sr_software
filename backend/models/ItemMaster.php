@@ -61,6 +61,7 @@ class ItemMaster extends \yii\db\ActiveRecord
             [['details'], 'string', 'max' => 250],
             [['size'], 'string', 'max' => 50],
             [['item_code'], 'unique'],
+           [['dry_cleaning_treshold'], 'default','value'=>1],
             [['colour_cat'], 'exist', 'skipOnError' => true, 'targetClass' => ColorMaster::className(), 'targetAttribute' => ['colour_cat' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => TypeMaster::className(), 'targetAttribute' => ['type_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryMaster::className(), 'targetAttribute' => ['category_id' => 'id']],

@@ -637,14 +637,23 @@ class ItemController extends Controller
             if ($parents != null) {
                 $cat_id = $parents[0];
 
-                $out = TypeMaster::find()->select(['id', 'name'])->where(['category_id' => $cat_id])->all();
-                //  print_r($out);die;
+                $type_master = TypeMaster::find()->select(['id', 'name', 'dry_cleaning_treshold'])
+                  ->where
+                (['category_id' => $cat_id])->asArray()->all();
+                  //print_r($out);die;
 // the getSubCatList function will query the database based on the
 // cat_id and return an array like below:
 // [
 // ['id'=>'<sub-cat-id-1>', 'name'=>'<sub-cat-name1>'],
 // ['id'=>'<sub-cat_id_2>', 'name'=>'<sub-cat-name2>']
 // ]
+              foreach ($type_master as $type){
+                $out[] = [
+                'id' => $type['id'],
+                'name' => $type['name'],
+                'options' => ['data-attr' => $type['dry_cleaning_treshold']] // Setting data-attribute
+            ];
+              }
                 echo Json::encode(['output' => $out, 'selected' => '']);
                 return;
             }
