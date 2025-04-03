@@ -24,7 +24,9 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
         padding: 10px 20px;
         /*    margin: 0 15px 15px 15px;*/
     }
-
+.form-group:has(input[type="hidden"]) {
+    display: none;
+}
     /*  .table-bordered>tbody>tr>td,.table-bordered>thead>tr>th{
   border:1px solid #eee !important;
  }*/
@@ -35,7 +37,12 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
     .form-group {
         margin-bottom: 0px;
     }
-
+ .form-control {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.5 !important;
+        padding: 5px !important;
+    }
 
     .control-label, .form-control {
         font-size: 14px;
@@ -166,10 +173,20 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                     'enableSorting' => false,
                                     'format' => ['date', 'php:d/m/Y']
                                 ],
-                                [
-                                    'attribute' => 'item_status',
-                                    'enableSorting' => false
-                                ],
+                                   [
+             'attribute' => 'Measurment',
+             'filter' => false,
+             'format' => 'raw',
+             'value' => function ($model) use($item_status){
+                    $header = $model->booking;
+                    $remark = ($header->remark != null || $header->remark != "") ? "Remark: ".$header->remark: " ";
+                    if($header->chest == null || $header->chest == "0.00" || $item_status != 'Picked'){
+                      return $remark;
+                    }
+                    return "C: ".$header->chest.", W: ".$header->waist.", H: ".$header->hip." <br> ".$remark;
+              },
+           ],
+                                 'note:ntext',
                                 //'picked_date',
 
                                 //'picked_date',
@@ -256,9 +273,36 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                         $payment_models = array_merge($array1, $payment_models);
                         $count_item_payment = count($payment_models);
                         $sub_total = 0;
+                        $readonly_flag = true;
+                        $payment_type = ['Advance'
+                                    => 'Advance', 'Per-payment' => 'Per-payment', 'Final-Payment' => 'Final-Payment',
+                                      'Return-Deposit' => 'Return-Deposit', 'Cancel-Charge' => 'Cancel-Charge', 'Other-Charges' => 'Other-Charges', 'Return-Payment' => 'Return-Payment'];
                         foreach ($payment_models as $indexHouse => $payment_model):
                             $active_div = ($model->booking_id != '' && $indexHouse != 0) ? '' : 'display:none;';
                             $payment_model['date'] = ($payment_model['date'] == "") ? date('Y-m-d') : $payment_model['date'];
+                            $readonly_flag = ($indexHouse != 0);
+                            $during = ($indexHouse != 0)?['Booking' => 'Booking', 'Pickup' => 'Pickup', 'Return' => 'Return', 'Other' => 'Other']: ['Pickup' => 'Pickup'];
+                            if($indexHouse != 0){
+                               $payment_type = ['Advance'
+                                    => 'Advance', 'Per-payment' => 'Per-payment', 'Final-Payment' => 'Final-Payment',
+                                      'Return-Deposit' => 'Return-Deposit', 'Cancel-Charge' => 'Cancel-Charge', 'Other-Charges' => 'Other-Charges', 'Return-Payment' => 'Return-Payment'];
+                               $during = ['Booking' => 'Booking', 'Pickup' => 'Pickup', 'Return' => 'Return', 'Other'
+                               => 'Other'];
+                            }else{
+                              if($item_status == 'Picked'){
+                                $payment_type = ['Final-Payment' => 'Final-Payment', 'Advance'
+                                    => 'Advance', 'Per-payment' => 'Per-payment',
+                                      'Return-Deposit' => 'Return-Deposit', 'Cancel-Charge' => 'Cancel-Charge', 'Other-Charges' => 'Other-Charges', 'Return-Payment' => 'Return-Payment'];
+                                $during = ['Pickup' => 'Pickup'];
+                              }else {
+                                $payment_type = ['Return-Deposit' => 'Return-Deposit', 'Final-Payment' => 'Final-Payment', 'Advance' => 'Advance', 'Per-payment' => 'Per-payment',
+                                      'Cancel-Charge' => 'Cancel-Charge', 'Other-Charges' => 'Other-Charges', 'Return-Payment' => 'Return-Payment'];
+                                $during = ['Return' => 'Return'];
+                              }
+
+
+                            }
+
                             ?>
                             <tr class="payment-item" id='<?php echo "paymentmaster-{$indexHouse}-test"; ?>'>
                                 <td id='<?php echo "paymentmaster-{$indexHouse}-tax_new_id"; ?>'
@@ -266,19 +310,23 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
 
                                     <input type="date" name="<?php echo "PaymentMaster[{$indexHouse}][date]" ?>"
                                            id='<?php echo "pricelistassignmentdiscounts-{$indexHouse}-valid_till" ?>'
-                                           class="valid_till_date form-control"
+                                           class="valid_till_date form-control" <?= ($readonly_flag)? 'readonly':'';  ?>
                                            value="<?php echo $payment_model['date']; ?>"
                                            style="width: 150px!important ">
                                     <?= $form->field($payment_model, "[{$indexHouse}]payment_id")->label(false)->hiddenInput(['maxlength' => true,]) ?>
                              </td>
                                 <td>
-                                    <?= $form->field($payment_model, "[{$indexHouse}]remark")->label(false)->textInput(['maxlength' => true, 'placeholder' => 'Remark',]) ?>
+                                    <?= $form->field($payment_model, "[{$indexHouse}]remark")->label(false)
+                                      ->textInput(['maxlength' => true, 'placeholder' => 'Remark','readonly' =>
+                                        $readonly_flag]) ?>
                                     <?= $form->field($payment_model, "[{$indexHouse}]booking_id")->label(false)->hiddenInput(['maxlength' => true,]) ?>
 
                                 </td>
 
                                 <td>
-                                    <?= $form->field($payment_model, "[{$indexHouse}]type")->dropDownList(['Advance' => 'Advance', 'Per-payment' => 'Per-payment', 'Final-Payment' => 'Final-Payment', 'Return-Deposit' => 'Return-Deposit', 'Cancel-Charge' => 'Cancel-Charge', 'Other-Charges' => 'Other-Charges', 'Return-Payment' => 'Return-Payment'], ['options' => ['style' => 'font-size:8px;'], 'onchange' => 'add_total_payment()'])->label(false) ?>
+                                    <?= $form->field($payment_model, "[{$indexHouse}]type")->dropDownList
+                                    ($payment_type ,
+                                      ['options' => ['style' => 'font-size:8px;'], 'onchange' => 'add_total_payment()', 'readonly' => $readonly_flag])->label(false) ?>
 
                                 </td>
                                 <td>
@@ -286,21 +334,25 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                     <?php
                                     $option_array = ($payment_model->type == 'Cancel-Charge' || $payment_model->type == 'Other-Charges') ? ['Deposit' => 'Deposit'] : ['Cash' => 'Cash', 'Google Pay' => 'Google Pay', 'Phone Pe' => 'Phone Pe', 'Bank Transfer' => 'Bank Transfer', 'Paytm' => 'Paytm', 'Other' => 'Other',];
 
-                                    echo $form->field($payment_model, "[{$indexHouse}]mode_of_payment")->dropDownList($option_array)->label(false) ?>
+                                    echo $form->field($payment_model, "[{$indexHouse}]mode_of_payment")->dropDownList
+                                    ($option_array, [ 'readonly' => $readonly_flag,'prompt' => 'Select Payment Mode'])
+                                      ->label(false) ?>
                                 </td>
                                 <td>
-                                    <?= $form->field($payment_model, "[{$indexHouse}]received_by")->dropDownList(['Varsha' => 'Varsha', 'Pranali' => 'Pranali', 'Others' => 'Others',])->label(false) ?>
+                                    <?= $form->field($payment_model, "[{$indexHouse}]received_by")->dropDownList(['Varsha' => 'Varsha',  'Others' => 'Others',],[ 'readonly' => $readonly_flag])->label(false) ?>
                                 </td>
 
                                 <td>
 
-                                    <?= $form->field($payment_model, "[{$indexHouse}]sendto")->dropDownList(['Company' => 'Company', 'Pranali' => 'Pranali', 'Varsha' => 'Varsha',])->label(false) ?>
+                                    <?= $form->field($payment_model, "[{$indexHouse}]sendto")->dropDownList(['Company' => 'Company',  'Varsha' => 'Varsha',],[ 'readonly' => $readonly_flag])->label(false) ?>
                                 </td>
                                 <td>
-                                    <?= $form->field($payment_model, "[{$indexHouse}]received_during")->dropDownList(['Booking' => 'Booking', 'Pickup' => 'Pickup', 'Return' => 'Return', 'Other' => 'Other',])->label(false) ?>
+                                    <?= $form->field($payment_model, "[{$indexHouse}]received_during")->dropDownList
+                                    ($during ,[ 'readonly' => $readonly_flag])->label(false) ?>
                                 </td>
                                 <td>
-                                    <?= $form->field($payment_model, "[{$indexHouse}]amount")->label(false)->textInput(['maxlength' => true, 'onkeyup' => 'add_total_payment(this.id)', 'placeholder' => '0.00',]) ?>
+                                    <?= $form->field($payment_model, "[{$indexHouse}]amount")->label(false)
+                                      ->textInput(['maxlength' => true, 'onkeyup' => 'add_total_payment(this.id)', 'placeholder' => '0.00',  'readonly' => $readonly_flag, 'style' => 'text-align: right']) ?>
                                 </td>
 
 

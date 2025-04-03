@@ -64,7 +64,7 @@ class BookingController extends Controller
             'allow' => true,
           ],
           [
-            'actions' => ['logout', 'index', 'view', 'create', 'update', 'delete', 'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details', 'delivery', 'delivery-item', 'return-item', 'index-payment', 'index-sales', 'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'pending-deposite', 'get-whatsapp', 'carry-frd', 'select-item'],
+            'actions' => ['logout', 'index', 'view', 'create', 'update', 'delete', 'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details', 'delivery', 'delivery-item', 'return-item', 'index-payment', 'index-sales', 'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'pending-deposite', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability'],
             'allow' => true,
             'roles' => ['@'],
           ],
@@ -125,18 +125,37 @@ class BookingController extends Controller
     $flag = 0;
     $message = "";
     // print_r($booking_items);die;
+    $multi_items = [];
     if ($booking_items != null || sizeOf($booking_items)) {
       $flag = 1;
       $message = "Booking for Items exist. Booking Dates: ";
       //print_r($booking_items);
       foreach ($booking_items as $booking_item) {
-        $message .= " [" . $this->dateFormat($booking_item['pickup_date'], 'd-m-Y') . " -> " . $this->dateFormat($booking_item['return_date'], 'd-m-Y') . "] ";
+        if (is_array($product_id)) {
+          $multi_items[$booking_item['product_id']][] = $this->dateFormat($booking_item['pickup_date'], 'd-m-Y') . " -> " . $this->dateFormat($booking_item['return_date'], 'd-m-Y');
+        } else {
+          $message .= " [" . $this->dateFormat($booking_item['pickup_date'], 'd-m-Y') . " -> " . $this->dateFormat($booking_item['return_date'], 'd-m-Y') . "] ";
+        }
       }
     }
     //return array('status'=>$flag,'errors'=>array($message));
 
 
-    return array('flag' => $flag, 'errors' => array($message));
+    return array('flag' => $flag, 'errors' => array($message), 'multi_items' => $multi_items);
+  }
+
+  public function actionCheckAvailability()
+  {
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    $pickup_date = isset($_POST['pickup_date']) ? $_POST['pickup_date'] : null;
+    $return_date = isset($_POST['return_date']) ? $_POST['return_date'] : null;
+    $type_con = (isset($_POST['type_id']) && $_POST['type_id'] != "") ? ['type_id' => $_POST['type_id']] : 1;
+    $item_master = ItemMaster::find()->where($type_con)->asArray()->all();
+    $item_ids = ArrayHelper::getColumn($item_master, 'id');
+    $pickup_date = $this->dateFormat($pickup_date, 'Y-m-d');
+    $return_date = $this->dateFormat($return_date, 'Y-m-d');
+    $result = $this->checkBooking($item_ids, $pickup_date, $return_date);
+    return $result;
   }
 
   public function actionIndexSales()

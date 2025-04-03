@@ -36,9 +36,9 @@ class CustomerMaster extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'contact_nos', 'reference', 'address_group'], 'required'],
+            [['name', 'contact_nos', 'reference'], 'required'],
             [['reference', 'cust_group'], 'string'],
-            [['created_date','id','contact_nos_2','cust_group','created_on'], 'safe'],
+            [['created_date','id','contact_nos_2','cust_group','created_on' , 'address_group'], 'safe'],
             [['email_id'],'email'],
             [['name', 'email_id', 'reference_name'], 'string', 'max' => 150],
            // [['contact_nos', 'contact_nos_2'], 'string', 'length' => 10],
