@@ -91,7 +91,9 @@ $this->title = 'Item Masters';
         <div class="row image-gallery">
           <?php foreach ($item_master as $item_details) { ?>
             <div class="card col-6 col-md-3 mb-4">
-              <div class="card-body" id = "card_body_<?= $item_details->id; ?>" style="padding:0; align-self: center;">
+              <div class="card-body card-item_view" id = "card_body_<?= $item_details->id; ?>" style="padding:0;
+              align-self:
+              center;">
                 <a href="<?= $item_details->imageurl; ?>">
                   <img src="<?= $item_details->imageurl; ?>" class="img-fluid" style="max-height: 200px;
 											min-height: 200px; align-content: center">
@@ -222,7 +224,7 @@ function setunavailable(item_id, booking_dates, message = "Not Available"){
 
 function clear_check_avaiblity() {
   $(".unavailable-overlay").remove();
-   $("#card_body_2").css({
+   $(".card-item_view").css({
         "filter": "none",
         "opacity": "1",
     })
