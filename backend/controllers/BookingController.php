@@ -14,7 +14,9 @@ use backend\models\PaymentMaster;
 use backend\models\ItemSummary;
 use backend\models\CategoryMaster;
 use backend\models\DynamicFormsPaymentItems;
+use DateTime;
 use Yii;
+use yii\db\Expression;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use backend\models\BookingHeader;
@@ -126,6 +128,7 @@ class BookingController extends Controller
     $message = "";
     // print_r($booking_items);die;
     $multi_items = [];
+    $warning_items = [];
     if ($booking_items != null || sizeOf($booking_items)) {
       $flag = 1;
       $message = "Booking for Items exist. Booking Dates: ";
@@ -138,10 +141,30 @@ class BookingController extends Controller
         }
       }
     }
+     if (is_array($product_id)) {
+       $pickup_date_temp = new DateTime($pickup_date);
+       $pickup_date_temp->modify('-1 day');
+       $fromdate =$pickup_date_temp->format('Y-m-d');
+        $return_date_temp = new DateTime($return_date);
+       $return_date_temp->modify('+1 day');
+       $todate =$return_date_temp->format('Y-m-d');
+       $booking_itm = BookingItem::find()->leftJoin('item_master','booking_item.product_id = item_master.id')->where
+         (['>', 'dry_cleaning_treshold' ,0])->andWhere(['product_id' => $product_id])->andWhere(['or', ["between",'return_date', new Expression('DATE_SUB("'
+         .$pickup_date.'", INTERVAL item_master.`dry_cleaning_treshold` DAY)'),$fromdate], ["between",'pickup_date', $todate, new Expression('DATE_ADD("'.$return_date.'", INTERVAL item_master.`dry_cleaning_treshold` DAY)')]])->orderBy(['pickup_date'=>SORT_ASC])
+         ->asArray
+         ()->all();
+       foreach ($booking_itm as $book_item){
+         if(!isset($multi_items[$book_item['product_id']])){
+           $warning_items[$book_item['product_id']][] = $this->dateFormat($book_item['pickup_date'], 'd-m-Y') . " -> " . $this->dateFormat($book_item['return_date'], 'd-m-Y');
+         }
+
+       }
+
+     }
     //return array('status'=>$flag,'errors'=>array($message));
 
 
-    return array('flag' => $flag, 'errors' => array($message), 'multi_items' => $multi_items);
+    return array('flag' => $flag, 'errors' => array($message), 'multi_items' => $multi_items, 'warning' => $warning_items);
   }
 
   public function actionCheckAvailability()

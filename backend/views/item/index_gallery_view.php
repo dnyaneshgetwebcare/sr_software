@@ -36,11 +36,36 @@ $this->title = 'Item Masters';
     text-transform: uppercase;
     pointer-events: none; /* Prevent interactions */
 }
+    .warning-overlay {
+   position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(255 224 192 / 50%);
+    color: #ad2929;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    pointer-events: none;
+}
     .booking_dates {
         position: absolute;
     top: 11px;
     font-size: small;
     color: white;
+    font-weight: 400;
+    align-self: anchor-center;
+    padding-top: 50px;
+    }
+    .warning-booking-dates {
+        position: absolute;
+    top: 11px;
+    font-size: small;
+    color: #201414;
     font-weight: 400;
     align-self: anchor-center;
     padding-top: 50px;
@@ -191,16 +216,19 @@ function checkAvailable() {
       success: function (data) {
          console.log(data['multi_items']);
         for (let datumKey in data['multi_items']) {
-
-          console.log(datumKey)
-          console.log(data['multi_items'][datumKey])
           let dates = "";
           for (let i = 0; i < data['multi_items'][datumKey].length; i++) {
             dates =dates+"<br>"+data['multi_items'][datumKey][i]
           }
           setunavailable(datumKey,dates)
         }
-
+         for (let datumKey in data['warning']) {
+          let dates = "";
+          for (let i = 0; i < data['warning'][datumKey].length; i++) {
+            dates =dates+"<br>"+data['warning'][datumKey][i]
+          }
+          setwarning(datumKey,dates)
+        }
 
       },
       error: function (jqXhr, textStatus, errorThrown) {
@@ -221,9 +249,20 @@ function setunavailable(item_id, booking_dates, message = "Not Available"){
     </span></div>`);
 
 }
+function setwarning(item_id, booking_dates, message = "Warning"){
+    $(`#card_body_${item_id}`).css({
+        "filter": "grayscale(100%)",
+        "opacity": "0.6",
+    }).parent().css({"position": "relative",}).append(`<div class="warning-overlay">${message} <span
+    class = "warning-booking-dates">
+    ${booking_dates}
+    </span></div>`);
+
+}
 
 function clear_check_avaiblity() {
   $(".unavailable-overlay").remove();
+  $(".warning-overlay").remove();
    $(".card-item_view").css({
         "filter": "none",
         "opacity": "1",
