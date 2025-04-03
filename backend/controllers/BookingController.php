@@ -120,7 +120,7 @@ class BookingController extends Controller
   public function checkBooking($product_id, $pickup_date, $return_date, $booking_id = null)
   {
     $where_booking = ($booking_id == null) ? 1 : ['!=', 'booking_id', $booking_id];
-    $booking_items = BookingItem::find()->select(['item_id', 'booking_id', 'product_id', 'item_no', 'pickup_date', 'return_date'])->where(['product_id' => $product_id])->andWhere("`pickup_date` <= '$return_date' and `return_date` >= '$pickup_date'")->andWhere(['item_status' => ['Booked', 'Picked']])->andWhere($where_booking)->asArray()->all();
+    $booking_items = BookingItem::find()->select(['item_id', 'booking_id', 'product_id', 'item_no', 'pickup_date', 'return_date'])->where(['product_id' => $product_id])->andWhere("`pickup_date` <= '$return_date' and `return_date` >= '$pickup_date'")->andWhere(['item_status' => ['Booked', 'Picked']])->andWhere($where_booking)->orderBy(['pickup_date'=>SORT_ASC])->asArray()->all();
     //
     $flag = 0;
     $message = "";
