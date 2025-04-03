@@ -21,19 +21,21 @@ use kartik\file\FileInput;
 $user = Yii::$app->user->identity;
 $is_admin = ($user->user_type == "admin") ? true : false;
 ?>
-<!--<link rel="stylesheet" type="text/css" href="css/gccsite.css">-->
-<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/gccsite.css">
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="dist_crop/imagerJs.js"></script>
 <link href="dist_crop/imagerJs.css" rel="stylesheet">
 <style type="text/css">
     .imager-edit-container .toolbar {
         position: absolute;
     }
+
     .btn-secondary {
         color: white !important;
     }
+
     #imagers {
         display: flex;
         align-items: flex-start;
@@ -165,8 +167,11 @@ $is_admin = ($user->user_type == "admin") ? true : false;
                             'pluginOptions' => [
                               'depends' => ['itemmaster-category_id'],
                               'placeholder' => 'Select...',
-                              'url' => Url::to(['/item/get-type'])
-                            ]
+                              'url' => Url::to(['/item/get-type']),
+                              'params' => ['dry_cleaning_treshold'],
+
+                            ],
+
                           ]);
                           ?>
                         </div>
@@ -202,7 +207,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
                             'options' => $saveOptions,
                             'displayOptions' => $dispOptions,
                             'saveInputContainer' => $saveCont
-                          ]);// $form->field($model, 'purchase_amount')->textInput(['maxlength' => true])          ?>
+                          ]);// $form->field($model, 'purchase_amount')->textInput(['maxlength' => true])           ?>
 
 
                         </div>
@@ -422,6 +427,19 @@ $is_admin = ($user->user_type == "admin") ? true : false;
                                                     </label>-->
                           <?= $form->field($model, 'skip_website')
                             ->checkBox(['class' => 'skip_website_class check col-sm-offset-0', 'data-checkbox' => "icheckbox_square-red"]); ?>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <?= $form->field($model, 'dry_cleaning_treshold')->widget(NumberControl::classname(), [
+                            'maskedInputOptions' => [
+                              'min' => 0,
+                              'allowMinus' => false
+                            ],
+                            'options' => $saveOptions,
+                            'displayOptions' => $dispOptions,
+                            'saveInputContainer' => $saveCont
+                          ]); ?>
                         </div>
                       </div>
                     </div>
@@ -721,7 +739,17 @@ $is_admin = ($user->user_type == "admin") ? true : false;
       } else {
         drDestroy.init();
       }
-    })
+    });
+
+    $('#itemmaster-type_id').on('change', function() {
+        var selectedOption = $(this).find(':selected'); // Get selected <option>
+        var dataAttrValue = selectedOption.data('attr'); // Get data-attr value
+  // Set hidden field value
+        $('#itemmaster-dry_cleaning_treshold').val(dataAttrValue).trigger('change');
+
+        // Set visible input field
+        $('#itemmaster-dry_cleaning_treshold-disp').val(dataAttrValue).trigger('change');
+    });
   });
 
 
