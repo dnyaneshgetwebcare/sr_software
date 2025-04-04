@@ -79,9 +79,7 @@ class ApiController extends \yii\web\Controller
 
         $category_id = isset($_GET['category_id'])?$_GET['category_id'] : '';
 
-        $category_master = CategoryMaster::find()->andFilterWhere(['id' => $category_id])->andWhere(['dispaly_main_site'
-        =>
-            '1' ]) ->asArray()->all();
+        $category_master = CategoryMaster::find()->andFilterWhere(['id' => $category_id])->asArray()->all();
         return $category_master;
 
     }
