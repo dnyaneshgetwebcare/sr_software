@@ -63,12 +63,6 @@ $this->title = 'Soyara Rental Couture';
         </div>
     </div>
 </div>
-<!-- ============================================================== -->
-<!-- End Bread crumb and right sidebar toggle -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- Start Page Content -->
-<!-- ============================================================== -->
 <?php
 if ($is_admin) { ?>
     <div class="row">
@@ -372,7 +366,7 @@ if ($is_admin) { ?>
                         <?php foreach ($sale_monthly_summary as $sales_summary) {
                             ?>
                             <tr>
-
+                              <?php if($is_admin){ ?>
                                 <td><?= date('F', mktime(0, 0, 0, $sales_summary['month'], 10)); ?></td>
 
                                 <td style="<?= $display_hide; ?>"><?= $sales_summary['amount']; ?></td>
@@ -381,7 +375,16 @@ if ($is_admin) { ?>
                                 <td><?= isset($invoice_list[$sales_summary['month']]) ? $invoice_list[$sales_summary['month']] : '-'; ?></td>
                                 <td style="<?= $display_hide; ?>"><?= $sales_summary['total_purchase']; ?></td>
                                 <td style="<?= $display_hide; ?>"><?= $sales_summary['total_expense']; ?></td>
+                              <?php }else{ ?>
+                               <td><?= date('F', mktime(0, 0, 0, $sales_summary['month'], 10)); ?></td>
+
+
+                                <td><?= isset($cust_list[$sales_summary['month']]) ? $cust_list[$sales_summary['month']] : '-'; ?></td>
+                                <td><?= isset($invoice_list[$sales_summary['month']]) ? $invoice_list[$sales_summary['month']] : '-'; ?></td>
+
+                              <?php  } ?>
                             </tr>
+
                             <?php
                         }
                         ?>
