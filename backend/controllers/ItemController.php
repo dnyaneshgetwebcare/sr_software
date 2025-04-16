@@ -151,7 +151,7 @@ class ItemController extends Controller
     $booking_items = BookingItem::find()->leftJoin('booking_header','booking_header.booking_id = booking_item.booking_id')
       ->where(['product_id' =>
       $item_id])
-      ->andWhere(['OR',['>=','booking_header.pickup_date',date('Y-m-d')],['>=','booking_header.return_date' ,date('Y-m-d')]])
+      ->andWhere(['OR',['>=','booking_header.pickup_date',date('Y-m-d')],['>=','booking_header.return_date' ,date('Y-m-d')]])->andWhere(["!=",'item_status',"Cancelled"])
       ->orderBy
       (['PICKUP_DATE'=>SORT_DESC])
         ->all();

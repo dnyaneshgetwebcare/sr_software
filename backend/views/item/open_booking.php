@@ -1,6 +1,7 @@
 <style>
   .modal-content{
       width: 600px;
+      margin-top: 75px !important;
   }
 </style>
 
