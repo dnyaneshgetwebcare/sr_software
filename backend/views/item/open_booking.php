@@ -3,6 +3,25 @@
       width: 600px;
       margin-top: 75px !important;
   }
+   .booked {
+        background-color: #7460ee;
+    }
+
+    .picked {
+        background-color: #1e88e5;
+    }
+
+    .returned {
+        background-color: #26c6da;
+    }
+
+    .cancelled {
+        background-color: #ffb22b;
+    }
+
+    .deleted {
+        background-color: #fc4b6c;
+    }
 </style>
 
 <div class="card-body" style="overflow: auto; max-height: 450px">
