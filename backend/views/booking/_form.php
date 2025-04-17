@@ -36,18 +36,12 @@ $is_admin = ($user->user_type == "admin") ? true : false;
     .page-titles {
         margin-bottom: 10px !important;
     }
-
-
     .form-control {
         font-size: 15px;
         font-weight: 500;
         line-height: 1.5 !important;
         padding: 5px !important;
     }
-
-
-
-
     th {
         font-size: 15px;
     }
@@ -241,8 +235,6 @@ $is_admin = ($user->user_type == "admin") ? true : false;
 
 <?php
 //echo (Yii::$app->session->hasFlash('success'));die;
-
-
 $active_div = true;
 $order_status = ($model->booking_id != '') && ($model->status == 'Closed' || $model->status == 'Deleted') ? true : false;
 $label_select = 'SELECT';
@@ -253,10 +245,12 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         <div class="card-body">
             <div class="col-lg-12">
                 <div class="error-summary-sales alert alert-danger" id="errors_test1" style="display: none;">
-                    <p><i
-                                class="fa fa-close pull-right" onclick="$(&quot;#errors_test1&quot;).hide()"></i>
-                    <h5
-                            class="text-danger"><b><i class="fa fa-exclamation-triangle"></i> <?= 'ERRORS'; ?>:</b>
+                    <p><i class="fa fa-close pull-right" onclick="$(&quot;#errors_test1&quot;).hide()"></i>
+                    <h5 class="text-danger">
+                    <b>
+                      <i class="fa fa-exclamation-triangle"></i>
+                      <?= 'ERRORS'; ?>:
+                    </b>
                     </h5>
                     </p>
                     <hr class="custom_error_hr">
@@ -284,20 +278,12 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     <div class="col-md-8" style="padding-left: 0px!important; margin-left: -12px;">
                                         <?php
                                         echo $form->field($customer_model, 'name')->textInput(['maxlength' => true, 'class' => 'form-control text_first', 'placeholder' => 'Search by Name/Contact nos or Create New', 'autocomplete' => "off", 'readonly' => true])->label(false); ?>
-                                        <!-- <div class="form-group field-customermastersearch-name">
-
-                            <input type="text" id="customermastersearch-name" class="form-control text_first"  placeholder="Search by Name/Contact nos or Create New" autocomplete="off" style="display: none;" onkeyup="customerchange(this.value,this.id)">
-                            </div>     <div id='customer_autodata' style="background-color:black">
-
-                                        </div>-->
-
-
                                     </div>
                                     <div class="col-md-2">
-                                        <button type="button" class="btn btn-info" onclick="showsearch()"><span
-                                                    class="fa fa-edit"></span></button>
+                                        <button type="button" class="btn btn-info" onclick="showsearch()">
+                                          <span class="fa fa-edit"></span>
+                                        </button>
                                     </div>
-
                                 </div>
                             </div>
 
@@ -680,8 +666,13 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                         ?>
                                         <tr class="house-item" id='<?php echo "bookingitem-{$indexHouse}-test"; ?>'>
                                             <td id='<?php echo "bookingitem-{$indexHouse}-tax_new_id"; ?>'
-                                                style="text-align: center;vertical-align: middle !important;"><?= $indexHouse; ?>
+                                                style="text-align: center;vertical-align: middle !important;">
+                                              <span id ='<?php echo "bookingitem-{$indexHouse}-sr_no"; ?>'><?=
+                                                $indexHouse; ?> </span>
 
+                                            <?= $form->field($booking_item, "[{$indexHouse}]inv_visibilty")
+                                                ->checkbox(['maxlength' => true, 'class'=> 'check my-checkbox icheckbox_square-blue', 'label'=>false, 'onchange' => "changeHideStatus(this)"
+                                                  ]) ?>
                                             </td>
                                             <td>
                                                 <img src="<?= $image_pth ?>" height="70px" width="70px" id='<?php
@@ -713,7 +704,6 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
                                                     <div class="col-lg-12 other_details_data"
                                                          id='<?php echo "bookingitem-{$indexHouse}-item_details_data"; ?>'></div>
-
                                                 </div>
 
                                                 <div class="item_details_lable" style="<?= $active_div ?>"
@@ -731,8 +721,6 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                     ?>
 
                                                 </div>
-
-
                                                 <?php
                                                 // necessary for update action.
                                                 if (!$booking_item->isNewRecord) {
@@ -1459,7 +1447,16 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
         $("#display_pending").html("Amount: " + $("#pending_amount").val());
 
+          $('.my-checkbox').on('ifChanged', function () {
+        if ($(this).is(':checked')) {
+            console.log('Checked!');
+        } else {
+            console.log('Unchecked!');
+        }
 
+        // You can also do something else here
+        // like $('#someDiv').toggle();
+    });
         /* $('.cancel_class').on('ifChecked', function(event){
             //$('.deposite_applicable_class').iCheck('uncheck');
             cancelBooking();
@@ -1560,7 +1557,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         jQuery("#sales_items_tab .dynamicform_wrapper_booking").on("afterDelete", function (e, item) {
             //alert(count_item);
             for (var i = 1; i < count_item; i++) {
-                var temp_sr = "#bookingitem-" + (i) + "-tax_new_id";
+                var temp_sr = "#bookingitem-" + (i) + "-sr_no";
                 //var temp_sr_no="#salesitems-"+(i)+"-sr_no";
                 $(temp_sr).html(i);
                 // $(temp_sr_no).val(i);
@@ -1896,7 +1893,14 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             }
         });
     }
-
+    function changeHideStatus(checkbox) {
+       console.log('Checked');
+      if (checkbox.is(":checked")) {
+        console.log('Checked');
+    } else {
+        console.log('Unchecked');
+    }
+    }
     function add() {
         saved_flag = true;
         var deposit = 0;
@@ -2433,7 +2437,27 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
         });
     }
+function initICheck($container) {
+      console.log($container)
+    $container.find('input.my-checkbox').each(function () {
+        let $this = $(this);
 
+
+        // Remove iCheck if already initialized
+        if ($this.parent().hasClass('icheckbox_square-blue')) {
+            $this.iCheck('destroy');
+        }
+
+        // Initialize iCheck
+        $this.iCheck({
+            checkboxClass: 'check icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%'
+        }).on('ifChanged', function () {
+            console.log('Changed:', $(this).is(':checked'));
+        });
+    });
+}
 
     function removePaymentitem() {
         saved_flag = true;
@@ -2483,9 +2507,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             //    var scrollBottom = Math.max($('.dynamic_table').height() - $('.dynamicform_wrapper_sales').height(), 0);
             // $('.dynamicform_wrapper_sales').scrollTop(scrollBottom);
             for (var i = 1; i < count_item; i++) {
-                var sr_replace = "#bookingitem-" + (i) + "-tax_new_id";
+                var sr_replace = "#bookingitem-" + (i) + "-sr_no";
                 //var sr_no_replace="#salesitems-"+(i)+"-sr_no";
-
+               initICheck($("#bookingitem-" + (i) + "-tax_new_id"));
                 $(sr_replace).html(i);
                 //$(sr_no_replace).val(i);
             }

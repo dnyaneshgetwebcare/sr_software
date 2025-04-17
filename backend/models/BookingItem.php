@@ -51,6 +51,12 @@ class BookingItem extends \yii\db\ActiveRecord
             [['pickup_date', 'picked_date', 'return_date', 'returned_date','description','net_value','discount', 'item_no','item_status', 'deposite_status','item_id','item_type','item_category','extra_per','earning_amount'], 'safe'],
             [['item_status', 'note', 'deposite_status'], 'string'],
             [['image_name'], 'string', 'max' => 50],
+            [['inv_visibilty'], 'default', 'value' => '0'],
+            ['net_value', function ($attribute, $params, $validator) {
+              if ($this->inv_visibilty == 1 && $this->$attribute != 0) {
+                 $this->addError($attribute, "#{$this->sr_no}Net Value must be 0 when Hidden in invoice.");
+               }
+            }],
           /*  [['booking_id'], 'exist', 'skipOnError' => true, 'targetClass' => BookingHeader::className(), 'targetAttribute' => ['booking_id' => 'booking_id']],*/
            /* [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => ItemMaster::className(), 'targetAttribute' => ['item_id' => 'id']],*/
         ];

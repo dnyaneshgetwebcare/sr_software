@@ -357,7 +357,7 @@ class BookingController extends Controller
       die;
     }
     $business_partner = $model->customer;
-    $item = $model->bookingItems;
+    $item = $model->bookingItemsInv;
     $payments = $model->payment;
     return $this->renderPartial('invoice_soyara', [
       'model' => $model,
@@ -1275,7 +1275,7 @@ class BookingController extends Controller
         $result_payment_item = ActiveForm::validateMultiple($payment_models);
         $no_payment = true;
       }
-      //print_r($customer_model);die;
+      //print_r($booking_items);die;
       $result = ActiveForm::validate($model);
       $result_cust = ActiveForm::validate($customer_model);
       $result_item = ActiveForm::validateMultiple($booking_items);
@@ -1377,6 +1377,7 @@ class BookingController extends Controller
               'amount' => $booking_item->amount,
               'earning_amount' => $booking_item->earning_amount,
               'deposit_amount' => $booking_item->deposit_amount,
+              'inv_visibilty' => $booking_item->inv_visibilty,
               'deposite_charge_status' => $booking_item->deposite_charge_status,
               'extra_per' => $booking_item->extra_per,
               'pickup_date' => ($picked_status) ? date('Y-m-d') : $model->pickup_date,

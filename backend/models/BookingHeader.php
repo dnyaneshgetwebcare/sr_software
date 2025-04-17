@@ -115,6 +115,12 @@ public function init()
     {
         return $this->hasMany(BookingItem::className(), ['booking_id' => 'booking_id']);
     }
+
+    public function getBookingItemsInv()
+    {
+        return $this->hasMany(BookingItem::className(), ['booking_id' => 'booking_id'])->andWhere(['inv_visibilty' =>
+          0]);
+    }
     public function getPayment()
     {
         return $this->hasMany(PaymentMaster::className(), ['booking_id' => 'booking_id']);
