@@ -726,7 +726,7 @@ class BookingController extends Controller
          $message.="\nDiscount-Rs.".round($booking_header->discount);
      }*/
         // $message.="\nPaid-Rs.".round($booking_header->paid_amount)."\nReturn date: ".date_format(date_create($booking_header->return_date),'d-m-y')."\nNote:Please Return on given date or you will be charged extra per day.\n\n";
-        $message .= "\nPaid-Rs." . round($booking_header->paid_amount) . "\nReturn date: " . date_format(date_create($booking_header->return_date), 'd-m-y') . "\nNote:Please Return on given date or you will be charged extra per day.\n\n";
+        $message .= "\nPaid-Rs." . round($booking_header->paid_amount) . "\nPick date: " . date_format(date_create($booking_header->pickup_date), 'd-m-y')."\nReturn date: " . date_format(date_create($booking_header->return_date), 'd-m-y') . "\nNote: -Please Check Pick and Return Date \n-Please Return on given date or you will be charged extra per day.\n\n **SAVE NUMBER TO VIEW INVOICE**";
         // echo $this->short_url($booking_header->encryted_id);die;
         // $this->sendSMS($customer_model->contact_nos,$message);
         return array('message' => $message, 'contact_nos' => "91" . $customer_model->contact_nos);
