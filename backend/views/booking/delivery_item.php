@@ -124,6 +124,17 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                             ]
                                     ]); ?>
                                 </div>
+                              <label class="col-md-6"> Remark: <span style="font-weight: 400"><?= $model->remark; ?>
+                                </span><br>
+                               Measurment: <span style="font-weight: 400">  <?php if($model->chest !="" || $model->waist !="" || $model->hip
+                                    !=""){
+                                  echo "C: ".$model->chest
+                                    .", W: ".$model->waist
+                                    .", H: ".$model->hip;
+                                }
+                                ?>
+                                </span>
+                              </label>
                             </div>
                         </div>
                     </div>
@@ -173,19 +184,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                     'enableSorting' => false,
                                     'format' => ['date', 'php:d/m/Y']
                                 ],
-                                   [
-             'attribute' => 'Measurment',
-             'filter' => false,
-             'format' => 'raw',
-             'value' => function ($model) use($item_status){
-                    $header = $model->booking;
-                    $remark = ($header->remark != null || $header->remark != "") ? "Remark: ".$header->remark: " ";
-                    if($header->chest == null || $header->chest == "0.00" || $item_status != 'Picked'){
-                      return $remark;
-                    }
-                    return "C: ".$header->chest.", W: ".$header->waist.", H: ".$header->hip." <br> ".$remark;
-              },
-           ],
+
                                  'note:ntext',
                                 //'picked_date',
 
@@ -216,6 +215,15 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                         <h1><b>
                                 <center>
                                     <div id="display_pending" style="background-color: #c4ecba">Amount: 0</div>
+                                </center>
+                            </b></h1>
+                    </div>
+                  <div class="col-md-6 pull-right" style="display: <?= ($item_status=='Picked')?'None':'Block' ?>">
+                        <h1><b>
+                                <center>
+                                    <div id="deposit_pending" style="background-color: #b4daf1">Balance DP Amt:
+                                      <?= $model->deposite_amount - ($model->other_charges + $model->refunded)
+                                      ?></div>
                                 </center>
                             </b></h1>
                     </div>
@@ -437,21 +445,26 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                 </div>
                                 <div class="row even-strip row_new" style="border-top:1px solid #eee;">
                                     <div class="form-group col-12">
-                                        <label class="col-md-6 control-label"> Refund </label>
+                                        <label class="col-md-6 control-label" style="text-wrap: auto;"> (Refund +
+                                          Charges) /
+                                          Deposite
+                                        </label>
                                         <div class="col-md-6 number">
                                             <input type="text"
-                                                   value="<?= $model->refunded . '/' . $model->deposite_amount ?>"
+                                                   value="<?= ($model->refunded + $model->other_charges ). '/' .
+                                                   $model->deposite_amount ?>"
                                                    class="form-control total"
                                                    style="border:none;background: none !important;" readonly
                                                    id="refund_dis">
-                                            <input type="hidden" name="BookingHeader[refunded]"
+
+                                        </div>
+                                    </div>
+                                </div>
+                               <input type="hidden" name="BookingHeader[refunded]"
                                                    value="<?= ($model->refunded == '' ? 0 : $model->refunded) ?>"
                                                    class="form-control total"
                                                    style="border:none;background: none !important;" readonly
                                                    id="refunded">
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -591,7 +604,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                 }
             }
         }
-
+        let deposite_adjustment = other_charges + refund;
         var net_value = Number($("#sub_total").val());
         var deposit_amount = $("#total_deposite_amount").val()
         $("#return_amount").val(return_amount);
@@ -600,8 +613,9 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
         $("#paid_amount").val(paid_amount);
         $("#pending_amount").val(net_value - (paid_amount - cancellation_charges));
         $("#display_pending").html("Amount: " + $("#pending_amount").val());
+        $("#deposit_pending").html(`Balance DP Amt: ${deposit_amount-deposite_adjustment}`);
         $("#refunded").val(refund);
-        $("#refund_dis").val(refund + '/' + deposit_amount);
+        $("#refund_dis").val(deposite_adjustment + '/' + deposit_amount);
     }
 
     $(document).ready(function () {

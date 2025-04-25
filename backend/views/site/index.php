@@ -210,6 +210,9 @@ if ($is_admin) { ?>
                                             <h5 style="font-size: 16px"><?= $model_delivary->customer->name ?></h5>
                                             <span class="mail-desc"
                                                   style="font-size: 12px"><?= $model_delivary->customer->contact_nos ?></span>
+                                          <span class="mail-desc" title="<?= $model_delivary->remark
+                                            ?>" style="font-size: 12px"><b><?= $model_delivary->remark
+                                            ?> </b></span>
                                         </div>
                                     </a>
                                 </li>
