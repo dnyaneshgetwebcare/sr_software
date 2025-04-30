@@ -616,7 +616,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     'widgetContainer' => 'dynamicform_wrapper_booking',
                                     'widgetBody' => '.container-items',
                                     'widgetItem' => '.house-item',
-                                    'limit' => 10,
+                                    'limit' => 25,
                                     'min' => 1,
                                     'insertButton' => '.add-house',
                                     'deleteButton' => '.remove-house',
