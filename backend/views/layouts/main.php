@@ -811,7 +811,7 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
               <?php $form = ActiveForm::begin(['action' => 'index.php?r=site/logout', 'id' => 'logout_form', 'options' => ['method' => 'post']]); ?>
 
               <button href="#" class="btn btn-danger" type="submit"
-                      style="height: -webkit-fill-available;background: none; border: none;"><i
+                      style="height: 35px;background: none; border: none;"><i
                   class="fa fa-power-off"></i>
               </button>
               <?php ActiveForm::end(); ?>
