@@ -45,7 +45,7 @@ class ItemController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error','client-gallery'],
                         'allow' => true,
                     ],
                     [
@@ -294,6 +294,30 @@ class ItemController extends Controller
         ]);
     }
 
+  public function actionClientGallery()
+  {
+    $where_type = 1;
+      $where_category = isset($_GET['cat_id'])? $_GET['cat_id'] : '';
+       $where_type = isset($_GET['type'])? $_GET['type'] : '';
+      /*if(isset($_GET['cat_id'])){
+        $where_category = ['category_id' => $_GET['cat_id']];
+      }
+      if(isset($_GET['type'])){
+        $where_type = ['type_id' => $_GET['type']];
+      }*/
+
+        $type_master = TypeMaster::find()->asArray()->all();
+        $model_category = ArrayHelper::map(CategoryMaster::find()->all(), 'id', 'name');
+
+        // $dataProvider->pagination=false;
+        $item_master = ItemMaster::find()->where(['delete_status'=>0])->andFilterWhere(['type_id' => $where_type, 'category_id' => $where_category])->all();
+      return $this->render('index_client_gallery_view', [
+
+            'type_master' => $type_master,
+            'model_category' => $model_category,
+            'item_master' => $item_master,
+        ]);
+    }
     public function actionIndexGallery()
     {
 

@@ -18,7 +18,7 @@ AppAsset::register($this);
 ?>
 <?php $this->beginPage();
 $user = Yii::$app->user->identity;
-$is_admin = ($user->user_type == "admin") ? true : false;
+$is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true : false;
 ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -801,7 +801,8 @@ $is_admin = ($user->user_type == "admin") ? true : false;
 
                 <span class="profile-username">
                       <span class="op-7">Hi,</span>
-                      <span class="fw-bold"><?= Yii::$app->user->identity->username;; ?></span>
+                      <span class="fw-bold"><?= isset(Yii::$app->user->identity->username)?
+                          Yii::$app->user->identity->username: ""; ?></span>
 
                     </span>
 
