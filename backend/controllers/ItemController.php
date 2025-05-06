@@ -306,11 +306,12 @@ class ItemController extends Controller
         $where_type = ['type_id' => $_GET['type']];
       }*/
 
-        $type_master = TypeMaster::find()->asArray()->all();
+        $type_master = TypeMaster::find()->where(['dispaly_main_site'=>1])->asArray()->all();
         $model_category = ArrayHelper::map(CategoryMaster::find()->all(), 'id', 'name');
 
         // $dataProvider->pagination=false;
-        $item_master = ItemMaster::find()->where(['delete_status'=>0])->andFilterWhere(['type_id' => $where_type, 'category_id' => $where_category])->all();
+        $item_master = ItemMaster::find()->where(['delete_status'=>0, 'scrab_status' => 'No'])->andWhere(['!=','item_status','Discontinue'])
+          ->andFilterWhere(['type_id' =>$where_type, 'category_id' => $where_category])->all();
       return $this->render('index_client_gallery_view', [
 
             'type_master' => $type_master,
@@ -335,8 +336,9 @@ class ItemController extends Controller
         $model_category = ArrayHelper::map(CategoryMaster::find()->all(), 'id', 'name');
 
         // $dataProvider->pagination=false;
-        $item_master = ItemMaster::find()->where(['delete_status'=>0])->andFilterWhere(['type_id' => $where_type, 'category_id' => $where_category])->all();
-        return $this->render('index_gallery_view', [
+       $item_master = ItemMaster::find()->where(['delete_status'=>0, 'scrab_status' => 'No'])->andWhere(['!=','item_status','Discontinue'])
+          ->andFilterWhere(['type_id' =>$where_type, 'category_id' => $where_category])->all();
+       return $this->render('index_gallery_view', [
 
             'type_master' => $type_master,
             'model_category' => $model_category,
