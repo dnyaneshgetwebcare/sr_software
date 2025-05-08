@@ -211,7 +211,7 @@ if ($is_admin) { ?>
                                             <span class="mail-desc"
                                                   style="font-size: 12px"><?= $model_delivary->customer->contact_nos ?></span>
                                           <span class="mail-desc" title="<?= $model_delivary->remark
-                                            ?>" style="font-size: 12px"><b><?= $model_delivary->remark
+                                            ?>" style="font-size: 12px; color: #3300ff"><b><?= $model_delivary->remark
                                             ?> </b></span>
                                         </div>
                                     </a>

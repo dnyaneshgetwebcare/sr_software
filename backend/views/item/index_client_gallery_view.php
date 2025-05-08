@@ -218,6 +218,7 @@ function filter_data() {
   let check_count = 0;
   $(`.select_category_input:checked`).each(function() {
     let active_cat = $(this).val();
+     console.log(`Checked Cat : ${active_cat}`);
     let cat_item_class = `cat_item_${active_cat}`;
     let cat_type_class = `filter_cat_type_${active_cat}`;
     $(`.${cat_item_class}`).show();
@@ -228,6 +229,7 @@ function filter_data() {
   $(`.select_category_input:not(:checked)`).each(function() {
 
     let active_cat = $(this).val();
+    console.log(`UnCheck Cat : ${active_cat}`);
     let cat_item_class = `cat_item_${active_cat}`;
     let cat_type_class = `filter_cat_type_${active_cat}`;
     $(`.${cat_item_class}`).hide();
@@ -235,6 +237,7 @@ function filter_data() {
     $(`.${cat_type_class} .selectgroup-input`).prop('checked', false);
     $(`.${cat_type_class}`).hide();
 });
+  console.log(`Check Cat Count: ${check_count}`);
 if(check_count == 0){
   $('.items_class').show();
 }
@@ -246,7 +249,7 @@ function filter_data_type() {
   let check_count = 0;
   $(`.select_type_input:checked`).each(function() {
     let active_type = $(this).val();
-
+console.log(`Checked type: ${active_type}`);
     let cat_item_class = `type_item_${active_type}`;
     $(`.${cat_item_class}`).show();
     check_count++;
@@ -254,12 +257,14 @@ function filter_data_type() {
 
   $(`.select_type_input:not(:checked)`).each(function() {
     let in_active_type = $(this).val();
+    console.log(`UnCheck type: ${in_active_type}`);
     let cat_item_class = `type_item_${in_active_type}`;
     $(`.${cat_item_class}`).hide();
 });
-
+console.log(`Check Count: ${check_count}`);
 if(check_count == 0){
-  $('.items_class').show();
+  filter_data();
+  //$('.items_class').show();
 }
 
 }

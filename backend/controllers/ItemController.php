@@ -311,7 +311,9 @@ class ItemController extends Controller
 
         // $dataProvider->pagination=false;
         $item_master = ItemMaster::find()->where(['delete_status'=>0, 'scrab_status' => 'No'])->andWhere(['!=','item_status','Discontinue'])
-          ->andFilterWhere(['type_id' =>$where_type, 'category_id' => $where_category])->all();
+          ->andFilterWhere(['type_id' =>$where_type, 'category_id' => $where_category])->orderBy(['category_id'=>SORT_ASC,
+            'type_id'=>SORT_ASC])
+          ->all();
       return $this->render('index_client_gallery_view', [
 
             'type_master' => $type_master,
