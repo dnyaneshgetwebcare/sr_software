@@ -23,6 +23,9 @@ return [
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
+      'helpercomponent' => [
+      'class' => 'backend\components\HelperComponent'
+    ],
         'html2pdf' => [
             'class' => 'yii2tech\html2pdf\Manager',
             'viewPath' => '@app/pdf',
