@@ -158,6 +158,8 @@ $this->title = 'Item Masters';
             <?php foreach ($item_master as $item_details) {
               $deatils_array = $item_details->toArray(['id', 'name', 'type_id', 'category_id', 'rent_amount', 'deposit_amount']);
               //print_r($deatils_array);
+              $img_url = $item_details->imageurl;
+              $deatils_array['img_url'] = $img_url;
               ?>
               <div
                 class="card col-6 col-md-3 mb-4 items_class  <?= 'cat_item_' . $item_details['category_id'] ?> <?= 'type_item_'
@@ -166,7 +168,7 @@ $this->title = 'Item Masters';
                 <div class="card-body card-item_view" id="card_body_<?= $item_details['id']; ?>" style="padding:0;
               align-self:
               center;">
-                  <img src="<?= $item_details->imageurl; ?>" class="img-fluid" style="max-height: 200px;
+                  <img src="<?= $img_url; ?>" class="img-fluid" style="max-height: 200px;
 											min-height: 200px; align-content: center">
 
                 </div>

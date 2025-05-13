@@ -325,7 +325,6 @@ class ItemController extends Controller
 
   public function actionMenuItems()
   {
-
     $where_category = isset($_GET['cat_id']) ? $_GET['cat_id'] : '';
     $where_type = isset($_GET['type']) ? $_GET['type'] : '';
     $req_pickup_date = isset($_GET['pickup_date']) ? $_GET['pickup_date'] : '';
@@ -339,9 +338,9 @@ class ItemController extends Controller
 
     $type_master = TypeMaster::find()->filterWhere(['id' => $where_type, 'category_id' => $where_category])->asArray()->all();
     $model_category = ArrayHelper::map(CategoryMaster::find()->filterWhere(['id' => $where_category])->all(), 'id', 'name');
-
     // $dataProvider->pagination=false;
     $item_master = ItemMaster::find()->where(['delete_status' => 0, 'scrab_status' => 'No'])->andWhere(['!=', 'item_status', 'Discontinue'])->andFilterWhere(['type_id' => $where_type, 'category_id' => $where_category])->orderBy(['category_id' => SORT_ASC, 'type_id' => SORT_ASC])->all();
+    $avaiblity_result= array( 'multi_items' => array(), 'warning' => array());
     if ($req_pickup_date != '' && $req_return_date != '') {
    $item_ids = ArrayHelper::getColumn($item_master, 'id');
     $pickup_date = $this->dateFormat($req_pickup_date, 'Y-m-d');
