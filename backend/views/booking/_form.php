@@ -610,7 +610,24 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                 <div class="tab-content master-main-tab"> <!-- General Tab-->
                     <div class="tab-pane  show active in" id="component_pills" role="tabpanel"
                          aria-labelledby="pills-items-tab">
-                        <div class="row ">
+                        <div class="row">
+                         <div class="col-lg-2" style="position: absolute;  right: 0;  top: 0;">
+                           <button type="button" style="padding: 20px; font-size: 25px" class="btn btn-rounded btn-outline-primary
+                           btn-icon btn-border" onclick="openMenucard(1)">
+                             <i class="fa fas fa-chess-king"></i>
+                             </button>
+                          <button type="button" style="padding: 20px; font-size: 25px"  class="btn btn-rounded btn-outline-secondary
+                          btn-icon btn-border"
+                                  onclick="openMenucard(2)">
+                            <i class="fa fas
+                          fa-chess-queen"></i>
+                          </button>
+                          <button type="button" style="padding: 20px;font-size: 25px" class="btn btn-rounded btn-outline-warning
+                          btn-icon btn-border"
+                                  onclick="openMenucard(3)">
+                            <i class="fa fas fa-medal"></i>
+                          </button>
+                         </div>
                             <div class="col-lg-12" id="sales_items_tab" style="margin-top: 10px">
                                 <?php DynamicFormWidget::begin([
                                     'widgetContainer' => 'dynamicform_wrapper_booking',
@@ -641,7 +658,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                         <th style="width: 20%">Note</th>
                                         <th class="text-center" style="width: 2%;">
                                             <button type="button" onclick="addBookingitem()"
-                                                    class="add-house btn btn-success btn-xs">
+                                                   id="add_billing_item" class="add-house btn btn-success btn-xs">
                                                 <span class="fa fa-plus"></span>
                                             </button>
                                         </th>
@@ -1324,7 +1341,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
 </div>
 
-<div class="row" style="position: fixed;bottom: 0;width: 100%; z-index:1500">
+<div class="row" style="position: fixed;bottom: 0;width: 100%; z-index:900">
 
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -1406,7 +1423,42 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             //  swal(final_setl);
         }
     }
+function openMenucard(cat_id) {
+      var pickup_date= $('#bookingheader-pickup_date').val();
+      var return_date = $('#bookingheader-return_date').val();
+      $.ajax({
+            url: '<?php echo Yii::$app->request->baseUrl . '/index.php?r=item/menu-items' ?>',
+            type: 'get',
+            dataType: 'html',
+            data: {
+                cat_id: cat_id,
+              pickup_date:pickup_date,
+              return_date:return_date
+            },
+         beforeSend: function () {
+                    $(".overlay").show();
+                },
+                complete: function () {
+                    $(".overlay").hide();
 
+                },
+            success: function (data) {
+               $('.sidebar-modal .tab-content').html(data);
+          $(".sidebar-modal").show('slide');
+          $(".overlay-back").show();
+          initMenuICheck($('#menu_items_body'));
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                if (errorThrown == 'Forbidden') {
+                    alert(you_dont_have_access_label);
+                }
+            }
+        });
+
+
+
+
+}
     function settlebooking(carry_frd_id, booking_id) {
 
         $.ajax({
@@ -1417,6 +1469,13 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                 booking_id: booking_id,
                 carry_frd_id: carry_frd_id,
             },
+           beforeSend: function () {
+                    $(".overlay").show();
+                },
+                complete: function () {
+                    $(".overlay").hide();
+
+                },
             success: function (data) {
                 var return_err = '';
                 var cleaned = removeDuplicates(data['errors']);
@@ -1588,6 +1647,13 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             data: {
                 id: id
             },
+           beforeSend: function () {
+                    $(".overlay").show();
+                },
+                complete: function () {
+                    $(".overlay").hide();
+
+                },
             success: function (data) {
 
                 // console.log(data);
@@ -1622,6 +1688,13 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             data: {
                 id: id
             },
+           beforeSend: function () {
+                    $(".overlay").show();
+                },
+                complete: function () {
+                    $(".overlay").hide();
+
+                },
             success: function (data) {
 
                 alert("Send");
@@ -2038,6 +2111,13 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                 term:val,
                 id:id_pass,
             },*/
+           beforeSend: function () {
+                    $(".overlay").show();
+                },
+                complete: function () {
+                    $(".overlay").hide();
+
+                },
             success: function (data) {
                 $('.overlay-back').show();
                 console.log(data)
@@ -2068,6 +2148,13 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                 term: val,
                 id: id_pass,
             },
+           beforeSend: function () {
+                    $(".overlay").show();
+                },
+                complete: function () {
+                    $(".overlay").hide();
+
+                },
             success: function (data, textStatus, jQxhr) {
 
                 var n = data['id_pass'].lastIndexOf('-');
@@ -2183,7 +2270,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         alert();
     }
 
-    function addText(id) {
+    function addText(id, selection_obj='') {
 
         var result1 = "#itemselection-suggesstion-itemdetail-box";
         $(result1).hide();
@@ -2200,56 +2287,48 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             return false;
         }
         var display_amt = $('#bookingheader-diplay_amount').is(":checked");
-        /*     if(readonly_closed_string==true){
-               alert(billing_has_been_closed_label +' '+ you_cant_select_any_item);
-               return false;
-             }
-             if(goods_field_status==1){
-               alert(goods_inv_has_closed_label+' '+you_cant_select_any_item);
-               return false;
-             }
-                  if(picked_field_status==1){
-               alert(you_cant_select_item_becoz_item_packed_label);
-               return false;
-             } */
-
+      if(selection_obj=='') {
         var item_details = $("#itemselection-description").val();
         var product_id = $("#itemselection-item_id").val();
+        var item_type = $("#itemselection-item_type").val();
+        var selected_item_category = $("#itemselection-item_category").val();
+        var selected_item_amount = $("#itemselection-rent_amount").val();
+        var selected_item_deposite_amount = $("#itemselection-deposit_amount").val();
+        var value_oth = $("#itemselection-item_type").val();
+
+        var imgsrc = $("#itemselection-img").attr("src");
+      }else{
+       // console.log(selection_obj)
+        var item_details = selection_obj.name;
+        var product_id = selection_obj.id;
+        var item_type = selection_obj.type_id;
+        var selected_item_category = selection_obj.category_id;
+        var selected_item_amount = selection_obj.rent_amount;
+        var selected_item_deposite_amount = selection_obj.deposit_amount;
+      }
         if (product_id == '') {
             $('.item_error').html('Please select item');
             return false;
         }
-        //var MATERIAL_NO_old=$(result+'material_no').val();
-
-        /*    if(MATERIAL_NO_old!=MATERIAL_NO){
-              $(result+'batch_no').val('');
-              $(result+'unit').val('');
-            }  */
         var label_name = result + 'label_name';
         var item_type_new = $(result + 'item_type').val();
-        var item_type = $("#itemselection-item_type").val();
         //alert(item_type);
         //alert($("#itemselection-rent_amount").val());
-
-        $(result + 'item_category').val($("#itemselection-item_category").val());
+        $(result + 'item_category').val(selected_item_category);
         if (display_amt) {
-            $(result + 'amount').val($("#itemselection-rent_amount").val());
+            $(result + 'amount').val(selected_item_amount);
         } else {
             $(result + 'amount').val(0);
         }
-        var imgsrc = $("#itemselection-img").attr("src");
         $(result + 'img').attr("src", imgsrc);
-
         var deposite_applicable = $('#bookingheader-deposite_applicable').is(":checked");
-
         if (deposite_applicable) {
-            $(result + 'deposit_amount').val($("#itemselection-deposit_amount").val());
+            $(result + 'deposit_amount').val(selected_item_deposite_amount);
         } else {
             $(result + 'deposit_amount').val(0);
         }
-
         var description = result + "description";
-        var value_oth = $("#itemselection-item_type").val();
+
         $(result + 'product_id').val(product_id);
         //alert(description);
         $(result + 'item_desc').closest('.desc').find('.temp_change_item_row').hide();
@@ -2266,9 +2345,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         $('.search_row').slideUp(200);
         $('.overlay-back').hide();
         $(".other_details_data").html('');
-
         // }
-
         // var id="#salesheader-exchange_rate";
         add_total(id);
     }
@@ -2438,7 +2515,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         });
     }
 function initICheck($container) {
-      console.log($container)
+     // console.log($container)
     $container.find('input.my-checkbox').each(function () {
         let $this = $(this);
 
@@ -2454,11 +2531,38 @@ function initICheck($container) {
             radioClass: 'iradio_square-blue',
             increaseArea: '20%'
         }).on('ifChanged', function () {
-            console.log('Changed:', $(this).is(':checked'));
+            //console.log('Changed:', $(this).is(':checked'));
+
         });
     });
 }
+function initMenuICheck($container) {
+     // console.log($container)
+    $container.find('input.menu_item-checkbox').each(function () {
+        let $this = $(this);
 
+
+        // Remove iCheck if already initialized
+        if ($this.parent().hasClass('icheckbox_square-blue')) {
+            $this.iCheck('destroy');
+        }
+
+        // Initialize iCheck
+        $this.iCheck({
+            checkboxClass: 'check icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%'
+        }).on('ifChanged', function () {
+          console.log('Changed:', $(this).is(':checked'));
+          var item_id = $(this).val();
+          if($(this).is(':checked') == true){
+            $(`#item_main_${item_id}`).addClass('selected');
+          }else{
+            $(`#item_main_${item_id}`).removeClass('selected');
+          }
+        });
+    });
+}
     function removePaymentitem() {
         saved_flag = true;
         /* if (count_item==2) {
@@ -2474,6 +2578,23 @@ function initICheck($container) {
             add_total_payment();
         });
     }
+
+    function setitemsbilling() {
+  $('.menu_item-checkbox:checked').each(function() {
+    var value = $(this).val();
+    var item_details = $(this).data('itemdetails');
+    let bookingitem_id = `bookingitem-${count_item}-item_id`;
+    console.log(bookingitem_id);
+    if($(`#${bookingitem_id}`) == undefined || $(`#${bookingitem_id}`).val()!=''){
+      $('#add_billing_item').click();
+    }
+
+   addText(bookingitem_id, item_details)
+
+
+});
+slider_close();
+}
     function show_image(imgelement){
       $('#pModal').modal('show');
         $('#modal-title').html(`Image`);
@@ -2481,7 +2602,6 @@ function initICheck($container) {
         $('#modalContent').html(`<img src='${path}' style='width: 300px; height: 250px;'/>`);
     }
     function addBookingitem() {
-
         if (order_status) {
             return;
         }
@@ -2492,9 +2612,7 @@ function initICheck($container) {
                 updateItemRow($(this));
             });
             $('.desc .temp_change_item').unbind().click(function () {
-
                 select_item_function($(this));
-
             });
             var item_status_id = "bookingitem-" + (count_item - 1) + "-item_status";
             $('#' + item_status_id).val('Booked');
@@ -2513,8 +2631,6 @@ function initICheck($container) {
                 $(sr_replace).html(i);
                 //$(sr_no_replace).val(i);
             }
-
-
         });
     }
 

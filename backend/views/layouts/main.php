@@ -63,7 +63,7 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
         z-index: 1050;
         background: rgba(0, 0, 0, 0.4);
         border-radius: 3px;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
@@ -469,7 +469,7 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
     <center style="font-size: 20px;color: #3c60b5;margin-top: 30px"><b id="data_progress_bar"
                                                                        style="background-color: #ffffff"></b></center>
   </div>
-  <div class="overlay-back" style="display:none">
+  <div class="overlay-back" style="display:none" onclick="slider_close()">
 
   </div>
   <div class="main-panel">
@@ -823,8 +823,13 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
       </nav>
       <!-- End Navbar -->
     </div>
-
+<aside class="sidebar-modal control-sidebar-modal-centralized"
+               style="position: fixed;right:0;z-index:1095;display: none;width:80%; height: 100%">
+          <div class="tab-content" style="overflow-y:auto;overflow-x: hidden; height: 100%;">
+          </div>
+        </aside>
     <div class="container">
+
       <!-- ============================================================== -->
       <!-- Container fluid  -->
       <!-- ============================================================== -->
@@ -891,7 +896,10 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
     }
     return true;
   }
-
+  function slider_close() {
+    $(".sidebar-modal").hide('slide');
+    $(".overlay-back").hide();
+  }
   function checkitembooking(val) {
     $.ajax({
       url: "<?php echo \Yii::$app->getUrlManager()->createUrl('booking/item-check-autocomplete') ?>",
