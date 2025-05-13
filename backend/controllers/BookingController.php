@@ -119,53 +119,7 @@ class BookingController extends Controller
     return array(true);
   }
 
-  public function checkBooking($product_id, $pickup_date, $return_date, $booking_id = null)
-  {
-    $where_booking = ($booking_id == null) ? 1 : ['!=', 'booking_id', $booking_id];
-    $booking_items = BookingItem::find()->select(['item_id', 'booking_id', 'product_id', 'item_no', 'pickup_date', 'return_date'])->where(['product_id' => $product_id])->andWhere("`pickup_date` <= '$return_date' and `return_date` >= '$pickup_date'")->andWhere(['item_status' => ['Booked', 'Picked']])->andWhere($where_booking)->orderBy(['pickup_date'=>SORT_ASC])->asArray()->all();
-    //
-    $flag = 0;
-    $message = "";
-    // print_r($booking_items);die;
-    $multi_items = [];
-    $warning_items = [];
-    if ($booking_items != null || sizeOf($booking_items)) {
-      $flag = 1;
-      $message = "Booking for Items exist. Booking Dates: ";
-      //print_r($booking_items);
-      foreach ($booking_items as $booking_item) {
-        if (is_array($product_id)) {
-          $multi_items[$booking_item['product_id']][] = $this->dateFormat($booking_item['pickup_date'], 'd-m-Y') . " -> " . $this->dateFormat($booking_item['return_date'], 'd-m-Y');
-        } else {
-          $message .= " [" . $this->dateFormat($booking_item['pickup_date'], 'd-m-Y') . " -> " . $this->dateFormat($booking_item['return_date'], 'd-m-Y') . "] ";
-        }
-      }
-    }
-     if (is_array($product_id)) {
-       $pickup_date_temp = new DateTime($pickup_date);
-       $pickup_date_temp->modify('-1 day');
-       $fromdate =$pickup_date_temp->format('Y-m-d');
-        $return_date_temp = new DateTime($return_date);
-       $return_date_temp->modify('+1 day');
-       $todate =$return_date_temp->format('Y-m-d');
-       $booking_itm = BookingItem::find()->leftJoin('item_master','booking_item.product_id = item_master.id')->where
-         (['>', 'dry_cleaning_treshold' ,0])->andWhere(['product_id' => $product_id])->andWhere(['or', ["between",'return_date', new Expression('DATE_SUB("'
-         .$pickup_date.'", INTERVAL item_master.`dry_cleaning_treshold` DAY)'),$fromdate], ["between",'pickup_date', $todate, new Expression('DATE_ADD("'.$return_date.'", INTERVAL item_master.`dry_cleaning_treshold` DAY)')]])->orderBy(['pickup_date'=>SORT_ASC])
-         ->asArray
-         ()->all();
-       foreach ($booking_itm as $book_item){
-         if(!isset($multi_items[$book_item['product_id']])){
-           $warning_items[$book_item['product_id']][] = $this->dateFormat($book_item['pickup_date'], 'd-m-Y') . " -> " . $this->dateFormat($book_item['return_date'], 'd-m-Y');
-         }
 
-       }
-
-     }
-    //return array('status'=>$flag,'errors'=>array($message));
-
-
-    return array('flag' => $flag, 'errors' => array($message), 'multi_items' => $multi_items, 'warning' => $warning_items);
-  }
 
   public function actionCheckAvailability()
   {
@@ -177,7 +131,7 @@ class BookingController extends Controller
     $item_ids = ArrayHelper::getColumn($item_master, 'id');
     $pickup_date = $this->dateFormat($pickup_date, 'Y-m-d');
     $return_date = $this->dateFormat($return_date, 'Y-m-d');
-    $result = $this->checkBooking($item_ids, $pickup_date, $return_date);
+    $result = Yii::$app->helpercomponent->checkBooking($item_ids, $pickup_date, $return_date);
     return $result;
   }
 
@@ -623,7 +577,7 @@ class BookingController extends Controller
             $booking_item->item_status = 'Returned';
             //$this->updateRentCount($booking_item->product_id);
           }
-          $check_booking_status = $this->checkBooking($booking_item->product_id, $booking_item->pickup_date, $booking_item->return_date);
+          $check_booking_status = Yii::$app->helpercomponent->checkBooking($booking_item->product_id, $booking_item->pickup_date, $booking_item->return_date);
           //print_r($check_booking_status);die;
           if ($check_booking_status['flag']) {
             return array('errors' => $check_booking_status['errors']);
@@ -1345,7 +1299,7 @@ class BookingController extends Controller
               $booking_item->item_status = 'Returned';
               //$this->updateRentCount($booking_item->product_id);
             }
-            $check_booking_status = $this->checkBooking($booking_item->product_id, $booking_item->pickup_date, $booking_item->return_date, $model->booking_id);
+            $check_booking_status = Yii::$app->helpercomponent->checkBooking($booking_item->product_id, $booking_item->pickup_date, $booking_item->return_date, $model->booking_id);
             //print_r($check_booking_status);die;
             if ($check_booking_status['flag']) {
               return array('errors' => $check_booking_status['errors']);
@@ -1362,7 +1316,7 @@ class BookingController extends Controller
 
               $item_status = ($picked_status) ? 'Picked' : $booking_item->item_status;
             }
-            $check_booking_status = $this->checkBooking($booking_item->product_id, $model->pickup_date, $model->return_date, $model->booking_id);
+            $check_booking_status = Yii::$app->helpercomponent->checkBooking($booking_item->product_id, $model->pickup_date, $model->return_date, $model->booking_id);
             //print_r($check_booking_status);die;
             if ($check_booking_status['flag']) {
               return array('errors' => $check_booking_status['errors']);
