@@ -1183,6 +1183,9 @@ class BookingController extends Controller
     //print_r($_POST);die;
     $address_grup = ArrayHelper::map(AddressGroup::find()->all(), 'id', 'name');
     $booking_items = $model->bookingItems;
+    if($booking_items == null){
+      $booking_items = [new BookingItem()];
+    }
     $customer_model = $model->customer;
     $bal_amount = 0;
     $where_carry = ($model->order_status == 'Open') ? ['status' => 0] : ['settle_with_booking_id' => $model->booking_id];
