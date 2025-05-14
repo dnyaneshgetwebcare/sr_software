@@ -26,17 +26,17 @@ $this->title = 'Daliy Summary';
      }
 </style>
 <div class="payment-master-index">
-
-   
-
-   
   <div class="row">
                     <div class="col-12" style="overflow: auto;">
                         <div class="card" style="width: 100%; ">
                             <div class="card-body">
 
 <div class="table-responsive m-t-40">
-    <?php echo GridView::widget([
+    <?php
+    $user = Yii::$app->user->identity;
+$is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true : false;
+    $page_summary = $is_admin;
+    echo GridView::widget([
        /* 'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'toolbar'=>[
@@ -78,7 +78,7 @@ $this->title = 'Daliy Summary';
                 'headerRowOptions' => ['class' => 'kartik-sheet-style'],
                 'filterRowOptions' => ['class' => 'kartik-sheet-style'],
                 //'columns' => $arrColumns,
-                'showPageSummary' => true,
+                'showPageSummary' => $page_summary,
                 'pageSummaryRowOptions' => ['style'=>'background:#F9F908;font-size:15px;font-weight:bold'],
                 'pjax' => true,
                 'pjaxSettings'=> [
@@ -122,11 +122,11 @@ $this->title = 'Daliy Summary';
 
             //'payment_id',
             //'date',
-           
+
             [
               'attribute'=>'date',
-               'header'=>'Payment Date',
-              'headerOptions' => ['style' => 'width:5%'],
+               'header'=>'Date',
+              'headerOptions' => ['style' => 'width:4%'],
               'value'=> function($model, $key, $index, $grid){
                 return Yii::$app->formatter->asDate($model['date'],'dd-MM-yy');
                },
@@ -149,65 +149,85 @@ $this->title = 'Daliy Summary';
            
              
             [ 'attribute'=>'cash_rec',
-                'headerOptions' => ['style' => 'width:8%'],
+                'headerOptions' => ['style' => 'width:12%'],
                 'format'=>['decimal',0],
-                'header'=>'Rec. Cash',
+                'header'=>'Cash',
                 // 'group'=>true,
            //  'subGroupOf'=>1,
-              'pageSummary' => true,
+              'pageSummary' => $page_summary,
                 //'footer' => PaymentMaster::getTotal($dataProvider->models, 'rent_amount'),
                 
             ],
-               [ 'attribute'=>'online_rec',
-                'headerOptions' => ['style' => 'width:8%'],
+          [ 'attribute'=>'online_rec_comp',
+                'headerOptions' => ['style' => 'width:12%'],
                 'format'=>['decimal',0],
-                'header'=>'Rec. Online',
+                'header'=>'Company Acc.',
                 // 'group'=>true,
            //  'subGroupOf'=>1,
-              'pageSummary' => true,
+              'pageSummary' => $page_summary,
+                //'footer' => PaymentMaster::getTotal($dataProvider->models, 'rent_amount'),
+
+            ],
+          [ 'attribute'=>'online_rec_other',
+                'headerOptions' => ['style' => 'width:12%'],
+                'format'=>['decimal',0],
+                'header'=>'Other Acc.',
+                // 'group'=>true,
+           //  'subGroupOf'=>1,
+              'pageSummary' => $page_summary,
+                //'footer' => PaymentMaster::getTotal($dataProvider->models, 'rent_amount'),
+
+            ],
+               [ 'attribute'=>'online_rec',
+                'headerOptions' => ['style' => 'width:12%'],
+                'format'=>['decimal',0],
+                'header'=>'Total',
+                // 'group'=>true,
+           //  'subGroupOf'=>1,
+              'pageSummary' => $page_summary,
                 //'footer' => PaymentMaster::getTotal($dataProvider->models, 'rent_amount'),
                 
             ],
             
                [ 'attribute'=>'charge_on',
-                'headerOptions' => ['style' => 'width:8%'],
+                'headerOptions' => ['style' => 'width:12%'],
                 'format'=>['decimal',0],
                 'header'=>'Extra',
                 // 'group'=>true,
            //  'subGroupOf'=>1,
-              'pageSummary' => true,
+              'pageSummary' => $page_summary,
                 //'footer' => PaymentMaster::getTotal($dataProvider->models, 'rent_amount'),
                 
             ],
             
                [ 'attribute'=>'cash_return',
-                'headerOptions' => ['style' => 'width:8%'],
+                'headerOptions' => ['style' => 'width:12%'],
                 'format'=>['decimal',0],
-                'header'=>'Return Cash',
+                'header'=>'Cash',
                 // 'group'=>true,
            //  'subGroupOf'=>1,
-              'pageSummary' => true,
+              'pageSummary' => $page_summary,
                 //'footer' => PaymentMaster::getTotal($dataProvider->models, 'rent_amount'),
                 
             ],
             [ 'attribute'=>'online_return',
-                'headerOptions' => ['style' => 'width:8%'],
+                'headerOptions' => ['style' => 'width:12%'],
                 'format'=>['decimal',0],
-                'header'=>'Return Online',
+                'header'=>'Online',
                 // 'group'=>true,
            //  'subGroupOf'=>1,
-              'pageSummary' => true,
+              'pageSummary' => $page_summary
                 //'footer' => PaymentMaster::getTotal($dataProvider->models, 'rent_amount'),
                 
             ],
             [ 
-                'headerOptions' => ['style' => 'width:8%'],
+                'headerOptions' => ['style' => 'width:12%'],
                 'format'=>['decimal',0],
                 'header'=>'Balance Cash',
                 'value'=> function($model, $key, $index, $grid){
                 return $model['cash_rec']- $model['cash_return'];
                },
-               'pageSummary' => true,
+               'pageSummary' => $page_summary,
                 //'footer' => PaymentHeader::getTotal($dataProvider->models, 'amount'),
             ],
           
@@ -218,6 +238,31 @@ $this->title = 'Daliy Summary';
 
             
         ],
+        'beforeHeader'=>[
+        // Level 1 Grouping
+        [
+            'columns'=>[
+                ['content'=>'', 'options'=>['colspan'=>1]],
+                ['content'=>'Recived', 'options'=>['colspan'=>5, 'class'=>'text-center success']],
+                ['content'=>'Return', 'options'=>['colspan'=>2, 'class'=>'text-center warning']],
+              ['content'=>'', 'options'=>['colspan'=>1]],
+            ],
+            'options'=>['class'=>'skip-export']
+        ],
+        // Level 2 Grouping
+        [
+            'columns'=>[
+                ['content'=>'', 'options'=>['colspan'=>1]],
+                ['content'=>'', 'options'=>['colspan'=>1]],
+                ['content'=>'Online', 'options'=>['colspan'=>3, 'class'=>'text-center info']],
+              ['content'=>'', 'options'=>['colspan'=>1]],
+              ['content'=>'', 'options'=>['colspan'=>1]],
+              ['content'=>'', 'options'=>['colspan'=>1]],
+              ['content'=>'', 'options'=>['colspan'=>1]],
+            ],
+            'options'=>['class'=>'skip-export']
+        ]
+    ],
     ]); ?>
 
 
