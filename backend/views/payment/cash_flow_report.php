@@ -126,7 +126,8 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
             [
               'attribute'=>'date',
                'header'=>'Date',
-              'headerOptions' => ['style' => 'width:4%'],
+              'contentOptions' => ['class' => 'text-end'],
+              'headerOptions' => ['style' => 'width:10%'],
               'value'=> function($model, $key, $index, $grid){
                 return Yii::$app->formatter->asDate($model['date'],'dd-MM-yy');
                },
@@ -150,6 +151,7 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
              
             [ 'attribute'=>'cash_rec',
                 'headerOptions' => ['style' => 'width:12%'],
+              'contentOptions' => ['class' => 'text-end'],
                 'format'=>['decimal',0],
                 'header'=>'Cash',
                 // 'group'=>true,
@@ -159,7 +161,8 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
                 
             ],
           [ 'attribute'=>'online_rec_comp',
-                'headerOptions' => ['style' => 'width:12%'],
+                'headerOptions' => ['style' => 'width:12%; background-color: #7ad3ff'],
+            'contentOptions' => ['class' => 'text-end'],
                 'format'=>['decimal',0],
                 'header'=>'Company Acc.',
                 // 'group'=>true,
@@ -169,7 +172,8 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
 
             ],
           [ 'attribute'=>'online_rec_other',
-                'headerOptions' => ['style' => 'width:12%'],
+                'headerOptions' => ['style' => 'width:12% ; background-color: #7ad3ff'],
+            'contentOptions' => ['class' => 'text-end'],
                 'format'=>['decimal',0],
                 'header'=>'Other Acc.',
                 // 'group'=>true,
@@ -179,7 +183,8 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
 
             ],
                [ 'attribute'=>'online_rec',
-                'headerOptions' => ['style' => 'width:12%'],
+                'headerOptions' => ['style' => 'width:12%;  background-color: #7ad3ff'],
+                 'contentOptions' => ['class' => 'text-end info', 'style'=> 'font-weight:bold'],
                 'format'=>['decimal',0],
                 'header'=>'Total',
                 // 'group'=>true,
@@ -190,7 +195,8 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
             ],
             
                [ 'attribute'=>'charge_on',
-                'headerOptions' => ['style' => 'width:12%'],
+                'headerOptions' => ['style' => 'width:10%'],
+                 'contentOptions' => ['class' => 'text-end'],
                 'format'=>['decimal',0],
                 'header'=>'Extra',
                 // 'group'=>true,
@@ -201,7 +207,8 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
             ],
             
                [ 'attribute'=>'cash_return',
-                'headerOptions' => ['style' => 'width:12%'],
+                'headerOptions' => ['style' => 'width:10%'],
+                 'contentOptions' => ['class' => 'text-end'],
                 'format'=>['decimal',0],
                 'header'=>'Cash',
                 // 'group'=>true,
@@ -212,6 +219,7 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
             ],
             [ 'attribute'=>'online_return',
                 'headerOptions' => ['style' => 'width:12%'],
+              'contentOptions' => ['class' => 'text-end'],
                 'format'=>['decimal',0],
                 'header'=>'Online',
                 // 'group'=>true,
@@ -222,6 +230,7 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
             ],
             [ 
                 'headerOptions' => ['style' => 'width:12%'],
+              'contentOptions' => ['class' => 'text-end', 'style' => 'background-color: #ebe76c;font-weight: bold;'],
                 'format'=>['decimal',0],
                 'header'=>'Balance Cash',
                 'value'=> function($model, $key, $index, $grid){
@@ -230,21 +239,15 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
                'pageSummary' => $page_summary,
                 //'footer' => PaymentHeader::getTotal($dataProvider->models, 'amount'),
             ],
-          
-            
             //'booking_id',
-
-           
-
-            
         ],
         'beforeHeader'=>[
         // Level 1 Grouping
         [
             'columns'=>[
                 ['content'=>'', 'options'=>['colspan'=>1]],
-                ['content'=>'Recived', 'options'=>['colspan'=>5, 'class'=>'text-center success']],
-                ['content'=>'Return', 'options'=>['colspan'=>2, 'class'=>'text-center warning']],
+                ['content'=>'Received', 'options'=>['colspan'=>5, 'class'=>'text-center success']],
+                ['content'=>'Returned', 'options'=>['colspan'=>2, 'class'=>'text-center warning']],
               ['content'=>'', 'options'=>['colspan'=>1]],
             ],
             'options'=>['class'=>'skip-export']
