@@ -678,7 +678,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                     $active_div = ($model->booking_id != '' && $indexHouse != 0) ? '' : 'display:none;';
                     $item_status = false;
                     $item_master = $booking_item->item;
-                    $image_pth = ($model->booking_id != '' && $indexHouse != 0) ? $booking_item->item->imageurl : $image_path;
+                    $image_pth = ($model->booking_id != '' && $indexHouse != 0 && $item_master!=null) ?
+                    $item_master->imageurl :
+                      $image_path;
                     $booking_item->item_status = ($model->booking_id != '' && $indexHouse != 0) ? $booking_item->item_status : 'Booked';
                     if ($model->booking_id != '' && $indexHouse != 0) {
                       $item_status = ($booking_item->item_status != 'Booked');
