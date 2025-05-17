@@ -1,3 +1,7 @@
+<?php
+$this->title = 'Packing';
+?>
+
 <div>
 <table class="table table-head-bg-primary mt-4">
 										<thead>

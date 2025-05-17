@@ -5,7 +5,7 @@ use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
-
+$this->title = 'Packing';
 ?>
 <style>
   .select2-search__field{
