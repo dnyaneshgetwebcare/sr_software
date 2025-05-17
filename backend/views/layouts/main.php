@@ -179,6 +179,12 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
                   </a>
                 </li>
                 <li>
+                  <a href="index.php?r=packing/index">
+                        <span class="sub-item">Packing Item
+                        </span>
+                  </a>
+                </li>
+                <li>
                   <a href="index.php?r=booking-item/index">
                         <span class="sub-item">Pickup Item
                         </span>
