@@ -261,7 +261,10 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         </div>
       </div>
       <input type="hidden" name="booking_sms" id="booking_sms" value="0">
-      <?php echo $form->field($model, 'customer_id')->hiddenInput(['maxlength' => true, 'class' => 'form-control', 'placeholder' => $model->attributeLabels()['customer_id'], 'autocomplete' => "off", 'id' => "hidden_id"])->label(false);
+      <?php  $model->updated_time_temp = $model->updated_time;
+      echo $form->field($model, 'updated_time_temp')->hiddenInput(['maxlength' => true, 'class' => 'form-control',
+        'placeholder' => $model->attributeLabels()['updated_time']])->label(false);
+      echo $form->field($model, 'customer_id')->hiddenInput(['maxlength' => true, 'class' => 'form-control', 'placeholder' => $model->attributeLabels()['customer_id'], 'autocomplete' => "off", 'id' => "hidden_id"])->label(false);
       echo $form->field($customer_model, 'id')->hiddenInput(['maxlength' => true, 'class' => 'form-control', 'placeholder' => $model->attributeLabels()['customer_id'], 'autocomplete' => "off"])->label(false);
       echo $form->field($model, 'order_status')->hiddenInput(['maxlength' => true, 'class' => 'form-control'])->label(false);
       echo $form->field($model, 'status')->hiddenInput(['maxlength' => true, 'class' => 'form-control'])->label(false);

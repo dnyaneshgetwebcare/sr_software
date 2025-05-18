@@ -111,6 +111,7 @@ class BookingController extends Controller
 
   public function actionCancelDelivery()
   {
+
     $booking_id = $_POST['booking_id'];
     $booking_item = $_POST['booking_item'];
     Yii::$app->response->format = Response::FORMAT_JSON;
@@ -788,6 +789,7 @@ class BookingController extends Controller
   public function actionDeliveryItem()
   {
     # code...
+
     Yii::$app->response->format = Response::FORMAT_JSON;
     $transaction = Yii::$app->db->beginTransaction();
     if (!isset($_POST['selection'])) {
@@ -806,13 +808,18 @@ class BookingController extends Controller
     $other_charges = $_POST['BookingHeader']['other_charges'];
     $pending_amount = $_POST['BookingHeader']['pending_amount'];
     $model = $this->findModel($booking_id);
+    $old_updated_timestamp = $model->updated_time;
     $payment_models = $model->payment;
     $old_pick_up = $model->pickup_date;
     $payment_status = (($model->net_value - $paid_amount) == 0);
     if ($payment_models == null) {
       $payment_models = [new PaymentMaster()];
     }
+   $updated_timestamp_temp =  $_POST['updated_time_temp'];
 
+       if (strtotime($updated_timestamp_temp) != strtotime($old_updated_timestamp)) {
+          return array('errors' => array("Please Refresh Page...!"));
+        }
     $oldIDs_payment = ArrayHelper::map($payment_models, 'payment_id', 'payment_id');
     $payment_models = DynamicFormsPaymentItems::createMultiple(PaymentMaster::classname());
     DynamicFormsPaymentItems::loadMultiple($payment_models, Yii::$app->request->post());
@@ -1181,6 +1188,7 @@ class BookingController extends Controller
     $model = $this->findModel($id);
     //$this->sendInvoice($model);die;
     //print_r($_POST);die;
+    $old_updated_timestamp = $model->updated_time;
     $address_grup = ArrayHelper::map(AddressGroup::find()->all(), 'id', 'name');
     $booking_items = $model->bookingItems;
     if($booking_items == null){
@@ -1232,6 +1240,10 @@ class BookingController extends Controller
         $result_payment_item = ActiveForm::validateMultiple($payment_models);
         $no_payment = true;
       }
+      $updated_temp_time = $model->updated_time_temp;
+       if (strtotime($updated_temp_time) != strtotime($old_updated_timestamp)) {
+          return array('errors' => array("Please Refresh Page...!"));
+        }
       //print_r($booking_items);die;
       $result = ActiveForm::validate($model);
       $result_cust = ActiveForm::validate($customer_model);

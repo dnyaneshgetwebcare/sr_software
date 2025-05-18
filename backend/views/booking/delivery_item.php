@@ -98,6 +98,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
 
                 <input type="hidden" name="item_status" value="<?= $item_status ?>">
                 <input type="hidden" name="booking_id" value="<?= $booking_id ?>">
+                <input type="hidden" name="updated_time_temp" value="<?= $model->updated_time ?>">
 
                 <div class="row show_vendor_data">
                     <div class="row">

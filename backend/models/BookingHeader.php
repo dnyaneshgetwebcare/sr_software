@@ -3,6 +3,8 @@
 namespace backend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "booking_header".
@@ -31,12 +33,24 @@ class BookingHeader extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-     
+       public function behaviors()
+  {
+    return [
+      ['class' => \yii\behaviors\TimestampBehavior::className(),
+        'attributes' => [
+          ActiveRecord::EVENT_AFTER_VALIDATE => ['updated_time'],
+        ],
+        // if you're using datetime instead of UNIX timestamp:
+        'value' => new Expression('NOW()'),
+      ]
+    ];
+  }
+
     public static function tableName()
     {
         return 'booking_header';
     }
-    public $diplay_amount,$picked_up,$cancel_flag,$pending_amount,$settl_booking_id,$open_balance;
+    public $diplay_amount,$picked_up,$cancel_flag,$pending_amount,$settl_booking_id,$open_balance, $updated_time_temp;
     /**
      * {@inheritdoc}
      */
@@ -47,7 +61,7 @@ class BookingHeader extends \yii\db\ActiveRecord
             [['pickup_date', 'return_date'], 'required','when' => function ($model) { 
               return $model->postpond == 0; 
           }, ],
-            [['booking_date', 'pickup_date', 'picked_date', 'return_date', 'returned_date', 'picked_date', 'returned_date','deposite_amount', 'deposite_status', 'order_status','rent_amount','waist','hip','chest','payment_status','picked_up','complete_order','extra_amount', 'status','cancellation_charges','return_amount','cancel_flag','earning_amount','other_charges','pending_amount','postpond','issues_penalty','issues_reason','carry_frwd_app', 'remark'], 'safe'],
+            [['booking_date', 'pickup_date', 'picked_date', 'return_date', 'returned_date', 'picked_date', 'returned_date','deposite_amount', 'deposite_status', 'order_status','rent_amount','waist','hip','chest','payment_status','picked_up','complete_order','extra_amount', 'status','cancellation_charges','return_amount','cancel_flag','earning_amount','other_charges','pending_amount','postpond','issues_penalty','issues_reason','carry_frwd_app', 'remark', 'updated_time', 'updated_time_temp'], 'safe'],
             [['net_value', 'discount', 'deposite_amount'], 'number'],
             [['deposite_applicable',  'customer_id'], 'integer'],
             [['deposite_status', 'order_status', 'status'], 'string'],
@@ -87,6 +101,7 @@ class BookingHeader extends \yii\db\ActiveRecord
              'carry_frwd_app' => 'Apply Carry Forward',
              'issues_penalty' => 'Penality Amount',
              'issues_reason' => 'Issue Reason',
+             'updated_time' => 'Updated Time',
 
 
         ];
