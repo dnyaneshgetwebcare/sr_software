@@ -2092,7 +2092,10 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         }
         console.log(return_err)
         if (return_err != '') {
-          alert(return_err)
+          //alert(return_err)
+          $('#errors_customer').show();
+          $('#error_display_customer').html(return_err);
+
         } else {
           alert("Successful")
           showView(data['customer_id'], data['customer_name'])

@@ -24,6 +24,20 @@ use kartik\date\DatePicker;
             <div class="card">
 
                 <div class="card-body">
+                   <div class="col-lg-12">
+        <div class="error-summary-customer alert alert-danger" id="errors_customer" style="display: none;">
+          <p><i class="fa fa-close pull-right" onclick="$(&quot;#errors_test1&quot;).hide()"></i>
+          <h5 class="text-danger">
+            <b>
+              <i class="fa fa-exclamation-triangle"></i>
+              <?= 'ERRORS'; ?>:
+            </b>
+          </h5>
+          </p>
+          <hr class="custom_error_hr">
+          <div id="error_display_customer" class="custom_error"></div>
+        </div>
+      </div>
                     <div class="form-body">
 
 

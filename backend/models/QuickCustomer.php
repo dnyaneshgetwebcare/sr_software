@@ -41,10 +41,22 @@ class QuickCustomer extends CustomerMaster
             [['created_date','id','contact_nos_2','cust_group','created_on'], 'safe'],
             [['email_id'],'email'],
             [['name', 'email_id', 'reference_name'], 'string', 'max' => 150],
-           // [['contact_nos', 'contact_nos_2'], 'string', 'length' => 10],
+           [['contact_nos'], 'validateUniqueContact'],
             [['address'], 'string', 'max' => 350],
         ];
     }
+
+    public function validateUniqueContact($attribute, $params)
+{
+    $existingCustomer = self::find()
+        ->where(['contact_nos' => $this->$attribute])
+        ->andFilterWhere(['!=', 'id', $this->id]) // Exclude current record during update
+        ->one();
+
+    if ($existingCustomer) {
+        $this->addError($attribute, "Contact nos. already used by: <span style='color: blue; cursor: pointer' onclick=\"showView({$existingCustomer->id},'{$existingCustomer->name}')\">{$existingCustomer->id} - {$existingCustomer->name}. Select</span>");
+    }
+}
 
     /**
      * {@inheritdoc}

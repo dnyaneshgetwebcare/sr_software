@@ -117,7 +117,7 @@ return $this->render('quick_search',['searchModel' => $searchModel]);
         if ($model->load(Yii::$app->request->post())) {
             $model->created_on=$this->dateFormat($model->created_on);
            if(!$model->save()){
-return json_encode(['result'=>false,'errors'=>$model->errors]);
+             return json_encode(['result'=>false,'errors'=>$model->errors]);
            }
            return json_encode(['result'=>true,'customer_id'=>$model->id,'customer_name'=>$model->name]);
            // return $this->redirect(['view', 'id' => $model->id]);
