@@ -25,6 +25,14 @@ $is_admin = ($user->user_type == "admin") ? true : false;
     /*  .table-bordered>tbody>tr>td,.table-bordered>thead>tr>th{
   border:1px solid #eee !important;
  }*/
+    @media (min-width: 768px) {
+  #menu_button{
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* add other positioning properties as needed */
+  }
+}
     .close {
         position: absolute;
         right: 20px;
@@ -617,7 +625,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
           <div class="tab-pane  show active in" id="component_pills" role="tabpanel"
                aria-labelledby="pills-items-tab">
             <div class="row">
-              <div class="col-lg-2" style="position: absolute;  right: 0;  top: 0;">
+              <div class="col-lg-2" id="menu_button" >
                 <button type="button" style="padding: 20px; font-size: 25px" class="btn btn-rounded btn-outline-primary
                            btn-icon btn-border" onclick="openMenucard(1)">
                   <i class="fa fas fa-chess-king"></i>

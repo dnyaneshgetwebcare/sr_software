@@ -1331,10 +1331,12 @@ class BookingController extends Controller
 
               $item_status = ($picked_status) ? 'Picked' : $booking_item->item_status;
             }
-            $check_booking_status = Yii::$app->helpercomponent->checkBooking($booking_item->product_id, $model->pickup_date, $model->return_date, $model->booking_id);
-            //print_r($check_booking_status);die;
-            if ($check_booking_status['flag']) {
-              return array('errors' => $check_booking_status['errors']);
+            if(!$complete_order) {
+              $check_booking_status = Yii::$app->helpercomponent->checkBooking($booking_item->product_id, $model->pickup_date, $model->return_date, $model->booking_id);
+              //print_r($check_booking_status);die;
+              if ($check_booking_status['flag']) {
+                return array('errors' => $check_booking_status['errors']);
+              }
             }
             BookingItem::updateAll([
               'booking_id' => $model->booking_id,

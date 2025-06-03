@@ -198,7 +198,7 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
                 </li>
                 <li>
                   <a href="index.php?r=booking/pending-deposite">
-                     <span class="sub-item">Return Deposite Pending
+                     <span class="sub-item">Return Deposit Pending
                      </span>
                   </a>
                 </li>
