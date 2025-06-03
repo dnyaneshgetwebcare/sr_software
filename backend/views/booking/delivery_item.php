@@ -58,13 +58,26 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
 
         <div class="col-md-5 col-8 align-self-center">
 
-            <h3 class="text-themecolor m-b-0 m-t-0"><a href="index.php?r=booking%2Fupdate&id=<?= $booking_id ?>"
-                                                       tag="Go to order""><?= Html::encode($this->title) ?></a></h3>
+            <h3 class="text-themecolor m-b-0 m-t-0">
+              <a href="index.php?r=booking%2Fupdate&id=<?= $booking_id ?>"
+                                                       tag="Go to order""><?= Html::encode($this->title) ?>
+              </a>
+            </h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Sales</a></li>
                 <li class="breadcrumb-item active"><?= Html::encode($this->title) ?></li>
             </ol>
         </div>
+      <div class="col-md-5 col-8 align-self-center">
+        <span> <label>Customer Name: </label> <?= $customer_master['name']; ?></span> <br>
+        <span> <label>Contact Name: </label> <?= $customer_master['contact_nos']; ?></span>
+      </div>
+      <div class="col-md-2 col-8 align-self-center">
+        <button class="btn btn-secondary btn-border" onclick="sendwhatsapp('<?= "91".$customer_master['contact_nos']
+        ?>', '<?= $item_status; ?>')">
+          <i class="fabfa-whatsapp"></i>
+        </button>
+      </div>
     </div>
 
     <!--   <div class="row page-header update-page-header"  id="header_details">
@@ -663,5 +676,11 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
             //add();
             add_total_payment('');
         });
+    }
+    function sendwhatsapp(contact_nos, ord_status) {
+      let pickup_message = "Your outfits are packed and ready for pickup. Please collect them before 7:30 PM."
+       var message = encodeURI(pickup_message);
+        // window.open('https://api.whatsapp.com/send/?phone='+data["contact_nos"]+'&text='+message, '_blank').focus();
+        window.open('https://web.whatsapp.com/send/?phone=' + contact_nos + '&text=' + message, '_blank').focus();
     }
 </script>

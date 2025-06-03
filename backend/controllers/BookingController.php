@@ -387,7 +387,7 @@ class BookingController extends Controller
     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     $model = $this->findModel($id);
     $payment_models = $model->payment;
-
+    $customer_master = $model->customer;
     if ($payment_models == null) {
       $payment_models = [new PaymentMaster()];
     }
@@ -397,7 +397,8 @@ class BookingController extends Controller
       'item_status' => 'Picked',
       'booking_id' => $id,
       'payment_models' => $payment_models,
-      'model' => $model
+      'model' => $model,
+      'customer_master' => $customer_master,
     ]);
 
   }
@@ -411,7 +412,7 @@ class BookingController extends Controller
     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     $model = $this->findModel($id);
     $payment_models = $model->payment;
-
+    $customer_master = $model->customer;
     if ($payment_models == null) {
       $payment_models = [new PaymentMaster()];
     }
@@ -423,7 +424,8 @@ class BookingController extends Controller
       'item_status' => 'Returned',
       'booking_id' => $id,
       'payment_models' => $payment_models,
-      'model' => $model
+      'model' => $model,
+      'customer_master' => $customer_master,
     ]);
 
   }
