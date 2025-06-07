@@ -29,7 +29,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
   #menu_button{
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     /* add other positioning properties as needed */
   }
 }
