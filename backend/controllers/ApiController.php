@@ -43,6 +43,9 @@ class ApiController extends \yii\web\Controller
         $page_limt = isset($_GET['page_limit'])?$_GET['page_limit'] : 20;
         $page_nos = isset($_GET['page_nos'])?$_GET['page_nos'] : 1;
         $offset = ($page_limt * $page_nos) -$page_limt;
+        if($type != ""){
+          $type = explode(",",$type);
+        }
         $item_master = ItemMaster::find()->select(['item_master.id', 'item_master.name', 'item_master.details',  'type_id', 'type_master.name as type_name', 'item_master.category_id', 'category_master.name as category_name', 'rent_amount', 'colour_cat', 'color_master.name as color_name', 'images', 'size'])
             ->leftJoin('type_master','type_master.id = item_master.type_id')
             ->leftJoin('category_master',
