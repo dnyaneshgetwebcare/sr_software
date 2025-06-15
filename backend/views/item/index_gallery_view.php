@@ -149,7 +149,8 @@ $this->title = 'Item Masters';
         <div class="row image-gallery">
           <?php foreach ($item_master as $item_details) { ?>
             <div class="card col-6 col-md-3 mb-4">
-              <div class="card-body card-item_view" id = "card_body_<?= $item_details->id; ?>" style="padding:0;
+              <div class="card-body card-item_view <?= 'cat_item_'.$item_details['category_id'] ?> <?= 'type_item_'
+            .$item_details['type_id'] ?>" id = "card_body_<?= $item_details->id; ?>" style="padding:0;
               align-self:
               center;">
                 <a href="<?= $item_details->imageurl; ?>">
@@ -204,6 +205,7 @@ $(document).ready(function () {
   }
   if(sel_type !== ""){
     $(`#sel_type_${sel_cat}_${sel_type}`).prop('checked', true);
+    filter_data_type()
   }
 
 });
