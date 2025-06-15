@@ -74,11 +74,12 @@ $this->title = 'Item Masters';
 <div class="row">
   <div class="col-md-12">
     <div class="card">
-      <div class="card-header">
-        <h4 class="card-title col-md-7"">Item Master</h4>
-        <div class="col-md-4">
-          <?php
+       <div class="card-header">
+        <h4 class="card-title col-md-7"">Item</h4>
 
+        <div class="col-md-5">
+          <div style="width: 85%">
+            <?php
           echo DatePicker::widget([
             'name' => 'filter_from_date',
             'name2' => 'filter_from_date',
@@ -107,10 +108,42 @@ $this->title = 'Item Masters';
 
             ]
           ]); ?>
-
-        </div>
+            </div>
+          <div style="position: absolute;    top: 0px;    right: 26px;">
          <button type="button" class="btn btn-icon btn-info col-lg-1" onclick="checkAvailable()" ><i class="fa fa-search"></i></button>
-        <button type="button" class="btn btn-link col-lg-1" onclick="clear_check_avaiblity()" >Clear</i></button>
+        <button type="button" style="position: absolute; top: 30px; left: 0; padding: 6px 5px;" class="btn btn-link col-lg-1"
+                onclick="clear_check_avaiblity()" >Clear</i></button>
+
+       </div>
+        </div>
+          <div class="form-group">
+
+	<div class="selectgroup selectgroup-pills">
+    <?php  foreach ($model_category as $cat_id => $category){
+      ?>
+		<label class="selectgroup-item select_category <?= 'select_cat_'
+      .$cat_id ?>">
+			<input type="checkbox" value="<?= $cat_id; ?>" id = "cat_<?= $cat_id; ?>" class="selectgroup-input select_category_input"
+             onchange="filter_data()">
+			<span class="selectgroup-button"> <?php echo $category; ?></span>
+		</label>
+		<?php } ?>
+     <?php  foreach ($type_master as $type){
+       if( $type['id'] == $selected_type){
+         $selected_cat = $type['category_id'];
+       }
+       ?>
+		<label class="selectgroup-item filter_type <?= 'filter_cat_type_'.$type['category_id'] ?>" style="display: none;">
+			<input type="checkbox" value="<?= $type['id']; ?>" id = "sel_type_<?= $type['category_id']; ?>_<?= $type['id'];
+      ?>"
+             class="selectgroup-input select_type_input"
+             onchange="filter_data_type()">
+			<span class="selectgroup-button"> <?php echo $type['name']; ?></span>
+		</label>
+		<?php } ?>
+	</div>
+      </div>
+
       </div>
       <div class="card-body">
         <div class="row image-gallery">
@@ -162,7 +195,18 @@ $this->title = 'Item Masters';
 
 <script>
   // This will create a single gallery from all elements that have class "gallery-item"
+$(document).ready(function () {
+  let sel_type = "<?= $selected_type; ?>";
+  let sel_cat = "<?= $selected_cat; ?>";
+  if(sel_cat !== ""){
+    $(`#cat_${sel_cat}`).prop('checked', true);
+    filter_data()
+  }
+  if(sel_type !== ""){
+    $(`#sel_type_${sel_cat}_${sel_type}`).prop('checked', true);
+  }
 
+});
   $('.image-gallery').magnificPopup({
     delegate: 'a',
     type: 'image',
@@ -180,7 +224,63 @@ $this->title = 'Item Masters';
       }
     }
   });
+function filter_data() {
 
+  //$('.items_class').hide();
+  //let cat_class = `cat_item_${cat_id}`;
+  let check_count = 0;
+  $(`.select_category_input:checked`).each(function() {
+    let active_cat = $(this).val();
+     console.log(`Checked Cat : ${active_cat}`);
+    let cat_item_class = `cat_item_${active_cat}`;
+    let cat_type_class = `filter_cat_type_${active_cat}`;
+    $(`.${cat_item_class}`).show();
+    $(`.${cat_type_class}`).show();
+    check_count++;
+});
+
+  $(`.select_category_input:not(:checked)`).each(function() {
+
+    let active_cat = $(this).val();
+    console.log(`UnCheck Cat : ${active_cat}`);
+    let cat_item_class = `cat_item_${active_cat}`;
+    let cat_type_class = `filter_cat_type_${active_cat}`;
+    $(`.${cat_item_class}`).hide();
+
+    $(`.${cat_type_class} .selectgroup-input`).prop('checked', false);
+    $(`.${cat_type_class}`).hide();
+});
+  console.log(`Check Cat Count: ${check_count}`);
+if(check_count == 0){
+  $('.items_class').show();
+}
+}
+function filter_data_type() {
+
+  //$('.items_class').hide();
+  //let cat_class = `cat_item_${cat_id}`;
+  let check_count = 0;
+  $(`.select_type_input:checked`).each(function() {
+    let active_type = $(this).val();
+console.log(`Checked type: ${active_type}`);
+    let cat_item_class = `type_item_${active_type}`;
+    $(`.${cat_item_class}`).show();
+    check_count++;
+});
+
+  $(`.select_type_input:not(:checked)`).each(function() {
+    let in_active_type = $(this).val();
+    console.log(`UnCheck type: ${in_active_type}`);
+    let cat_item_class = `type_item_${in_active_type}`;
+    $(`.${cat_item_class}`).hide();
+});
+console.log(`Check Count: ${check_count}`);
+if(check_count == 0){
+  filter_data();
+  //$('.items_class').show();
+}
+
+}
 function checkAvailable() {
   let fromdate = $("#from_date").val();
   let todate = $("#to_date").val();

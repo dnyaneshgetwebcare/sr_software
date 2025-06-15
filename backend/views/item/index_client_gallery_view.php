@@ -148,6 +148,8 @@ $this->title = 'Item Masters';
 		<?php } ?>
 	</div>
       </div>
+
+      </div>
       <div class="card-body" style="height: 100vh; overflow: auto">
         <div class="row image-gallery">
           <?php foreach ($item_master as $item_details) { ?>
