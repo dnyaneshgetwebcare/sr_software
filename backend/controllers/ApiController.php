@@ -6,6 +6,7 @@ use backend\models\CategoryMaster;
 use backend\models\ItemMaster;
 use backend\models\TypeMaster;
 use Yii;
+use yii\db\Expression;
 use yii\filters\Cors;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -42,6 +43,7 @@ class ApiController extends \yii\web\Controller
         $category = isset($_GET['category'])?$_GET['category'] : '';
         $page_limt = isset($_GET['page_limit'])?$_GET['page_limit'] : 20;
         $page_nos = isset($_GET['page_nos'])?$_GET['page_nos'] : 1;
+        $occation = isset($_GET['display_cat'])?$_GET['display_cat'] : "";
         $offset = ($page_limt * $page_nos) -$page_limt;
         if($type != ""){
           $type = explode(",",$type);
@@ -53,7 +55,12 @@ class ApiController extends \yii\web\Controller
             ->leftJoin('color_master', 'colour_cat = color_master.id')
             ->andWhere(['scrab_status' =>
                 'No' , 'delete_status' => 0 , 'skip_website' =>
-                0])->andFilterWhere(['item_master.category_id' => $category, 'type_id'=> $type])->limit($page_limt)
+                0]);
+        if($occation!=""){
+          $item_master->andWhere(new Expression("FIND_IN_SET(:value, tag_ids)"))
+          ->addParams([':value' => $occation]);
+        }
+        $item_master->andFilterWhere(['item_master.category_id' => $category, 'type_id'=> $type])->limit($page_limt)
             ->offset($offset)->asArray
             ()->all();
         $image_def_path =\Yii::$app->request->BaseUrl.'https://app.thesoyara.com/uploads/';
