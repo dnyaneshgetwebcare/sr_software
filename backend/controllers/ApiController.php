@@ -57,7 +57,7 @@ class ApiController extends \yii\web\Controller
                 'No' , 'delete_status' => 0 , 'skip_website' =>
                 0]);
         if($occation!=""){
-          $item_master->andWhere(new Expression("FIND_IN_SET(:value, tag_ids)"))
+          $item_master->andWhere(new Expression("FIND_IN_SET(:value, display_type)"))
           ->addParams([':value' => $occation]);
         }
         $item_master->andFilterWhere(['item_master.category_id' => $category, 'type_id'=> $type])->limit($page_limt)
