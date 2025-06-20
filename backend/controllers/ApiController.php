@@ -48,21 +48,20 @@ class ApiController extends \yii\web\Controller
         if($type != ""){
           $type = explode(",",$type);
         }
-        $item_master = ItemMaster::find()->select(['item_master.id', 'item_master.name', 'item_master.details',  'type_id', 'type_master.name as type_name', 'item_master.category_id', 'category_master.name as category_name', 'rent_amount', 'colour_cat', 'color_master.name as color_name', 'images', 'size'])
+        $query_item = ItemMaster::find()->select(['item_master.id', 'item_master.name', 'item_master.details',  'type_id',
+          'type_master.name as type_name', 'item_master.category_id', 'category_master.name as category_name', 'rent_amount', 'colour_cat', 'color_master.name as color_name', 'images', 'size'])
             ->leftJoin('type_master','type_master.id = item_master.type_id')
             ->leftJoin('category_master',
                 'item_master.category_id = category_master.id')
-            ->leftJoin('color_master', 'colour_cat = color_master.id')
-            ->andWhere(['scrab_status' =>
-                'No' , 'delete_status' => 0 , 'skip_website' =>
-                0]);
+            ->leftJoin('color_master', 'colour_cat = color_master.id');
         if($occation!=""){
-          $item_master->andWhere(new Expression("FIND_IN_SET(:value, display_type)"))
+          $query_item->andWhere(new Expression("FIND_IN_SET(:value, display_type)"))
           ->addParams([':value' => $occation]);
         }
-        $item_master->andFilterWhere(['item_master.category_id' => $category, 'type_id'=> $type])->limit($page_limt)
-            ->offset($offset)->asArray
-            ()->all();
+        $query_item->andFilterWhere(['item_master.category_id' => $category, 'type_id'=> $type]);
+       $item_master = $query_item->andWhere(['scrab_status' =>
+                'No' , 'delete_status' => 0 , 'skip_website' =>
+                0])->limit($page_limt)->offset($offset)->asArray()->all();
         $image_def_path =\Yii::$app->request->BaseUrl.'https://app.thesoyara.com/uploads/';
         $no_image_path = \Yii::$app->request->BaseUrl.'https://app.thesoyara.com/img/no-image.jpg';
 
