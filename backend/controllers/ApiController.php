@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use app\models\ItemMasterImg;
 use backend\models\CategoryMaster;
 use backend\models\ItemMaster;
 use backend\models\TypeMaster;
@@ -67,6 +68,31 @@ class ApiController extends \yii\web\Controller
 
         return array("item_master" => $item_master,'no_image_path' => $no_image_path, 'image_def_path' =>
             $image_def_path );
+
+    }
+    public function actionItemDetails()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $item_id = isset($_GET['item_id'])?$_GET['item_id'] : "";
+
+        $query_item = ItemMaster::find()->select(['item_master.id', 'item_master.name', 'item_master.details',  'type_id',
+          'type_master.name as type_name', 'item_master.category_id', 'category_master.name as category_name', 'rent_amount', 'colour_cat', 'color_master.name as color_name', 'images', 'size'])
+            ->leftJoin('type_master','type_master.id = item_master.type_id')
+            ->leftJoin('category_master',
+                'item_master.category_id = category_master.id')
+            ->leftJoin('color_master', 'colour_cat = color_master.id');
+        $query_item->andFilterWhere(['item_master.id' => $item_id]);
+       $item_master = $query_item->andWhere(['scrab_status' =>
+                'No' , 'delete_status' => 0 , 'skip_website' =>
+                0])->asArray()->all();
+       $image_list = ItemMasterImg::find()->where(['id'=> $item_id, 'status'=> 1])->orderBy(['default_image' => SORT_DESC])
+         ->asArray()->all();
+        $image_def_path =\Yii::$app->request->BaseUrl.'https://app.thesoyara.com/uploads/';
+        $no_image_path = \Yii::$app->request->BaseUrl.'https://app.thesoyara.com/img/no-image.jpg';
+
+        return array("item_master" => $item_master,'no_image_path' => $no_image_path, 'image_def_path' =>
+            $image_def_path ,"image_list" => $image_list );
 
     }
     public function actionTypeList()
