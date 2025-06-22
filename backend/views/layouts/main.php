@@ -353,7 +353,7 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
                     </a>
                   </li>
                   <li>
-                    <a href="index.php?r=index.php?r=reports/index">
+                    <a href="index.php?r=reports/index">
                       <span class="sub-item">Booking Orders</span>
                     </a>
                   </li>
