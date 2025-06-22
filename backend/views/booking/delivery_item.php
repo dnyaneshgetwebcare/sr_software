@@ -56,7 +56,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
 <div class="booking-header-index">
     <div class="row page-titles">
 
-        <div class="col-md-5 col-8 align-self-center">
+        <div class="col-md-6 col-6 align-self-center">
 
             <h3 class="text-themecolor m-b-0 m-t-0">
               <a href="index.php?r=booking%2Fupdate&id=<?= $booking_id ?>"
@@ -68,14 +68,14 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                 <li class="breadcrumb-item active"><?= Html::encode($this->title) ?></li>
             </ol>
         </div>
-      <div class="col-md-5 col-8 align-self-center">
+      <div class="col-md-5 col-5 align-self-center">
         <span> <label>Customer Name: </label> <?= $customer_master['name']; ?></span> <br>
         <span> <label>Contact Name: </label> <?= $customer_master['contact_nos']; ?></span>
       </div>
-      <div class="col-md-2 col-8 align-self-center">
+      <div class="col-md-1 col-1 align-self-center">
         <button class="btn btn-secondary btn-border" onclick="sendwhatsapp('<?= "91".$customer_master['contact_nos']
         ?>', '<?= $item_status; ?>')">
-          <i class="fabfa-whatsapp"></i>
+          <i class="fab fa-whatsapp"></i>
         </button>
       </div>
     </div>
