@@ -41,7 +41,7 @@ class PaymentMasterSearch extends PaymentMaster
    *
    * @return ActiveDataProvider
    */
-
+//ALTER TABLE `booking_header` ADD `skip` INT(1) NOT NULL DEFAULT '0' AFTER `updated_time`;
   public function searchReport($params)
   {
     # code...
@@ -80,6 +80,7 @@ class PaymentMasterSearch extends PaymentMaster
     if ($this->month_year_filter != '' && $this->date == '') {
       $query->andWhere('DATE_FORMAT(date, "%m-%Y") = "' . $this->month_year_filter . '"');
     }
+    $query->andWhere(['skip' => 0]);
     $query->andFilterWhere(['type' => $this->type])
       ->andFilterWhere(['mode_of_payment' => $this->mode_of_payment])
       ->andFilterWhere(['like', 'received_by', $this->received_by])
