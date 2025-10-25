@@ -486,6 +486,36 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
               <div class="col-md-12">
                 <div class="form-group row">
                   <label class="control-label text-right col-md-4"
+                         style="align-self: center"><?= $model->attributeLabels()['event_date'] ?></label>
+                  <div class="col-md-8">
+                    <?php 
+                    $model['event_date'] = ($model['event_date'] != '') ? date('d-m-Y', strtotime($model['event_date'])) : null;
+                    $startDate = $is_admin ? null : 'today';
+                    echo DatePicker::widget([
+                      'name' => 'BookingHeader[event_date]',
+                      'id' => 'bookingheader-event_date',
+                      'type' => DatePicker::TYPE_INPUT,
+                      'value' => $model['event_date'],
+                      'options' => [
+                        'placeholder' => 'dd-mm-yyyy',
+                        'autocomplete' => 'off'
+                      ],
+                      'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-mm-yyyy',
+                        'todayHighlight' => true,
+                        'orientation' => 'bottom',
+                        'startDate' => $startDate,
+                      ],
+                    ]); ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="margin-bottom: 7px;">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="control-label text-right col-md-4"
                          style="align-self: center"><?= $model->attributeLabels()['pickup_date'] ?></label>
                   <div class="col-md-8">
                     <?php //$model['pickup_date']=($model['pickup_date'] !='')?date('d-m-Y',strtotime($model['pickup_date'])):date('d-m-Y');
@@ -1586,6 +1616,25 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
     $('.item_details_lable .glyphicon-pencil').unbind().click(function () {
       updateItemRow($(this));
     });
+    // Event date change handler - auto-calculate pickup and return dates
+    $('#bookingheader-event_date').on('change', function () {
+      let event_date = $(this).val();
+      if (event_date != "") {
+        let event_parts = event_date.split("-");
+        let event_date_obj = new Date(event_parts[2], event_parts[1] - 1, event_parts[0]);
+        
+        // Calculate pickup date (event date - 1 day)
+        let pickup_date_obj = new Date(event_date_obj);
+        pickup_date_obj.setDate(pickup_date_obj.getDate() - 1);
+        $("#bookingheader-pickup_date").kvDatepicker('update', pickup_date_obj);
+        
+        // Calculate return date (event date + 1 day)
+        let return_date_obj = new Date(event_date_obj);
+        return_date_obj.setDate(return_date_obj.getDate() + 1);
+        $("#bookingheader-return_date").kvDatepicker('update', return_date_obj);
+      }
+    });
+
     $('#bookingheader-pickup_date').on('change', function () {
       let pickup_date = $(this).val();
       let return_date = $("#bookingheader-return_date").val();
@@ -1596,6 +1645,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         let return_parts = return_date.split("-");
         let return_date_obj = new Date(return_parts[2], return_parts[1] - 1, return_parts[0]);
         if (return_date_obj < pickup_date_obj) {
+          alert('Warning: Return Date cannot be earlier than Pickup Date. Please adjust the dates.');
           return_date = "";
         }
       }
@@ -1606,6 +1656,26 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
       }
 
+    });
+
+    // Validation for return date changes
+    $('#bookingheader-return_date').on('change', function () {
+      let return_date = $(this).val();
+      let pickup_date = $("#bookingheader-pickup_date").val();
+      
+      if (pickup_date != "" && return_date != "") {
+        let pick_parts = pickup_date.split("-");
+        let pickup_date_obj = new Date(pick_parts[2], pick_parts[1] - 1, pick_parts[0]);
+        
+        let return_parts = return_date.split("-");
+        let return_date_obj = new Date(return_parts[2], return_parts[1] - 1, return_parts[0]);
+        
+        if (return_date_obj < pickup_date_obj) {
+          alert('Error: Return Date must be greater than or equal to Pickup Date.');
+          // Clear the invalid return date
+          $("#bookingheader-return_date").val('');
+        }
+      }
     });
 
   });
@@ -2331,6 +2401,48 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
       $('.item_error').html('Please select item');
       return false;
     }
+
+    // Check item availability before adding
+    var pickup_date = $('#bookingheader-pickup_date').val();
+    var return_date = $('#bookingheader-return_date').val();
+    var booking_id = $('#bookingheader-booking_id').val();
+
+    if (pickup_date == '' || return_date == '') {
+      alert('Please select Pickup Date and Return Date first');
+      return false;
+    }
+
+    // Make AJAX call to check availability
+    var is_available = true;
+    $.ajax({
+      url: '<?php echo Yii::$app->request->baseUrl . '/index.php?r=booking/check-item-availability' ?>',
+      type: 'post',
+      dataType: 'json',
+      data: {
+        item_id: product_id,
+        pickup_date: pickup_date,
+        return_date: return_date,
+        booking_id: booking_id
+      },
+      async: false, // Make synchronous to prevent adding item before check
+      success: function (data) {
+        if (!data.available) {
+         // alert('Item Not Available: ' + data.message);
+          $('.item_error').html(data.message);
+          is_available = false;
+        }
+      },
+      error: function (jqXhr, textStatus, errorThrown) {
+        alert('Error checking availability. Please try again.');
+        is_available = false;
+      }
+    });
+
+    // If item is not available, return false
+    if (!is_available) {
+      return false;
+    }
+
     var label_name = result + 'label_name';
     var item_type_new = $(result + 'item_type').val();
     //alert(item_type);

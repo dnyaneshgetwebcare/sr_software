@@ -66,7 +66,7 @@ class BookingController extends Controller
             'allow' => true,
           ],
           [
-            'actions' => ['logout', 'index', 'view', 'create', 'update', 'delete', 'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details', 'delivery', 'delivery-item', 'return-item', 'index-payment', 'index-sales', 'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'pending-deposite', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability'],
+            'actions' => ['logout', 'index', 'view', 'create', 'update', 'delete', 'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details', 'delivery', 'delivery-item', 'return-item', 'index-payment', 'index-sales', 'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'pending-deposite', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability'],
             'allow' => true,
             'roles' => ['@'],
           ],
@@ -134,6 +134,35 @@ class BookingController extends Controller
     $return_date = $this->dateFormat($return_date, 'Y-m-d');
     $result = Yii::$app->helpercomponent->checkBooking($item_ids, $pickup_date, $return_date);
     return $result;
+  }
+
+  public function actionCheckItemAvailability()
+  {
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    $item_id = isset($_POST['item_id']) ? $_POST['item_id'] : null;
+    $pickup_date = isset($_POST['pickup_date']) ? $_POST['pickup_date'] : null;
+    $return_date = isset($_POST['return_date']) ? $_POST['return_date'] : null;
+    $booking_id = isset($_POST['booking_id']) ? $_POST['booking_id'] : null;
+    
+    if (empty($item_id) || empty($pickup_date) || empty($return_date)) {
+      return ['available' => false, 'message' => 'Missing required parameters'];
+    }
+    
+    $pickup_date = $this->dateFormat($pickup_date, 'Y-m-d');
+    $return_date = $this->dateFormat($return_date, 'Y-m-d');
+    
+    $result = Yii::$app->helpercomponent->checkBooking($item_id, $pickup_date, $return_date, $booking_id);
+    
+    if ($result['flag']) {
+      // Item is NOT available (flag = true means there's an error)
+      return [
+        'available' => false, 
+        'message' => isset($result['errors'][0]) ? $result['errors'][0] : 'Item not available for selected dates'
+      ];
+    } else {
+      // Item is available
+      return ['available' => true, 'message' => 'Item is available'];
+    }
   }
 
   public function actionIndexSales()
@@ -554,8 +583,22 @@ class BookingController extends Controller
         $model->customer_id = $customer_model->id;
         $model->encryted_id = $this->generateRandomString();
         $model->booking_date = $this->dateFormat($model->booking_date);
-        $model->pickup_date = ($model->pickup_date != '') ? $this->dateFormat($model->pickup_date) : null;
-        $model->return_date = ($model->return_date != '') ? $this->dateFormat($model->return_date) : null;
+        $model->event_date = ($model->event_date != '') ? $this->dateFormat($model->event_date) : null;
+        
+        // Auto-calculate pickup and return dates from event date if event date is set
+        if ($model->event_date != null && $model->event_date != '') {
+          $event_datetime = new DateTime($model->event_date);
+          $pickup_datetime = clone $event_datetime;
+          $pickup_datetime->modify('-1 day');
+          $return_datetime = clone $event_datetime;
+          $return_datetime->modify('+1 day');
+          $model->pickup_date = $pickup_datetime->format('Y-m-d');
+          $model->return_date = $return_datetime->format('Y-m-d');
+        } else {
+          $model->pickup_date = ($model->pickup_date != '') ? $this->dateFormat($model->pickup_date) : null;
+          $model->return_date = ($model->return_date != '') ? $this->dateFormat($model->return_date) : null;
+        }
+        
         $model->payment_status = (($model->net_value - $model->paid_amount) == 0);
         $model->earning_amount = $model->net_value - $model->deposite_amount;
         // print_r($model);die;
@@ -583,7 +626,9 @@ class BookingController extends Controller
           $check_booking_status = Yii::$app->helpercomponent->checkBooking($booking_item->product_id, $booking_item->pickup_date, $booking_item->return_date);
           //print_r($check_booking_status);die;
           if ($check_booking_status['flag']) {
-            return array('errors' => $check_booking_status['errors']);
+              $item_errors = array_merge($item_errors, $check_booking_status['errors']);
+              continue;
+            //return array('errors' => $check_booking_status['errors']);
           }
           if (!$flag = $booking_item->save()) {
             $transaction->rollBack();
@@ -596,6 +641,9 @@ class BookingController extends Controller
               return array('errors'=>$summary->errors);
            }*/
           $item_no += 10;
+        }
+        if(!empty($item_errors)){
+            return array('errors' => $item_errors);
         }
         // echo $no_payment;
         // print_r($payment_models);die;
@@ -1279,8 +1327,22 @@ class BookingController extends Controller
         }
         $model->customer_id = $customer_model->id;
         $model->booking_date = $this->dateFormat($model->booking_date);
-        $model->pickup_date = ($model->pickup_date != '') ? $this->dateFormat($model->pickup_date) : null;
-        $model->return_date = ($model->return_date != '') ? $this->dateFormat($model->return_date) : null;
+        $model->event_date = ($model->event_date != '') ? $this->dateFormat($model->event_date) : null;
+        
+        // Auto-calculate pickup and return dates from event date if event date is set
+        if ($model->event_date != null && $model->event_date != '') {
+          $event_datetime = new DateTime($model->event_date);
+          $pickup_datetime = clone $event_datetime;
+          $pickup_datetime->modify('-1 day');
+          $return_datetime = clone $event_datetime;
+          $return_datetime->modify('+1 day');
+          $model->pickup_date = $pickup_datetime->format('Y-m-d');
+          $model->return_date = $return_datetime->format('Y-m-d');
+        } else {
+          $model->pickup_date = ($model->pickup_date != '') ? $this->dateFormat($model->pickup_date) : null;
+          $model->return_date = ($model->return_date != '') ? $this->dateFormat($model->return_date) : null;
+        }
+        
         $model->payment_status = (($model->net_value - $model->paid_amount) == 0);
         $model->earning_amount = $model->net_value - $model->deposite_amount;
         // print_r($model);die;
@@ -1297,6 +1359,7 @@ class BookingController extends Controller
           PaymentMaster::deleteAll(['payment_id' => $deletedIDs_payment]);
         }
         $item_no = 10;
+          $item_errors =[];
         foreach ($booking_items as $key => $booking_item) {
           $booking_item->deposite_charge_status = ($booking_item->deposite_charge_status == null) ? 0 : $booking_item->deposite_charge_status;
           $booking_item->earning_amount = $booking_item->net_value - $booking_item->deposit_amount;
@@ -1319,12 +1382,14 @@ class BookingController extends Controller
             $check_booking_status = Yii::$app->helpercomponent->checkBooking($booking_item->product_id, $booking_item->pickup_date, $booking_item->return_date, $model->booking_id);
             //print_r($check_booking_status);die;
             if ($check_booking_status['flag']) {
-              return array('errors' => $check_booking_status['errors']);
+                $item_errors = array_merge($item_errors, $check_booking_status['errors']);
+                continue;
+              //return array('errors' => $check_booking_status['errors']);
             }
 
             if (!$flag = $booking_item->save()) {
               $transaction->rollBack();
-              return array('errors' => $model->errors);
+              return array('errors' => array_merge($model->errors, $item_errors));
             }
           } else {
             if ($complete_order) {
@@ -1337,7 +1402,9 @@ class BookingController extends Controller
               $check_booking_status = Yii::$app->helpercomponent->checkBooking($booking_item->product_id, $model->pickup_date, $model->return_date, $model->booking_id);
               //print_r($check_booking_status);die;
               if ($check_booking_status['flag']) {
-                return array('errors' => $check_booking_status['errors']);
+                  $item_errors = array_merge($item_errors, $check_booking_status['errors']);
+                  continue;
+                //return array('errors' => $check_booking_status['errors']);
               }
             }
             BookingItem::updateAll([
@@ -1373,7 +1440,10 @@ class BookingController extends Controller
            }*/
           $item_no += 10;
         }
+        if(!empty($item_errors)){
+            return array('errors' =>$item_errors);
 
+        }
 
         if ($no_payment) {
           foreach ($payment_models as $key => $payment_item) {
