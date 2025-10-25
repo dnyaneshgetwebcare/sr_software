@@ -74,9 +74,14 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
       </div>
       <div class="col-md-1 col-1 align-self-center">
         <button class="btn btn-secondary btn-border" onclick="sendwhatsapp('<?= "91".$customer_master['contact_nos']
-        ?>', '<?= $item_status; ?>')">
+        ?>', '<?= $item_status; ?>', )">
           <i class="fab fa-whatsapp"></i>
         </button>
+        <?php if($item_status != 'Picked'): ?>
+        <button class="btn btn-info btn-border mt-2" onclick="sendCustomerDetailsWhatsapp('<?= $customer_master['name']; ?>', '<?= $customer_master['contact_nos']; ?>', '<?= $model->deposite_amount - ($model->other_charges + $model->refunded); ?>')">
+          <i class="fab fa-whatsapp"></i> Return Deposit
+        </button>
+        <?php endif; ?>
       </div>
     </div>
 
@@ -679,8 +684,17 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
     }
     function sendwhatsapp(contact_nos, ord_status) {
       let pickup_message = "Your outfits are packed and ready for pickup. Please collect them before 7:30 PM."
+      if(ord_status != "Picked"){
+          pickup_message  = "Please return item before 7.30 PM to avoid late charges";
+      }
        var message = encodeURI(pickup_message);
         // window.open('https://api.whatsapp.com/send/?phone='+data["contact_nos"]+'&text='+message, '_blank').focus();
         window.open('https://web.whatsapp.com/send/?phone=' + contact_nos + '&text=' + message, '_blank').focus();
+    }
+    
+    function sendCustomerDetailsWhatsapp(customer_name, contact_nos, deposite_amount) {
+        var message = customer_name + "\n" + contact_nos + "\n" + deposite_amount;
+        var encodedMessage = encodeURI(message);
+        window.open('https://web.whatsapp.com/send/?phone=918237703030&text=' + encodedMessage, '_blank').focus();
     }
 </script>
