@@ -584,20 +584,10 @@ class BookingController extends Controller
         $model->encryted_id = $this->generateRandomString();
         $model->booking_date = $this->dateFormat($model->booking_date);
         $model->event_date = ($model->event_date != '') ? $this->dateFormat($model->event_date) : null;
-        
-        // Auto-calculate pickup and return dates from event date if event date is set
-        if ($model->event_date != null && $model->event_date != '') {
-          $event_datetime = new DateTime($model->event_date);
-          $pickup_datetime = clone $event_datetime;
-          $pickup_datetime->modify('-1 day');
-          $return_datetime = clone $event_datetime;
-          $return_datetime->modify('+1 day');
-          $model->pickup_date = $pickup_datetime->format('Y-m-d');
-          $model->return_date = $return_datetime->format('Y-m-d');
-        } else {
+
           $model->pickup_date = ($model->pickup_date != '') ? $this->dateFormat($model->pickup_date) : null;
           $model->return_date = ($model->return_date != '') ? $this->dateFormat($model->return_date) : null;
-        }
+
         
         $model->payment_status = (($model->net_value - $model->paid_amount) == 0);
         $model->earning_amount = $model->net_value - $model->deposite_amount;
@@ -1329,19 +1319,11 @@ class BookingController extends Controller
         $model->booking_date = $this->dateFormat($model->booking_date);
         $model->event_date = ($model->event_date != '') ? $this->dateFormat($model->event_date) : null;
         
-        // Auto-calculate pickup and return dates from event date if event date is set
-        if ($model->event_date != null && $model->event_date != '') {
-          $event_datetime = new DateTime($model->event_date);
-          $pickup_datetime = clone $event_datetime;
-          $pickup_datetime->modify('-1 day');
-          $return_datetime = clone $event_datetime;
-          $return_datetime->modify('+1 day');
-          $model->pickup_date = $pickup_datetime->format('Y-m-d');
-          $model->return_date = $return_datetime->format('Y-m-d');
-        } else {
+
+
           $model->pickup_date = ($model->pickup_date != '') ? $this->dateFormat($model->pickup_date) : null;
           $model->return_date = ($model->return_date != '') ? $this->dateFormat($model->return_date) : null;
-        }
+
         
         $model->payment_status = (($model->net_value - $model->paid_amount) == 0);
         $model->earning_amount = $model->net_value - $model->deposite_amount;
