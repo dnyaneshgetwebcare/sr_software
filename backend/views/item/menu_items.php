@@ -95,7 +95,7 @@ $this->title = 'Item Masters';
             <?php
             echo DatePicker::widget([
               'name' => 'filter_from_date',
-              'name2' => 'filter_from_date',
+              'name2' => 'filter_to_date',
               'attribute' => 'from_date',
               'value' => $pickup_date,
               'value2' => $return_date,
@@ -146,7 +146,7 @@ $this->title = 'Item Masters';
             <?php } ?>
             <?php foreach ($type_master as $type) { ?>
               <label class="selectgroup-item filter_type <?= 'filter_cat_type_' . $type['category_id'] ?>">
-                <input type="checkbox" value="<?= $type['id']; ?>" class="selectgroup-input select_type_input"
+                <input type="checkbox"  name =  "item_type[]" value="<?= $type['id']; ?>" class="selectgroup-input select_type_input"
                        onchange="filter_data_type()">
                 <span class="selectgroup-button"> <?php echo $type['name']; ?></span>
               </label>
@@ -238,29 +238,18 @@ $this->title = 'Item Masters';
   function checkAvailable() {
     let fromdate = $("#from_date").val();
     let todate = $("#to_date").val();
-    /*      alert("Selected Date Range: " + dateRange);
-            let dates = dateRange.split(" - ");
-      let startDate = dates[0]; // Start Date
-      let endDate = dates[1];   // End Date*/
+
     if (fromdate == "" || todate == "") {
       swal("Dates cannot be blank");
       return;
     }
     clear_check_avaiblity()
-    let pickup_date;
-    let return_date;
-    let type_id = "<?= isset($_GET["type"]) ? $_GET["type"] : ""; ?>";
-    let category_id;
+      let selected_type = $('.select_type_input, #from_date, #to_date').serialize();
     $.ajax({
       url: "<?php echo \Yii::$app->getUrlManager()->createUrl('booking/check-availability') ?>",
       type: 'post',
       dataType: 'json',
-      data: {
-        type_id: type_id,
-        pickup_date: fromdate,
-        return_date: todate,
-        category_id: category_id,
-      },
+      data: selected_type,
       beforeSend: function () {
         $(".overlay").show();
       },

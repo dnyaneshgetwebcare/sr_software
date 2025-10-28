@@ -125,9 +125,9 @@ class BookingController extends Controller
   public function actionCheckAvailability()
   {
     Yii::$app->response->format = Response::FORMAT_JSON;
-    $pickup_date = isset($_POST['pickup_date']) ? $_POST['pickup_date'] : null;
-    $return_date = isset($_POST['return_date']) ? $_POST['return_date'] : null;
-    $type_con = (isset($_POST['type_id']) && $_POST['type_id'] != "") ? ['type_id' => $_POST['type_id']] : 1;
+    $pickup_date = isset($_POST['filter_from_date']) ? $_POST['filter_from_date'] : null;
+    $return_date = isset($_POST['filter_to_date']) ? $_POST['filter_to_date'] : null;
+      $type_con = (isset($_POST['item_type']) && $_POST['item_type'] != "") ? ['type_id' => $_POST['item_type']] : 1;
     $item_master = ItemMaster::find()->where($type_con)->asArray()->all();
     $item_ids = ArrayHelper::getColumn($item_master, 'id');
     $pickup_date = $this->dateFormat($pickup_date, 'Y-m-d');
