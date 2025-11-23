@@ -23,6 +23,9 @@ return [
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
       'helpercomponent' => [
       'class' => 'backend\components\HelperComponent'
     ],
