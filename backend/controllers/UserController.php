@@ -40,20 +40,20 @@ class UserController extends Controller
           [
             'actions' => ['logout', 'change-password', 'reset-password', 'config', 'cancel-subscription', 'change-package', 'transaction-details', 'view', 'create', 'delete', 'change-status', 'activate-subscription', 'update'],
             'allow' => true,
-            'roles' => ['@'],
+            'roles' => ['user_managment'],
           ],
           [
-            'actions' => ['logout', 'create', 'signup'],
+            'actions' => [ 'create', 'signup'],
             'allow' => true,
-            'roles' => ['@'],
+            'roles' => ['user_managment'],
           ],
           [
-            'actions' => ['logout', 'create', 'view'],
+            'actions' => ['index', 'create', 'view'],
             'allow' => true,
-            'roles' => ['@'],
+            'roles' => ['user_managment'],
           ],
           [
-            'actions' => ['index'],
+            'actions' => ['logout'],
             'allow' => true,
             'roles' => ['@'],
           ],

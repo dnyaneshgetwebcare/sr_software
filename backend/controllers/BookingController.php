@@ -66,10 +66,15 @@ class BookingController extends Controller
             'allow' => true,
           ],
           [
-            'actions' => ['logout', 'index', 'view', 'create', 'update', 'delete', 'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details', 'delivery', 'delivery-item', 'return-item', 'index-payment', 'index-sales', 'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'pending-deposite', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability'],
+            'actions' => ['logout',  'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details',  'delivery-item',  'index-payment', 'index-sales', 'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'pending-deposite', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability'],
             'allow' => true,
             'roles' => ['@'],
           ],
+           [
+            'actions' => [ 'index', 'view', 'create', 'delivery','return-item', 'update'],
+            'allow' => true,
+            'roles' => ['manage_booking'],
+          ]
         ],
       ],
       'verbs' => [

@@ -13,6 +13,36 @@ use yii\web\Response;
 
 class PackingController extends \yii\web\Controller
 {
+  public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                  [
+                        'actions' => ['index','customer-search','booking-search','get-packing-item'],
+                        'allow' => true,
+                        'roles' => ['manage_packing'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
     public function actionIndex()
     {
       $filter_date = isset($_POST['filter_date'])? $_POST['filter_date'] : '';

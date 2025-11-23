@@ -5,10 +5,44 @@ namespace backend\controllers;
 use backend\models\BookingItemSearch;
 use backend\models\ItemMasterSearch;
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 
 
 class ItemWiseReportController extends \yii\web\Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error','quick-search'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['item-filter' , 'index', 'item-filter', 'item-report'],
+                        'allow' => true,
+                        'roles' => ['reports'],
+                    ],
+
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
     public function actionIndex()
     {
         return $this->render('index');

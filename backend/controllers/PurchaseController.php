@@ -29,7 +29,27 @@ class PurchaseController extends Controller
      */
     public function behaviors()
     {
+
         return [
+          'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'item-details-autocomplete', 'item-details-purchase', 'vendor-autocomplete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                  [
+                        'actions' => ['index','items-report','create','update','view'],
+                        'allow' => true,
+                          'roles' => ['manage_purchase'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

@@ -27,9 +27,14 @@ class ReportsController extends \yii\web\Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','index-item','index-item-master'],
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                   [
+                        'actions' => [ 'index','index-item','index-item-master'],
+                        'allow' => true,
+                        'roles' => ['reports'],
                     ],
                 ],
             ],

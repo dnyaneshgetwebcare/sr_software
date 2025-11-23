@@ -29,10 +29,15 @@ class ExpsenseCategoryController extends Controller
                         'actions' => ['login', 'error'],
                         'allow' => true,
                     ],
-                    [
-                        'actions' => ['logout', 'index','view','create','update','delete'],
+                     [
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                  [
+                        'actions' => ['index','view','create','update','delete'],
+                        'allow' => true,
+                        'roles' => ['manage_setting'],
                     ],
                 ],
             ],

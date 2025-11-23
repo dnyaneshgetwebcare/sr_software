@@ -35,9 +35,19 @@ class CustomerController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','view','create','update','delete','quick-create'],
+                        'actions' => ['logout', 'delete','quick-create'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['index','view','create','update','delete','quick-create'],
+                        'allow' => true,
+                        'roles' => ['manage_customer'],
+                    ],
+                  [
+                        'actions' => ['index','view','create','update','quick-create'],
+                        'allow' => true,
+                        'roles' => ['limited_customer'],
                     ],
                 ],
             ],

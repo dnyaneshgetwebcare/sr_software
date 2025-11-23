@@ -28,9 +28,14 @@ class VendorController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','view','create','update','delete','encrypt'],
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                   [
+                        'actions' => [ 'index','view','create','update','delete','encrypt'],
+                        'allow' => true,
+                        'roles' => ['manage-vendor'],
                     ],
                 ],
             ],

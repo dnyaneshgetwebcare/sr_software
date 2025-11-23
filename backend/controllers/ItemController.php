@@ -49,10 +49,14 @@ class ItemController extends Controller
             'allow' => true,
           ],
           [
-            'actions' => ['logout', 'getimage-list', 'img-status', 'upload-mul', 'index', 'menu-items',
-              'index-gallery', 'view', 'create', 'update', 'delete', 'vendor-list', 'get-type', 'file-upload', 'upload', 'remove', 'create-popup', 'open-bookings'],
+            'actions' => ['logout', 'getimage-list', 'img-status', 'upload-mul',  'menu-items', 'index-gallery', 'view', 'create', 'update', 'delete', 'vendor-list', 'get-type',  'file-upload', 'upload', 'remove', 'create-popup', 'open-bookings'],
             'allow' => true,
             'roles' => ['@'],
+          ],
+          [
+            'actions' => [ 'index', 'index-gallery', 'view', 'create', 'update', 'delete'],
+            'allow' => true,
+            'roles' => ['manage_item'],
           ],
         ],
       ],

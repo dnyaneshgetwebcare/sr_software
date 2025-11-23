@@ -23,7 +23,7 @@ class PaymentReportController extends \yii\web\Controller
                     [
                         'actions' => ['logout', 'index', 'view',  'payment-report', 'payment-search'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['report'],
                     ],
                 ],
             ],
