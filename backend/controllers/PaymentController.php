@@ -31,9 +31,19 @@ class PaymentController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'view', 'create', 'update', 'delete', 'payment-report', 'payment-search'],
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => [ 'index',  'payment-search'],
+                        'allow' => true,
+                        'roles' => ['limited_report'],
+                    ],
+                    [
+                        'actions' => [ 'index',  'payment-report', 'payment-search'],
+                        'allow' => true,
+                        'roles' => ['reports'],
                     ],
                 ],
             ],
@@ -115,12 +125,22 @@ class PaymentController extends Controller
         }
         if (isset(Yii::$app->request->post()['PaymentMasterSearch'])) {
             if (Yii::$app->request->post()['PaymentMasterSearch']['view_level'] == 'DETAIL') {
+                if(!Yii::$app->user->can('reports')){
+                    throw \yii\web\ForbiddenHttpException( 'You are not allowed to perform this action.');
+                }
                 $dataProvider = $searchModel->searchReport(Yii::$app->request->post());
 
             } elseif (Yii::$app->request->post()['PaymentMasterSearch']['view_level'] == 'OVERVIEW') {
+                if(!Yii::$app->user->can('reports')){
+                    throw new \yii\web\ForbiddenHttpException( 'You are not allowed to perform this action.');
+                }
                $view_name = 'payment_overview';
                 $dataProvider = $searchModel->searchOverview(Yii::$app->request->post());
             } else {
+                if( !(Yii::$app->user->can('limited_report')) ){
+                    throw new \yii\web\ForbiddenHttpException( 'You are not allowed to perform this action.');
+                }
+
                 $view_name = 'cash_flow_report';
                 $dataProvider = $searchModel->searchSummary(Yii::$app->request->post());
             }
@@ -134,12 +154,21 @@ class PaymentController extends Controller
             }
            // $view_level = isset(Yii::$app->request->post()['PaymentMasterSearch']['view_level']) ? Yii::$app->request->post()['PaymentMasterSearch']['view_level'] : 'DETAIL';
             if ($view_level == 'DETAIL') {
+                if(!Yii::$app->user->can('reports')){
+                    throw new \yii\web\ForbiddenHttpException( 'You are not allowed to perform this action.');
+                }
                 $dataProvider = $searchModel->searchReport(Yii::$app->request->queryParams);
 
             }elseif ($view_level == 'OVERVIEW') {
+                if(!Yii::$app->user->can('reports')){
+                    throw new \yii\web\ForbiddenHttpException( 'You are not allowed to perform this action.');
+                }
                $view_name = 'payment_overview';
                 $dataProvider = $searchModel->searchOverview(Yii::$app->request->post());
             } else {
+                if( !(Yii::$app->user->can('limited_report')) ){
+                    throw \yii\web\ForbiddenHttpException( 'You are not allowed to perform this action.');
+                }
                 $view_name = 'cash_flow_report';
                 $dataProvider = $searchModel->searchSummary(Yii::$app->request->queryParams);
             }

@@ -35,7 +35,7 @@ class VendorController extends Controller
                    [
                         'actions' => [ 'index','view','create','update','delete','encrypt'],
                         'allow' => true,
-                        'roles' => ['manage-vendor'],
+                        'roles' => ['manage_vendor'],
                     ],
                 ],
             ],

@@ -49,6 +49,11 @@ class CustomerController extends Controller
                         'allow' => true,
                         'roles' => ['limited_customer'],
                     ],
+                    [
+                        'actions' => [ 'index','view','create','update','delete','quick-create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
             'verbs' => [
