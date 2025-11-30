@@ -46,7 +46,7 @@ class BookingHeader extends \yii\db\ActiveRecord
       ]
     ];
   }
-
+/* test co*/
     public static function tableName()
     {
         return 'booking_header';
