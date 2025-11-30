@@ -100,7 +100,7 @@ $this->title = 'Soyara Rental Couture';
                                 foreach ($product_bookings as $booking) {
                                     $status_class = 'primary';
                                      $actual_rent = $booking['earning_amount'];
-                                     $earn_actual_rent = $actual_rent*60/100;
+                                     $earn_actual_rent = $actual_rent*40/100;
                                     if ($booking['status'] == 'Returned') {
                                         $rent_amount += $earn_actual_rent;
                                         $number_of_times++;
