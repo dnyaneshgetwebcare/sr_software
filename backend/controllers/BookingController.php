@@ -842,7 +842,7 @@ class BookingController extends Controller
 
     Yii::$app->response->format = Response::FORMAT_JSON;
     $transaction = Yii::$app->db->beginTransaction();
-    if (!isset($_POST['selection'])) {
+    if (isset($_POST['selection'])) {
       return array("errors" => array("No Item Selected."));
     }
     if (!isset($_POST['delivery_date']) || $_POST['delivery_date'] == "") {
@@ -854,10 +854,14 @@ class BookingController extends Controller
     $booking_id = $_POST['booking_id'];
     $paid_amount = $_POST['BookingHeader']['paid_amount'];
     $refunded = $_POST['BookingHeader']['refunded'];
+
     $cancellation_charges = $_POST['BookingHeader']['cancellation_charges'];
     $other_charges = $_POST['BookingHeader']['other_charges'];
     $pending_amount = $_POST['BookingHeader']['pending_amount'];
     $model = $this->findModel($booking_id);
+     if (isset($_POST['BookingHeader']['gpay_number'])) {
+      $model->gpay_number = $_POST['BookingHeader']['gpay_number'];
+    }
     $old_updated_timestamp = $model->updated_time;
     $payment_models = $model->payment;
     $old_pick_up = $model->pickup_date;
@@ -911,47 +915,35 @@ class BookingController extends Controller
             return array('errors' => $payment_retr->errors);
           }
         } else {
-          $payment_item->booking_id = $model->booking_id;
+          /* as no edit option avaible in payment so no need to update */
+          /*$payment_item->booking_id = $model->booking_id;
           // $payment_item->item_no=$item_no;
-          //print_r($payment_item);die;
+
           if (!$flag = $payment_item->save()) {
             $transaction->rollBack();
             return array('errors' => $payment_item->errors);
-          }
+          }*/
         }
-        // print_r($payment_item);die;
+
       }
     }
-    //  print_r($_POST);die;
-    // $booking_items=BookingItem::find()->where(['item_id'=>$selected_items])->all();
-    // print_r($selected_items);die;
+
     if ($status != 'Picked') {
       BookingItem::updateAll(['return_date' => $this->dateFormat($pickup_date), 'item_status' => $status], ['item_id' => $selected_items, 'booking_id' => $booking_id]);
     } else {
       BookingItem::updateAll(['pickup_date' => $this->dateFormat($pickup_date), 'item_status' => $status], ['item_id' => $selected_items, 'booking_id' => $booking_id]);
     }
-    /* $transaction = Yii::$app->db->beginTransaction();
-  foreach ($booking_items as $key => $item) {
-      $item->picked_date=$this->dateFormat($pickup_date);
-      $item->item_status='Picked';
-       if(!$flag=$item->save()){
-          $transaction->rollBack();
-       return array('errors'=>$item->errors);
-      }
-  }*/
-    //print_r($selected_items);die;
+
     $model->paid_amount = $paid_amount;
     $model->refunded = $refunded;
     $model->payment_status = $payment_status;
     $model->cancellation_charges = $cancellation_charges;
     $model->other_charges = $other_charges;
     $model->pending_amount = $pending_amount;
-    if (isset($_POST['BookingHeader']['gpay_number'])) {
-      $model->gpay_number = $_POST['BookingHeader']['gpay_number'];
-    }
+
     if ($status != 'Picked') {
       $booking_items = BookingItem::find()->where(['booking_id' => $booking_id])->andWhere(['!=', 'item_status', 'Returned'])->all();
-      //print_r($booking_items);die;
+
       if ($booking_items == null) {
         $temp_pay_status = true;
         if (($model->pending_amount) != 0) {
@@ -967,12 +959,7 @@ class BookingController extends Controller
         if ($temp_pay_status) {
           $model->order_status = 'Closed';
         }
-        /*BookingHeader::updateAll(['order_status'=>'Closed',
-            'status'=>'Returned',
-            'payment_status'=>$payment_status,
-            'paid_amount'=>$paid_amount,
-            'returned_date'=>$this->dateFormat($pickup_date),
-            'refunded'=>$refunded],['booking_id'=>$booking_id]);*/
+
         foreach ($booking_items as $key => $booking_item) {
           $this->updateRentCount($booking_item->product_id);
         }
@@ -986,11 +973,7 @@ class BookingController extends Controller
         $model->status = 'Picked';
         $model->picked_up = 1;
         $model->pickup_date = $this->dateFormat($pickup_date);
-        /*  BookingHeader::updateAll(['status'=>'Picked',
-              'payment_status'=>$payment_status,
-          'paid_amount'=>$paid_amount,
-              'picked_date'=>$this->dateFormat($pickup_date),
-              'refunded'=>$refunded],['booking_id'=>$booking_id]);*/
+
       }
     }
     if (!$flag = $model->save()) {
