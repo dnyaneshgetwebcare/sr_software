@@ -40,7 +40,7 @@ class CustomerController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view','create','update','delete','quick-create'],
+                        'actions' => ['index','view','create','update','delete','quick-create'],
                         'allow' => true,
                         'roles' => ['manage_customer'],
                     ],
