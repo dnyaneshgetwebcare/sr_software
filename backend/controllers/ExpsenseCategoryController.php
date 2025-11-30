@@ -35,7 +35,7 @@ class ExpsenseCategoryController extends Controller
                         'roles' => ['@'],
                     ],
                   [
-                        'actions' => ['index','view','create','update','delete'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['manage_setting'],
                     ],

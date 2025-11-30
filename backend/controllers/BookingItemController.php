@@ -31,9 +31,14 @@ class BookingItemController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index-return','sales-item'],
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['logout', 'index-return','sales-item', 'index'],
+                        'allow' => true,
+                        'roles' => ['manage_booking'],
                     ],
                 ],
             ],

@@ -56,7 +56,7 @@ class ItemController extends Controller
           [
             'actions' => [ 'index', 'index-gallery', 'view', 'create', 'update', 'delete'],
             'allow' => true,
-            'roles' => ['manage_item'],
+            'roles' => ['manage_item_master'],
           ],
         ],
       ],

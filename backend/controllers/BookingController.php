@@ -66,15 +66,20 @@ class BookingController extends Controller
             'allow' => true,
           ],
           [
-            'actions' => ['logout',  'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details',  'delivery-item',  'index-payment', 'index-sales', 'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'pending-deposite', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability'],
+            'actions' => ['logout',  'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details',  'delivery-item',  'index-payment',  'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability'],
             'allow' => true,
             'roles' => ['@'],
           ],
            [
-            'actions' => [ 'index', 'view', 'create', 'delivery','return-item', 'update'],
+            'actions' => [ 'index', 'view', 'create', 'delivery','return-item','pending-deposite',  'update'],
             'allow' => true,
             'roles' => ['manage_booking'],
-          ]
+          ],
+            [
+                'actions' => [ 'index-sales'],
+                'allow' => true,
+                'roles' => ['limited_report'],
+            ]
         ],
       ],
       'verbs' => [
@@ -941,6 +946,9 @@ class BookingController extends Controller
     $model->cancellation_charges = $cancellation_charges;
     $model->other_charges = $other_charges;
     $model->pending_amount = $pending_amount;
+    if (isset($_POST['BookingHeader']['gpay_number'])) {
+      $model->gpay_number = $_POST['BookingHeader']['gpay_number'];
+    }
     if ($status != 'Picked') {
       $booking_items = BookingItem::find()->where(['booking_id' => $booking_id])->andWhere(['!=', 'item_status', 'Returned'])->all();
       //print_r($booking_items);die;

@@ -350,21 +350,12 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                             <div class="col-md-6">
                                 <div class="form-group row">
                                     <label class="control-label text-left col-md-3"
-                                           style="padding-right: 0px;align-self: center">Addrs
-                                        Grp</label>
+                                           style="padding-right: 0px;align-self: center">GPay
+                                        Number</label>
                                     <div class="col-md-9">
-                                        <?php // $form->field($customer_model, 'cust_group')->dropDownList([ 'None' => 'None', 'Photographer' => 'Photographer', 'Model' => 'Model', 'Friend' => 'Friend', ], ['class'=>'form-control text_first'])->label(false)
-                                        ?>
-                                        <!--                                        --><?php //= $form->field($customer_model, 'address_group')->dropDownList($address_grup, ['class' => 'form-control text_first'])->label(false) ?>
-                                        <?= $form->field($customer_model, 'address_group')->widget(Select2::classname(), [
-                                                'data' => $address_grup,
-                                                'size' => Select2::MEDIUM,
-                                                'theme' => Select2::THEME_BOOTSTRAP,
-                                                'options' => ['placeholder' => 'Select Address Grp'],
-                                                'pluginOptions' => [
-                                                        'allowClear' => true
-                                                ],
-                                        ])->label(false); ?>
+                                        <?php echo $form->field($model, 'gpay_number')->textInput(['maxlength' => true, 'class' => 'form-control text_first', 'placeholder' => 'Enter GPay Number', 'autocomplete' => "off"])->label(false); ?>
+                                        <?php // Hidden address_group field ?>
+                                        <?= $form->field($customer_model, 'address_group')->hiddenInput()->label(false); ?>
                                     </div>
                                 </div>
                             </div>
@@ -491,7 +482,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     <div class="col-md-8">
                                         <?php
                                         $model['event_date'] = ($model['event_date'] != '') ? date('d-m-Y', strtotime($model['event_date'])) : null;
-                                        $startDate = $is_admin ? null : 'today';
+                                        $startDate = $is_admin ? null : '-5d';
                                         echo DatePicker::widget([
                                                 'name' => 'BookingHeader[event_date]',
                                                 'id' => 'bookingheader-event_date',
@@ -521,7 +512,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     <div class="col-md-8">
                                         <?php //$model['pickup_date']=($model['pickup_date'] !='')?date('d-m-Y',strtotime($model['pickup_date'])):date('d-m-Y');
                                         $model['pickup_date'] = ($model['pickup_date'] != '') ? date('d-m-Y', strtotime($model['pickup_date'])) : null;
-                                        $startDate = $is_admin ? null : 'today';
+
                                         echo DatePicker::widget([
                                                 'name' => 'BookingHeader[pickup_date]',
                                                 'id' => 'bookingheader-pickup_date',

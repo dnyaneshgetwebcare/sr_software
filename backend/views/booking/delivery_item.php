@@ -77,9 +77,11 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
         ?>', '<?= $item_status; ?>', )">
           <i class="fab fa-whatsapp"></i>
         </button>
-        <?php if($item_status != 'Picked'): ?>
-        <button class="btn btn-info btn-border mt-2" onclick="sendCustomerDetailsWhatsapp('<?= $customer_master['name']; ?>', '<?= $customer_master['contact_nos']; ?>', '<?= $model->deposite_amount - ($model->other_charges + $model->refunded); ?>')">
-          <i class="fab fa-whatsapp"></i> Return Deposit
+        <?php if($item_status != 'Picked'):
+            $whatsapp_nos = $model->gpay_number ?? $customer_master['contact_nos'];
+            ?>
+        <button class="btn btn-info btn-border mt-2" onclick="sendCustomerDetailsWhatsapp('<?= $customer_master['name']; ?>', '<?= $whatsapp_nos; ?>', '<?= $model->deposite_amount - ($model->other_charges + $model->refunded); ?>')">
+          <i class="fab fa-whatsapp"></i> Rtr. Dep.
         </button>
         <?php endif; ?>
       </div>
@@ -143,7 +145,11 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                             ]
                                     ]); ?>
                                 </div>
-                              <label class="col-md-6"> Remark: <span style="font-weight: 400"><?= $model->remark; ?>
+                                <label class="control-label text-left col-md-1" style="padding-right: 0px !important; padding-left: 15px;">GPay Nos.</label>
+                                <div class="col-md-3">
+                                    <?php echo $form->field($model, 'gpay_number')->textInput(['maxlength' => true, 'class' => 'form-control', 'placeholder' => 'Enter GPay Number', 'autocomplete' => "off"])->label(false); ?>
+                                </div>
+                              <label class="col-md-3"> Remark: <span style="font-weight: 400"><?= $model->remark; ?>
                                 </span><br>
                                Measurment: <span style="font-weight: 400">  <?php if($model->chest !="" || $model->waist !="" || $model->hip
                                     !=""){
