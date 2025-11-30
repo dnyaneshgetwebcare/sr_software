@@ -100,12 +100,13 @@ $this->title = 'Soyara Rental Couture';
                                 foreach ($product_bookings as $booking) {
                                     $status_class = 'primary';
                                      $actual_rent = $booking['earning_amount'];
+                                     $earn_actual_rent = $actual_rent*60/100;
                                     if ($booking['status'] == 'Returned') {
-                                        $rent_amount += $actual_rent;
+                                        $rent_amount += $earn_actual_rent;
                                         $number_of_times++;
                                         $status_class = 'success';
                                     } else {
-                                        $upcoming_booking += $actual_rent;
+                                        $upcoming_booking += $earn_actual_rent;
                                         $upcoming_booking_times++;
                                     }
 
@@ -124,7 +125,7 @@ $this->title = 'Soyara Rental Couture';
                           */ ?><!-- >>  --><?php /*= Yii::$app->formatter->asDate($booking['pickup_date'],'d-MM-yy');
                           */ ?></div>
                                         </div>
-                                        <span class="number"> <?= number_format($actual_rent, 0) ?> </span>
+                                        <span class="number"> <?= number_format($earn_actual_rent, 0) ?> </span>
                                     </div>
                                 <?php }
                             } else {
