@@ -9,6 +9,9 @@ $this->title = 'Soyara Rental Couture';
     td {
         font-size: 15px;
     }
+    .card-title{
+        font-size: 16px !important;
+    }
 </style>
 
 
@@ -183,10 +186,10 @@ if ($is_admin) { ?>
 <?php } ?>
 
 <div class="row">
-    <div class="col-lg-4 col-md-3">
+    <div class="col-lg-3 col-md-3">
         <div class="card card-round card-outline-info card-annoucement">
             <div class="card-header">
-                <h4 class="card-title" style="color: white">Upcoming Deliveries </h4>
+                <h4 class="card-title" style="color: white">Upcoming Deliveries (<?= count($model_delivarys) ?>)</h4>
                 <h6 class="card-subtitle op-5" style="margin-bottom: 0; color: white">Next 5days</h6>
             </div>
             <!-- <div class="card-body bg-danger">
@@ -242,10 +245,10 @@ if ($is_admin) { ?>
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-md-3">
+    <div class="col-lg-3 col-md-3">
         <div class="card card-round card-outline-info">
             <div class="card-header">
-                <h4 class="card-title" style="color: white">Upcoming Returns </h4>
+                <h4 class="card-title" style="color: white">Upcoming Returns (<?= count($model_returns) ?>)</h4>
                 <h6 class="card-subtitle op-5" style="margin-bottom: 0; color: white">Next 5days</h6>
             </div>
             <div class="card-body client-card-body">
@@ -284,10 +287,10 @@ if ($is_admin) { ?>
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-md-3">
+    <div class="col-lg-3 col-md-3">
         <div class="card card-round card-outline-info">
             <div class="card-header">
-                <h4 class="card-title" style="color: white">Return Deposite Pending </h4>
+                <h4 class="card-title" style="color: white">Return Deposite Pending (<?= count($dep_pending) ?>)</h4>
                 <h6 class="card-subtitle op-5" style="margin-bottom: 0; color: white">Open Order</h6>
             </div>
             <div class="card-body client-card-body">
@@ -316,6 +319,48 @@ if ($is_admin) { ?>
 
                                 ?>
                                 <p class="day">All Deposite Returened</p>
+                                <?php
+                            }
+                            ?>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3">
+        <div class="card card-round card-outline-info">
+            <div class="card-header">
+                <h4 class="card-title" style="color: white">Pending Payment (<?= count($pending_payment) ?>)</h4>
+                <h6 class="card-subtitle op-5" style="margin-bottom: 0; color: white">Returned Items</h6>
+            </div>
+            <div class="card-body client-card-body">
+                <div class="message-box contact-box">
+
+                    <div class="message-widget contact-widget" style=" height: 510px;  overflow: auto;">
+                        <ul class="list-group list-group-light">
+                            <?php
+                            foreach ($pending_payment as $key => $payment_pending) { ?>
+                                <!-- Message -->
+                                <li class="list-group-item px-3">
+                                    <a href="index.php?r=booking/update&id=<?= $payment_pending->booking_id ?>">
+                                        <div class="user-img" style="width: 56px"><span
+                                                    class="round"><?= date_format(date_create($payment_pending->return_date), "d/M") ?></span>
+                                        </div>
+                                        <div class="mail-contnet">
+                                            <h5 style="font-size: 16px"><?= $payment_pending->customer->name ?></h5> <span
+                                                    class="mail-desc"
+                                                    style="font-size: 12px"><?= $payment_pending->customer->contact_nos ?></span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                            <?php }
+                            if (sizeof($pending_payment) == 0) {
+
+                                ?>
+                                <p class="day">All Payments Completed</p>
                                 <?php
                             }
                             ?>
@@ -531,6 +576,11 @@ if ($is_admin) { ?>
         }
 
 
+    });
+
+    // Hide sidebar on dashboard page (same as booking/create)
+    $(document).ready(function () {
+        $('.wrapper').addClass('sidebar_minimize');
     });
 </script>
 <!-- Row -->
