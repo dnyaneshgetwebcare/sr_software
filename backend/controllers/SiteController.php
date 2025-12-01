@@ -73,7 +73,7 @@ class SiteController extends Controller
          $model_delivary=BookingHeader::find()->where(['order_status'=>'Open','status'=>'Booked'])->andWhere('pickup_date <= DATE_ADD(CURDATE(), INTERVAL 5 DAY)')->orderBy(['pickup_date'=>SORT_ASC])->all();
         $model_returns=BookingHeader::find()->where(['order_status'=>'Open','status'=>'Picked'])->andWhere('return_date <= DATE_ADD(CURDATE(), INTERVAL 5 DAY)')->orderBy(['return_date'=>SORT_ASC])->all();
         $dep_pending=BookingHeader::find()->where(['order_status'=>'Open','status'=>'Returned','payment_status'=>1])->all();
-        $pending_payment=BookingHeader::find()->where(['payment_status'=>0,'status'=>'Returned'])->all();
+        $pending_payment=BookingHeader::find()->where(['payment_status'=>0,'status'=>'Returned'])->andWhere(['not in', 'order_status', ['Cancelled', 'Deleted']])->all();
         $booking_this_month=BookingHeader::find()->select(['count(*) as numb_booking','sum(rent_amount) as rent_amount',  'sum(discount) as discount', 'sum(cancellation_charges) as cancellation_charges' , 'sum(extra_amount) as extra_amount' ,'sum( other_charges) as other_charges' , 'sum(issues_penalty) as issues_penalty'])
           ->where('MONTH(pickup_date)=MONTH(CURRENT_DATE())')->andWhere('YEAR(pickup_date)=YEAR(CURRENT_DATE())')
           ->andWhere(['order_status'=>array('Open',
