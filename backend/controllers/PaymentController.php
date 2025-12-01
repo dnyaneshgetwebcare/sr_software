@@ -36,7 +36,7 @@ class PaymentController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => [ 'index',  'payment-search'],
+                        'actions' => [ 'index',  'payment-report','payment-search'],
                         'allow' => true,
                         'roles' => ['limited_report'],
                     ],
