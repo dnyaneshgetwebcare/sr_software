@@ -842,7 +842,7 @@ class BookingController extends Controller
 
     Yii::$app->response->format = Response::FORMAT_JSON;
     $transaction = Yii::$app->db->beginTransaction();
-    if (isset($_POST['selection'])) {
+    if (!isset($_POST['selection'])) {
       return array("errors" => array("No Item Selected."));
     }
     if (!isset($_POST['delivery_date']) || $_POST['delivery_date'] == "") {
