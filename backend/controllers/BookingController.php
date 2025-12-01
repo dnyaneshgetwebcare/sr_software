@@ -916,13 +916,13 @@ class BookingController extends Controller
           }
         } else {
           /* as no edit option avaible in payment so no need to update */
-          /*$payment_item->booking_id = $model->booking_id;
+          $payment_item->booking_id = $model->booking_id;
           // $payment_item->item_no=$item_no;
 
           if (!$flag = $payment_item->save()) {
             $transaction->rollBack();
             return array('errors' => $payment_item->errors);
-          }*/
+          }
         }
 
       }
