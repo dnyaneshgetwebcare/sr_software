@@ -236,6 +236,12 @@ class PaymentMasterSearch extends PaymentMaster
       }*/
     $date_format = ($this->date != '') ? date('Y-m-d', strtotime($this->date)) : '';
     // grid filtering conditions
+    if ($this->from_date != '' && $this->to_date != '') {
+      $date_format_from = ($this->from_date != '') ? date('Y-m-d', strtotime($this->from_date)) : '';
+      $date_format_to = ($this->to_date != '') ? date('Y-m-d', strtotime($this->to_date)) : '';
+      $query->andWhere(['>=', 'date', $date_format_from]);
+      $query->andWhere(['<=', 'date', $date_format_to]);
+    }
     $query->andFilterWhere([
       'payment_id' => $this->payment_id,
       'date' => $date_format,
@@ -243,7 +249,7 @@ class PaymentMasterSearch extends PaymentMaster
       'amount' => $this->amount,
       // 'booking_id' => $this->booking_id,
     ]);
-    if ($this->month_year_filter != '' && $this->date == '') {
+    if ($this->month_year_filter != '' && $this->date == '' && $this->from_date == '' && $this->to_date == '') {
       $query->andWhere('DATE_FORMAT(date, "%m-%Y") = "' . $this->month_year_filter . '"');
     }
     $query->andFilterWhere(['like', 'type', $this->type])
@@ -311,5 +317,58 @@ class PaymentMasterSearch extends PaymentMaster
     ]);
     return $dataProvider;
 
+  }
+
+  public function searchReconcileBankTransaction($params)
+  {
+    # code...
+    $query = PaymentMaster::find()->select(['payment_master.payment_id', 'payment_master.date', 'booking_header.booking_id', 'customer_master.name as customer_name', 'payment_master.type', 'payment_master.mode_of_payment', 'payment_master.sendto', 'payment_master.amount', 'booking_header.pickup_date', 'booking_header.return_date', 'booking_header.booking_date', 'payment_master.remark'])->leftJoin('booking_header', 'booking_header.booking_id = payment_master.booking_id')->leftJoin('customer_master', 'booking_header.customer_id=customer_master.id');
+
+    // Filter: payment mode NOT IN ('cash', 'deposit', 'Carry_Frwd')
+    $query->andWhere(['NOT IN', 'payment_master.mode_of_payment', ['Cash', 'Deposit', 'Carry_Frwd']]);
+    
+    // Filter: type NOT IN ('Return-Deposit', 'Return-Payment')
+    $query->andWhere(['NOT IN', 'payment_master.type', ['Return-Deposit', 'Return-Payment']]);
+
+    $this->load($params);
+
+    // Single date filtering
+    $date_format = '';
+    if ($this->date != '') {
+      // Convert dd-mm-yyyy to Y-m-d format
+      $date_parts = explode('-', $this->date);
+      if (count($date_parts) == 3) {
+        $date_format = $date_parts[2] . '-' . $date_parts[1] . '-' . $date_parts[0];
+      } else {
+        $date_format = date('Y-m-d', strtotime($this->date));
+      }
+      $query->andWhere(['payment_master.date' => $date_format]);
+    } else {
+      // Default to today's date if no date is selected
+      $date_format = date('Y-m-d');
+      $query->andWhere(['payment_master.date' => $date_format]);
+    }
+    
+    // grid filtering conditions
+    $query->andFilterWhere([
+      'payment_master.payment_id' => $this->payment_id,
+      'payment_master.dom' => $this->dom,
+      'payment_master.amount' => $this->amount,
+    ]);
+    
+    $query->andFilterWhere(['like', 'payment_master.type', $this->type])
+      ->andFilterWhere(['like', 'payment_master.mode_of_payment', $this->mode_of_payment])
+      ->andFilterWhere(['like', 'customer_master.name', $this->customer_name])
+      ->andFilterWhere(['like', 'payment_master.sendto', $this->sendto]);
+    
+    $query->orderBy(['payment_master.date' => SORT_DESC, 'payment_master.payment_id' => SORT_DESC]);
+    
+    $dataProvider = new ArrayDataProvider([
+      'pagination' => false,
+      'allModels' => $query->createCommand()->queryAll(),
+      'sort' => false,
+    ]);
+    
+    return $dataProvider;
   }
 }

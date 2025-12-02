@@ -36,12 +36,12 @@ class PaymentController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => [ 'index',  'payment-report','payment-search'],
+                        'actions' => [ 'index',  'payment-report','payment-search', 'latest-transaction', 'reconcile-bank-transaction'],
                         'allow' => true,
                         'roles' => ['limited_report'],
                     ],
                     [
-                        'actions' => [ 'index',  'payment-report', 'payment-search'],
+                        'actions' => [ 'index',  'payment-report', 'payment-search', 'latest-transaction', 'reconcile-bank-transaction'],
                         'allow' => true,
                         'roles' => ['reports'],
                     ],
@@ -74,6 +74,73 @@ class PaymentController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'payment_summarys' => $payment_summarys,
+        ]);
+    }
+
+    /**
+     * Lists latest payment transactions (last 5 days).
+     * @return mixed
+     */
+    public function actionLatestTransaction()
+    {
+        // Calculate date range for last 5 days
+        $endDate = date('Y-m-d');
+        $startDate = date('Y-m-d', strtotime('-5 days'));
+        $user = Yii::$app->user->identity;
+        $is_admin = ($user->user_type == "admin") ? true : false;
+        $searchModel = new PaymentMasterSearch();
+        // Set date range in query params to ensure it's used
+        $queryParams = Yii::$app->request->queryParams;
+        if (!isset($queryParams['PaymentMasterSearch'])) {
+            $queryParams['PaymentMasterSearch'] = [];
+        }
+        $queryParams['PaymentMasterSearch']['from_date'] = $startDate;
+        $queryParams['PaymentMasterSearch']['to_date'] = $endDate;
+        
+        $dataProvider = $searchModel->search($queryParams);
+
+        // Get payment summary for last 5 days
+        $payment_summarys = PaymentMaster::find()
+            ->select(['sum(amount) as total', 'mode_of_payment'])
+            ->where(['>=', 'date', $startDate])
+            ->andWhere(['<=', 'date', $endDate])
+            ->groupBy(['mode_of_payment'])
+            ->createCommand()
+            ->queryAll();
+        
+        return $this->render('latest-transaction', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'payment_summarys' => $payment_summarys,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'is_admin' => $is_admin,
+        ]);
+    }
+
+    /**
+     * Lists bank transactions for reconciliation.
+     * Filters: payment mode NOT IN (cash, deposit, Carry_Frwd) AND type NOT IN (Return-Deposit, Return-Payment)
+     * @return mixed
+     */
+    public function actionReconcileBankTransaction()
+    {
+        $searchModel = new PaymentMasterSearch();
+        $queryParams = Yii::$app->request->queryParams;
+        
+        // Set default date to today if not provided
+        if (!isset($queryParams['PaymentMasterSearch']['date']) || empty($queryParams['PaymentMasterSearch']['date'])) {
+            if (!isset($queryParams['PaymentMasterSearch'])) {
+                $queryParams['PaymentMasterSearch'] = [];
+            }
+            $queryParams['PaymentMasterSearch']['date'] = date('d-m-Y');
+        }
+        
+        $dataProvider = $searchModel->searchReconcileBankTransaction($queryParams);
+
+        return $this->render('reconcile-bank-transaction', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

@@ -381,6 +381,16 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
                     <span class="sub-item">Payment</span>
                   </a>
                 </li>
+                <li>
+                  <a href="index.php?r=payment/latest-transaction">
+                    <span class="sub-item">Latest Transaction</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="index.php?r=payment/reconcile-bank-transaction">
+                    <span class="sub-item">Reconcile Bank Transaction</span>
+                  </a>
+                </li>
 
 
               </ul>
