@@ -45,6 +45,13 @@ class PaymentController extends Controller
                         'allow' => true,
                         'roles' => ['reports'],
                     ],
+                    [
+                        'actions' => [  'latest-transaction'],
+                        'allow' => true,
+                        'roles' => ['call_center'],
+                    ],
+
+
                 ],
             ],
             'verbs' => [
