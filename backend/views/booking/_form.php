@@ -416,6 +416,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     </div>
                                 </div>
                             </div>
+                          <?php if($is_admin){ ?>
                             <div class="col-md-2">
                                 <div class="form-group row">
                                     <div class="col-md-9">
@@ -424,6 +425,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     </div>
                                 </div>
                             </div>
+                          <?php } ?>
                             <div class="col-md-4">
                                 <div class="form-group row">
                                     <div class="col-md-9">
