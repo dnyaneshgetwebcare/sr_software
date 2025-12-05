@@ -71,7 +71,7 @@ class BookingController extends Controller
             'roles' => ['@'],
           ],
            [
-            'actions' => [ 'index', 'view', 'create', 'delivery','return-item','pending-deposite',  'update'],
+            'actions' => [ 'index', 'view', 'create', 'delivery','return-item','pending-deposite',  'update', 'delete'],
             'allow' => true,
             'roles' => ['manage_booking'],
           ],
