@@ -1948,6 +1948,8 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                     // alert(errorThrown);
                     if (errorThrown == 'Forbidden') {
                         alert(YOU_DONT_HAVE_ACCESS);
+                    }else{
+                        alert(errorThrown)
                     }
                 }
             });
@@ -2629,7 +2631,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
     }
 
     function printInvoice(id) {
-        window.open("http://app.thesoyara.com/index.php?r=booking/invoice-view&id=" + id, "_blank");
+        window.open("http://thesoyara.com/app/index.php?r=booking/invoice-view&id=" + id, "_blank");
     }
 
     function addPaymentitem() {
