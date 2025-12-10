@@ -667,6 +667,13 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                 </button>
                             </div>
                             <div class="col-lg-12" id="sales_items_tab" style="margin-top: 10px">
+                                <!-- Cancel Item Button (hidden by default) -->
+                                <div id="cancel-item-btn-container" style="display: none; margin-bottom: 10px;">
+                                    <button type="button" class="btn btn-danger" id="cancel-item-btn" onclick="cancelSelectedItems()">
+                                        <i class="fa fa-times"></i> Cancel Item
+                                    </button>
+                                </div>
+                                
                                 <?php DynamicFormWidget::begin([
                                         'widgetContainer' => 'dynamicform_wrapper_booking',
                                         'widgetBody' => '.container-items',
@@ -727,8 +734,16 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                               <span id='<?php echo "bookingitem-{$indexHouse}-sr_no"; ?>'><?=
                                                   $indexHouse; ?> </span>
 
-                                                <?= $form->field($booking_item, "[{$indexHouse}]inv_visibilty")
-                                                        ->checkbox(['maxlength' => true, 'class' => 'check my-checkbox icheckbox_square-blue', 'label' => false, 'onchange' => "changeHideStatus(this)"
+                                               <!-- <?php /*if ($model->booking_id != '' && $indexHouse != 0): */?>
+                                                    <input type="checkbox" class="cancel-item-checkbox icheckbox_square-blue"
+                                                           data-item-index="<?php /*= $indexHouse */?>"
+                                                           id="cancel-checkbox-<?php /*= $indexHouse */?>">
+                                                --><?php /*endif; */?>
+
+                                                <?= $form->field($booking_item, "[{$indexHouse}]cancel_checkbox")
+                                                        ->checkbox(['maxlength' => true, 'class' => 'cancel-item-checkbox icheckbox_square-blue', 'label' => false, 'onchange' => "changeHideStatus(this)", 'style' => 'display:none;', 'data' => [
+                                                                'item-index' => $indexHouse,
+                                                        ],
                                                         ]) ?>
                                             </td>
                                             <td>
@@ -2056,6 +2071,8 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             console.log('Unchecked');
         }
     }
+
+    // Booking item cancellation functionality is handled in js/booking-cancel-item.js
 
     function add() {
         saved_flag = true;

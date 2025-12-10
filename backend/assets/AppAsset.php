@@ -53,6 +53,7 @@ class AppAsset extends AssetBundle
     'kai-admin-assets/js/plugin/select2/select2.full.min.js',
     'kai-admin-assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js',
     'js/dropify/dist/js/dropify.min.js',
+    'js/booking-cancel-item.js',
     //'kai-admin-assets/js/demo.js',
 
   ];

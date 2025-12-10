@@ -112,6 +112,7 @@ class PaymentController extends Controller
             ->where(['>=', 'date', $startDate])
             ->andWhere(['<=', 'date', $endDate])
             ->groupBy(['mode_of_payment'])
+            ->orderBy('date', SORT_DESC)
             ->createCommand()
             ->queryAll();
         

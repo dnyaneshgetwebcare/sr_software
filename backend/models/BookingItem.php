@@ -28,12 +28,30 @@ use Yii;
  * @property BookingHeader $booking
  * @property ItemMaster $item
  */
+/*
+ *
+ * ALTER TABLE `booking_item`
+ADD COLUMN `other_amount` DECIMAL(10,2) NULL DEFAULT 0 AFTER `inv_visibilty`;
+ALTER TABLE `customer_master`
+CHANGE COLUMN `reference` `reference` ENUM('None', 'FaceBook', 'Instagram', 'Google', 'Friend') NULL ,
+CHANGE COLUMN `cust_group` `cust_group` ENUM('None', 'Photographer', 'Model', 'Friend') NULL ;
+ALTER TABLE `booking_header`
+CHANGE COLUMN `picked_date` `picked_date` DATE NULL ,
+CHANGE COLUMN `returned_date` `returned_date` DATE NULL ,
+CHANGE COLUMN `net_value` `net_value` DECIMAL(10,2) NOT NULL DEFAULT 0 ,
+CHANGE COLUMN `discount` `discount` DECIMAL(10,2) NOT NULL DEFAULT 0 ,
+CHANGE COLUMN `deposite_status` `deposite_status` ENUM('NA', 'PAID', 'RETURNED') NULL ,
+CHANGE COLUMN `order_status` `order_status` ENUM('Open', 'Closed', 'Deleted', 'Cancelled') NULL ;
+ALTER TABLE `booking_header`
+CHANGE COLUMN `reason` `reason` VARCHAR(150) NULL DEFAULT NULL ;
+
+*/
 class BookingItem extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public $sr_no;
+    public $sr_no , $cancel_checkbox;
     public static function tableName()
     {
         return 'booking_item';
@@ -48,10 +66,11 @@ class BookingItem extends \yii\db\ActiveRecord
             [[  'product_id', 'amount', 'deposit_amount'], 'required'],
             [['booking_id', 'item_no', 'product_id', 'deposite_charge_status', 'payment_status'], 'integer'],
             [['amount', 'deposit_amount'], 'number'],
-            [['pickup_date', 'picked_date', 'return_date', 'returned_date','description','net_value','discount', 'item_no','item_status', 'deposite_status','item_id','item_type','item_category','extra_per','earning_amount'], 'safe'],
+            [['pickup_date', 'picked_date', 'return_date', 'returned_date','description','net_value','discount', 'item_no','item_status', 'deposite_status','item_id','item_type','item_category','extra_per','earning_amount', 'other_amount'], 'safe'],
             [['item_status', 'note', 'deposite_status'], 'string'],
             [['image_name'], 'string', 'max' => 50],
             [['inv_visibilty'], 'default', 'value' => '0'],
+            [['other_amount'], 'default', 'value' => '0'],
             ['net_value', function ($attribute, $params, $validator) {
               if ($this->inv_visibilty == 1 && $this->$attribute != 0) {
                  $this->addError($attribute, "#{$this->sr_no}Net Value must be 0 when Hidden in invoice.");
@@ -87,6 +106,7 @@ class BookingItem extends \yii\db\ActiveRecord
             'note' => 'Note',
             'extra_per' => 'Extra',
             'discount'=>'Discount',
+            'other_amount'=>'Other',
             'deposite_status' => 'Deposite Status',
             'payment_status' => 'Payment Status',
         ];

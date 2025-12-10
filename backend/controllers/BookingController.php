@@ -66,7 +66,7 @@ class BookingController extends Controller
             'allow' => true,
           ],
           [
-            'actions' => ['logout',  'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details',  'delivery-item',  'index-payment',  'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability'],
+            'actions' => ['logout',  'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details',  'delivery-item',  'index-payment',  'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability', 'cancel-items'],
             'allow' => true,
             'roles' => ['@'],
           ],
@@ -1669,6 +1669,198 @@ class BookingController extends Controller
     //$year=date("Y",$time);
 
     return $old_month_year != $month_year;
+  }
+
+  /**
+   * Cancel selected booking items with charges
+   * @return array JSON response
+   */
+  public function actionCancelItems()
+  {
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    
+    $transaction = Yii::$app->db->beginTransaction();
+    
+    try {
+      $request = Yii::$app->request->post();
+      
+      // Validate required data
+      if (!isset($request['booking_id']) || !isset($request['items']) || !is_array($request['items'])) {
+        $transaction->rollBack();
+        return [
+          'success' => false,
+          'message' => 'Invalid request data. Booking ID and items are required.'
+        ];
+      }
+
+      $bookingId = $request['booking_id'];
+      $itemsData = $request['items'];
+      $chargeType = $request['charge_type'] ?? 'fixed';
+      $chargeValue = floatval($request['charge_value'] ?? 0);
+      $totalCharges = floatval($request['total_charges'] ?? 0);
+
+      $updatedItems = [];
+      $errors = [];
+
+      foreach ($itemsData as $itemData) {
+        $itemId = $itemData['item_id'] ?? null;
+        $productId = $itemData['product_id'] ?? null;
+        $chargesAmount = floatval($itemData['charges_amount'] ?? 0);
+        $originalDescription = $itemData['original_description'] ?? '';
+
+        // Skip if no item_id
+        if (!$itemId) {
+          continue;
+        }
+
+        // Find the booking item
+        $bookingItem = BookingItem::findOne([
+          'item_id' => $itemId,
+          'booking_id' => $bookingId
+        ]);
+
+        if (!$bookingItem) {
+          $errors[] = "Item ID {$itemId} not found";
+          continue;
+        }
+
+        // Update booking item fields
+        $bookingItem->item_status = 'Cancelled';
+        $bookingItem->earning_amount = 0;
+        $bookingItem->amount = $chargesAmount;
+        $bookingItem->other_amount = 0;
+        $bookingItem->deposit_amount = 0;
+        $bookingItem->net_value = $chargesAmount;
+        $bookingItem->description = 'Cancel ' . $originalDescription;
+
+        if (!$bookingItem->save(false)) {
+          $errors[] = "Failed to update item ID {$itemId}";
+          $transaction->rollBack();
+          return [
+            'success' => false,
+            'message' => 'Failed to cancel items',
+            'errors' => $errors
+          ];
+        }
+
+        $updatedItems[] = [
+          'item_id' => $itemId,
+          'product_id' => $productId,
+          'charges_amount' => $chargesAmount
+        ];
+      }
+
+      // Check if any items were updated
+      if (empty($updatedItems)) {
+        $transaction->rollBack();
+        return [
+          'success' => false,
+          'message' => 'No valid items found to cancel'
+        ];
+      }
+
+      // Update booking header summary
+      $bookingHeader = BookingHeader::findOne($bookingId);
+      if (!$bookingHeader) {
+        $transaction->rollBack();
+        return [
+          'success' => false,
+          'message' => 'Booking not found'
+        ];
+      }
+
+      // Recalculate totals from remaining active items
+      $activeItems = BookingItem::find()
+        ->where(['booking_id' => $bookingId])
+        ->andWhere(['!=', 'item_status', 'Cancelled'])
+        ->all();
+
+      $rentAmount = 0;
+      $depositAmount = 0;
+      $discountAmount = 0;
+      $extraAmount = 0;
+      $netValue = 0;
+      $earningAmount = 0; // Start with cancellation charges
+
+      foreach ($activeItems as $item) {
+        $rentAmount += floatval($item->amount ?? 0);
+        $depositAmount += floatval($item->deposit_amount ?? 0);
+        $discountAmount += floatval($item->discount ?? 0);
+        $extraAmount += (floatval($item->amount ?? 0) * floatval($item->extra_per ?? 0)) / 100;
+        $netValue += floatval($item->net_value ?? 0);
+        $earningAmount += floatval($item->earning_amount ?? 0);
+      }
+
+      // Update booking header
+      $bookingHeader->rent_amount = $rentAmount;
+      $bookingHeader->deposite_amount = $depositAmount;
+      $bookingHeader->discount = $discountAmount;
+      $bookingHeader->extra_amount = $extraAmount;
+      $bookingHeader->net_value = $netValue;
+      $bookingHeader->earning_amount = $earningAmount;
+      $bookingHeader->cancellation_charges = $totalCharges;
+
+      if (!$bookingHeader->save(false)) {
+        $transaction->rollBack();
+        return [
+          'success' => false,
+          'message' => 'Failed to update booking header',
+          'errors' => $bookingHeader->errors
+        ];
+      }
+
+      // Update booking summary tables
+      $update_summary = $this->updateSummary($bookingHeader->pickup_date);
+      if (!$update_summary['flag']) {
+        $transaction->rollBack();
+        return [
+          'success' => false,
+          'message' => 'Failed to update booking summary',
+          'errors' => $update_summary['errors']
+        ];
+      }
+
+      $update_summary_item = $this->updateItemSummary($bookingHeader->pickup_date);
+      if (!$update_summary_item['flag']) {
+        $transaction->rollBack();
+        return [
+          'success' => false,
+          'message' => 'Failed to update item summary',
+          'errors' => $update_summary_item['errors']
+        ];
+      }
+
+      // Commit transaction
+      $transaction->commit();
+
+      return [
+        'success' => true,
+        'message' => count($updatedItems) . ' item(s) cancelled successfully',
+        'data' => [
+          'updated_items' => $updatedItems,
+          'charge_type' => $chargeType,
+          'charge_value' => $chargeValue,
+          'total_charges' => $totalCharges,
+          'booking_totals' => [
+            'rent_amount' => $bookingHeader->rent_amount,
+            'deposite_amount' => $bookingHeader->deposite_amount,
+            'net_value' => $bookingHeader->net_value,
+            'earning_amount' => $bookingHeader->earning_amount
+          ]
+        ]
+      ];
+
+    } catch (\Exception $e) {
+      $transaction->rollBack();
+      
+      Yii::error('Error in actionCancelItems: ' . $e->getMessage(), __METHOD__);
+      
+      return [
+        'success' => false,
+        'message' => 'An error occurred while cancelling items',
+        'error' => $e->getMessage()
+      ];
+    }
   }
 
   public function actionDelete()
