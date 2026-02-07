@@ -6,6 +6,13 @@
 (function($) {
     'use strict';
 
+    // Global Configuration - Default Cancellation Charges
+    // TODO: Make this dynamic from backend settings in future
+    window.DEFAULT_CANCELLATION_CHARGE = {
+        type: 'percentage', // 'percentage' or 'fixed'
+        value: 40           // 40% or fixed amount in rupees
+    };
+
     // Initialize on document ready
     $(document).ready(function() {
         initializeCancelCheckboxes();
@@ -50,21 +57,76 @@
      */
     window.cancelSelectedItems = function() {
         var selectedItems = [];
+        var cancelledItems = [];
         
         // Collect selected items with their details
         $('.cancel-item-checkbox').each(function() {
             if ($(this).prop('checked')) {
                 var itemIndex = $(this).attr('data-item-index');
-                var itemDesc = $('#bookingitem-' + itemIndex + '-description').val();
+                var itemStatus = $('#bookingitem-' + itemIndex + '-item_status').val();
+                var itemDesc = $('#bookingitem-' + itemIndex + '-description').val() || 'Item ' + itemIndex;
+                
+                // Check if item status is not 'Booked'
+                if (itemStatus !== 'Booked') {
+                    console.log('Found non-bookable item at index:', itemIndex, 'Status:', itemStatus);
+                    
+                    var statusMessage = '';
+                    switch(itemStatus) {
+                        case 'Cancelled':
+                            statusMessage = 'already cancelled';
+                            break;
+                        case 'Picked':
+                            statusMessage = 'picked up';
+                            break;
+                        case 'Returned':
+                            statusMessage = 'returned';
+                            break;
+                        default:
+                            statusMessage = 'in status: ' + itemStatus;
+                    }
+                    
+                    cancelledItems.push({
+                        index: itemIndex,
+                        description: itemDesc + ' (' + statusMessage + ')'
+                    });
+                    return true; // continue to next iteration
+                }
+                
                 var itemAmount = $('#bookingitem-' + itemIndex + '-amount').val();
                 
                 selectedItems.push({
                     index: itemIndex,
-                    description: itemDesc || 'Item ' + itemIndex,
+                    description: itemDesc,
                     amount: itemAmount || '0.00'
                 });
             }
         });
+        
+        // Show error if any non-bookable items are selected
+        if (cancelledItems.length > 0) {
+            var cancelledList = cancelledItems.map(function(item, idx) {
+                return (idx + 1) + '. ' + item.description;
+            }).join('<br>');
+            
+            swal({
+                title: "Cannot Cancel Selected Items",
+                content: {
+                    element: "div",
+                    attributes: {
+                        innerHTML: '<div style="text-align: left;">' +
+                            '<p>The following item(s) cannot be cancelled:</p>' +
+                            '<div style="margin: 10px 0; padding: 10px; background: #ffebee; border-left: 3px solid #f44336; border-radius: 4px;">' +
+                            cancelledList +
+                            '</div>' +
+                            '<p style="margin-top: 10px;"><strong>Note:</strong> Only items with status "Booked" can be cancelled. Please uncheck these items and try again.</p>' +
+                            '</div>'
+                    }
+                },
+                icon: "error",
+                button: "OK",
+            });
+            return;
+        }
         
         if (selectedItems.length === 0) {
             swal({
@@ -105,24 +167,24 @@
                         '<div style="display: flex; gap: 10px; align-items: center;">' +
                         '<div style="flex: 1; position: relative;">' +
                         '<input type="number" id="cancellation-charges" class="swal-content__input" ' +
-                        'placeholder="Enter amount" min="0" step="0.01" value="0" ' +
+                        'placeholder="Enter percentage" min="0" step="0.01" value="' + window.DEFAULT_CANCELLATION_CHARGE.value + '" max="100" ' +
                         'style="width: 100%; padding: 10px 45px 10px 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">' +
                         '<span id="charge-unit" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); ' +
-                        'font-weight: 600; color: #333; pointer-events: none;">₹</span>' +
+                        'font-weight: 600; color: #333; pointer-events: none;">%</span>' +
                         '</div>' +
                         '<div class="btn-group" role="group" style="flex-shrink: 0;">' +
-                        '<button type="button" id="charge-type-fixed" class="btn btn-sm btn-primary" ' +
+                        '<button type="button" id="charge-type-fixed" class="btn btn-sm btn-outline-primary" ' +
                         'style="padding: 10px 18px; border-radius: 4px 0 0 4px; font-size: 18px; font-weight: 600;" title="Fixed Amount">' +
                         '₹' +
                         '</button>' +
-                        '<button type="button" id="charge-type-percent" class="btn btn-sm btn-outline-primary" ' +
+                        '<button type="button" id="charge-type-percent" class="btn btn-sm btn-primary" ' +
                         'style="padding: 10px 18px; border-radius: 0 4px 4px 0; font-size: 18px; font-weight: 600;" title="Percentage">' +
                         '%' +
                         '</button>' +
                         '</div>' +
                         '</div>' +
-                        '<small id="charge-helper" style="color: #666; display: block; margin-top: 5px;">Enter fixed amount in rupees</small>' +
-                        '<div id="calculated-amount" style="margin-top: 10px; padding: 8px; background: #fff3cd; border-left: 3px solid #ffc107; display: none;">' +
+                        '<small id="charge-helper" style="color: #666; display: block; margin-top: 5px;">Enter percentage of total amount (0-100%)</small>' +
+                        '<div id="calculated-amount" style="margin-top: 10px; padding: 8px; background: #fff3cd; border-left: 3px solid #ffc107; display: block;">' +
                         '<strong>Calculated Charges: ₹<span id="calc-value">0.00</span></strong>' +
                         '</div>' +
                         '</div>'
@@ -163,6 +225,11 @@
         // Add event handlers for the toggle buttons after swal renders
         setTimeout(function() {
             setupChargeTypeToggle(totalAmount);
+            // Calculate initial value based on default percentage
+            if (window.DEFAULT_CANCELLATION_CHARGE.type === 'percentage') {
+                var calculated = (totalAmount * window.DEFAULT_CANCELLATION_CHARGE.value) / 100;
+                $('#calc-value').text(calculated.toFixed(2));
+            }
         }, 100);
     };
 
@@ -190,8 +257,11 @@
                 $helper.text('Enter fixed amount in rupees');
                 $calculatedDiv.hide();
                 
-                // Reset value
-                $input.val('0');
+                // Reset to default value if type is fixed, otherwise 0
+                var defaultValue = (window.DEFAULT_CANCELLATION_CHARGE.type === 'fixed') 
+                    ? window.DEFAULT_CANCELLATION_CHARGE.value 
+                    : 0;
+                $input.val(defaultValue);
             }
         });
 
@@ -207,9 +277,15 @@
                 $helper.text('Enter percentage of total amount (0-100%)');
                 $calculatedDiv.show();
                 
-                // Reset value
-                $input.val('0');
-                $calcValue.text('0.00');
+                // Reset to default value if type is percentage, otherwise 0
+                var defaultValue = (window.DEFAULT_CANCELLATION_CHARGE.type === 'percentage') 
+                    ? window.DEFAULT_CANCELLATION_CHARGE.value 
+                    : 0;
+                $input.val(defaultValue);
+                
+                // Calculate and display
+                var calculated = (totalAmount * defaultValue) / 100;
+                $calcValue.text(calculated.toFixed(2));
             }
         });
 
@@ -347,6 +423,9 @@
                           "Cancellation Charges: " + chargeText,
                     icon: "success",
                     button: "OK",
+                }).then(function() {
+                    // Reload the page after user clicks OK
+                    window.location.reload();
                 });
             },
             error: function(xhr, status, error) {

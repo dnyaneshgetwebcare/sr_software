@@ -715,10 +715,12 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     $booking_items = array_merge($array1, $booking_items);
                                     $count_item = count($booking_items);
                                     $sub_total = 0;
+                                    $other_amount = 0;
                                     $def_image_path = Yii::getAlias('@web') . '/uploads/';
                                     foreach ($booking_items as $indexHouse => $booking_item):
                                         $active_div = ($model->booking_id != '' && $indexHouse != 0) ? '' : 'display:none;';
                                         $item_status = false;
+                                        $other_amount += $booking_item->other_amount;
                                         $item_master = $booking_item->item;
                                         $image_pth = ($model->booking_id != '' && $indexHouse != 0 && $item_master != null) ?
                                                 $item_master->imageurl :
@@ -727,8 +729,10 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                         if ($model->booking_id != '' && $indexHouse != 0) {
                                             $item_status = ($booking_item->item_status != 'Booked');
                                         }
+                                        $is_cancelled = ($booking_item->item_status == 'Cancelled');
+                                        $row_style = $is_cancelled ? 'background-color: #ffebee; opacity: 0.8;' : '';
                                         ?>
-                                        <tr class="house-item" id='<?php echo "bookingitem-{$indexHouse}-test"; ?>'>
+                                        <tr class="house-item" id='<?php echo "bookingitem-{$indexHouse}-test"; ?>' style="<?= $row_style ?>">
                                             <td id='<?php echo "bookingitem-{$indexHouse}-tax_new_id"; ?>'
                                                 style="text-align: center;vertical-align: middle !important;">
                                               <span id='<?php echo "bookingitem-{$indexHouse}-sr_no"; ?>'><?=
@@ -752,6 +756,13 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                             </td>
                                             <td class="vcenter desc"
                                                 style="width: 300px;max-width: 300px;overflow: visible;word-break: all;vertical-align: top !important;">
+                                                
+                                                <?php if ($is_cancelled): ?>
+                                                    <span class="cancelled-badge" style="display: inline-block; background: #f44336; color: white; 
+                                                        padding: 3px 10px; border-radius: 3px; font-size: 11px; margin-right: 5px; font-weight: bold;">
+                                                        CANCELLED
+                                                    </span>
+                                                <?php endif; ?>
 
                                                 <div class="row temp_change_item_row"
                                                      style="margin-left:1px;font-size:13px;padding-bottom: 0px;border-radius: 4px;width:100%;height:34px;border:1px solid #aad0e6;cursor: pointer;<?= ($active_div != '') ? 'display: block' : 'display:none'; ?>">
@@ -803,9 +814,21 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
                                             </td>
                                             <td>
-                                                <?= $form->field($booking_item, "[{$indexHouse}]amount")->label
-                                                (false)->textInput(['maxlength' => true, 'onkeyup' => 'add_total(this.id)', 'placeholder' => '0.00', 'readonly' => $item_status, 'style' => 'text-align : right']) ?>
-                                                <?= $form->field($booking_item, "[{$indexHouse}]product_id")->label(false)->hiddenInput(['maxlength' => true]) ?>
+                                                <?php
+                                                if($booking_item['item_status'] == 'Cancelled'){
+                                                      echo $form->field($booking_item, "[{$indexHouse}]other_amount")->label
+                                                (false)->textInput(['maxlength' => true, 'onkeyup' => 'add_total(this.id)', 'placeholder' => '0.00', 'readonly' => $item_status, 'style' => 'text-align : right']);
+                                                      echo $form->field($booking_item, "[{$indexHouse}]amount")->label
+                                                    (false)->hiddenInput(['maxlength' => true, 'onkeyup' => 'add_total(this.id)', 'placeholder' => '0.00', 'readonly' => $item_status, 'style' => 'text-align : right']);
+
+                                                }else{
+                                                      echo $form->field($booking_item, "[{$indexHouse}]amount")->label
+                                                (false)->textInput(['maxlength' => true, 'onkeyup' => 'add_total(this.id)', 'placeholder' => '0.00', 'readonly' => $item_status, 'style' => 'text-align : right']);
+                                                    echo $form->field($booking_item, "[{$indexHouse}]other_amount")->label
+                                                    (false)->hiddenInput(['maxlength' => true, 'onkeyup' => 'add_total(this.id)', 'placeholder' => '0.00', 'readonly' => $item_status, 'style' => 'text-align : right']);
+
+                                                } ?>
+                                              <?= $form->field($booking_item, "[{$indexHouse}]product_id")->label(false)->hiddenInput(['maxlength' => true]) ?>
                                                 <?= $form->field($booking_item, "[{$indexHouse}]item_type")->label(false)->hiddenInput(['maxlength' => true]) ?>
                                                 <?= $form->field($booking_item, "[{$indexHouse}]item_category")->label(false)->hiddenInput(['maxlength' => true]) ?>
                                                 <?= $form->field($booking_item, "[{$indexHouse}]item_no")->label(false)->hiddenInput(['maxlength' => true]) ?>
@@ -938,7 +961,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                         Amount </label>
                                                     <div class="col-md-6 number"
                                                          style="align-content: center; text-align: end;    padding-right: 30px;">
-                                                        <span id="total_rent_after_discount"><?= $model->earning_amount; ?> </span>
+                                                        <span id="total_rent_after_discount"><?= $model->rent_amount; ?> </span>
                                                         <input type="text" name="BookingHeader[rent_amount]"
                                                                value="<?= $model->rent_amount; ?>"
                                                                class="form-control total"
@@ -972,6 +995,20 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                                class="form-control total"
                                                                style="border:none;background: none !important;"
                                                                readonly id="extra_amount">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="even-strip row_new" style="border-top:1px solid #eee;">
+                                                <div class="form-group row">
+                                                    <label class="col-md-6 control-label"
+                                                           style="align-self: center;margin:0"> Cancel Charges </label>
+                                                    <div class="col-md-6 number">
+                                                        <input type="text" name="BookingHeader[other_amount]"
+                                                               value="<?= $other_amount ?>"
+                                                               class="form-control total"
+                                                               style="border:none;background: none !important;"
+                                                               readonly id="other_amount">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1043,9 +1080,14 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     $payment_models = array_merge($array1, $payment_models);
                                     $count_item_payment = count($payment_models);
                                     $sub_total = 0;
+                                    $payment_cancel_charge  = 0;
                                     foreach ($payment_models as $indexHouse => $payment_model):
                                         $active_div = ($model->booking_id != '' && $indexHouse != 0) ? '' : 'display:none;';
                                         $payment_model['date'] = ($payment_model['date'] == "") ? date('Y-m-d') : $payment_model['date'];
+                                        if($payment_model["type"] == "Cancel-Charge"){
+                                            $payment_cancel_charge += $payment_model["amount"];
+                                        }
+
                                         ?>
                                         <tr class="payment-item"
                                             id='<?php echo "paymentmaster-{$indexHouse}-test"; ?>'>
@@ -1065,7 +1107,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                             </td>
 
                                             <td>
-                                                <?= $form->field($payment_model, "[{$indexHouse}]type")->dropDownList(['Advance' => 'Advance', 'Per-payment' => 'Per-payment', 'Final-Payment' => 'Final-Payment', 'Return-Deposit' => 'Return-Deposit', 'Cancel-Charge' => 'Cancel-Charge', 'Other-Charges' => 'Other-Charges', 'Return-Payment' => 'Return-Payment'], ['onchange' => 'add_total_payment()'])->label(false) ?>
+                                                <?= $form->field($payment_model, "[{$indexHouse}]type")->dropDownList(['Advance' => 'Advance', 'Per-payment' => 'Per-payment', 'Final-Payment' => 'Final-Payment', 'Return-Deposit' => 'Return-Deposit', 'Cancel-Charge' => 'Cancel-Charge', 'Other-Charges' => 'Other-Charges', 'Return-Payment' => 'Return-Payment'], ['onchange' => 'check_payment_type(this); add_total_payment()'])->label(false) ?>
 
                                             </td>
                                             <td>
@@ -1264,7 +1306,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                 <label class="col-md-6 control-label"> Pending </label>
                                                 <div class="col-md-6 number">
                                                     <input type="text" name="BookingHeader[pending_amount]"
-                                                           value="<?= $model->net_value - (($model->paid_amount) - $model->cancellation_charges) ?>"
+                                                           value="<?= ($model->net_value  - $model->deposit_adjustment) - (($model->paid_amount)-$payment_cancel_charge) ?>"
                                                            class="form-control total"
                                                            style="border:none;background: none !important;" readonly
                                                            id="pending_amount">
@@ -1287,13 +1329,18 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                         </div>
                                         <div class="row even-strip row_new" style="border-top:1px solid #eee;">
                                             <div class="form-group col-12">
-                                                <label class="col-md-6 control-label"> Cancel Charge </label>
-                                                <div class="col-md-6 number">
-                                                    <input type="text" name="BookingHeader[cancellation_charges]"
+                                                <label class="col-md-9 control-label"> Adjst Cancel Charge with Deposit </label>
+                                                <div class="col-md-3 number">
+                                                <input type="text" name="BookingHeader[deposit_adjustment]"
+                                                           value="<?= isset($model->deposit_adjustment) ? $model->deposit_adjustment : '0' ?>"
+                                                           class="form-control total"
+                                                           placeholder="Out of <?= $model->cancellation_charges ?>"
+                                                           style=""  onkeyup="add_total_payment()"
+                                                           id="deposit_adjustment">
+                                                    <input type="hidden" name="BookingHeader[cancellation_charges]"
                                                            value="<?= $model->cancellation_charges ?>"
                                                            class="form-control total"
-                                                           style="border:none;background: none !important;" readonly
-                                                           id="cancellation_charges">
+                                                           style="border:none;background: none !important;" readonly                                          id="cancellation_charges">
                                                 </div>
                                             </div>
                                         </div>
@@ -1409,7 +1456,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
                 <?php if (($model->booking_id != '') && $model->order_status == 'Open' && $model->status == 'Booked') { ?>
                     <button type="button" class="btn btn-warning btn-square" style="margin-right: 10px"
-                            title="Cancel Booking" onclick="cancelBooking()">Cancel Booking
+                            title="Cancel All Booking Items" onclick="cancelAllBookingItems()">Cancel Booking
                     </button>
                 <?php } ?>
                 <?php if (($model->booking_id != '') && $model->order_status == 'Open' && $model->status == 'Booked' && ($model->paid_amount == 0 || $model->paid_amount == '')) { ?>
@@ -1979,6 +2026,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         var result = '#' + id_pass.substring(0, n + 1);
         //var quantity=result+"quantity";
         var amount = result + "amount";
+        var other_amount = result + "other_amount";  //item_wise_cancel amount
         // var net_price_value=result+"net_price_value";
         var net_value = result + "net_value";
         var extra_per = result + "extra_per";
@@ -2018,7 +2066,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         }
         var extra_amount = (+Number($(amount).val()) * Number(extra_percent)) / 100;
 
-        var final = (+Number($(amount).val()) + +Number($(deposit_amount).val())) - (dis) + extra_amount;
+        var final = (+Number($(amount).val()) + +Number($(deposit_amount).val()) + +Number($(other_amount).val())) - (dis) + extra_amount;
 
 
         $(net_value).val(final);
@@ -2073,6 +2121,57 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
     }
 
     // Booking item cancellation functionality is handled in js/booking-cancel-item.js
+    
+    /**
+     * Cancel all booking items at header level
+     * Selects all non-cancelled items and triggers cancellation
+     */
+    function cancelAllBookingItems() {
+        // Show loader
+        $('.overlay').show();
+        
+        // First, uncheck all checkboxes
+        $('.cancel-item-checkbox').each(function() {
+            $(this).iCheck('uncheck');
+        });
+        
+        // Then check all non-cancelled items (skip index 0 as it's hidden)
+        var hasItems = false;
+        $('.cancel-item-checkbox').each(function() {
+            var itemIndex = $(this).attr('data-item-index');
+            
+            // Skip index 0 (hidden row)
+            if (itemIndex == 0) {
+                return true; // continue to next iteration
+            }
+            
+            var itemStatus = $('#bookingitem-' + itemIndex + '-item_status').val();
+            
+            // Only select items that are not already cancelled
+            if (itemStatus !== 'Cancelled') {
+                $(this).iCheck('check');
+                hasItems = true;
+            }
+        });
+        
+        // Hide loader
+        $('.overlay').hide();
+        
+        if (!hasItems) {
+            swal({
+                title: "No Items Available",
+                text: "All items are already cancelled or no items found.",
+                icon: "warning",
+                button: "OK",
+            });
+            return;
+        }
+        
+        // Small delay to ensure checkboxes are checked before calling cancel
+        setTimeout(function() {
+            cancelSelectedItems();
+        }, 100);
+    }
 
     function add() {
         saved_flag = true;
@@ -2089,6 +2188,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             var discount = "#bookingitem-" + i + "-discount";
             var deposit_amount = "#bookingitem-" + i + "-deposit_amount";
             var amount = "#bookingitem-" + i + "-amount";
+            var other_amount = "#bookingitem-" + i + "-other_amount";
             var extra_per = "#bookingitem-" + i + "-extra_per";
             if ($(discount).val() === undefined) {
                 continue;
@@ -2104,7 +2204,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             total = +total + +Number($(netvalue).val());
             discount_amt = +discount_amt + +Number((numb));
             deposit = +deposit + +Number($(deposit_amount).val());
-            total_value = +total_value + (+(Number($(amount).val())) + +(Number($(deposit_amount).val()))) - numb + extra_amount;
+            total_value = +total_value + (+(Number($(amount).val())) + +(Number($(deposit_amount).val())) + +(Number($(other_amount).val())) ) - numb + extra_amount;
         }
 
         //tax=  +tax + +$("#salesheader-tax_amount").val();
@@ -2780,7 +2880,20 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         });
     }
 
+    function check_payment_type(el) {
+        let payment_type = $(el).val();
+        
+        if (payment_type == "Cancel-Charge") {
+            swal({
+                title: "Option Deactivated",
+                text: "This functionality is disabled now use item cancel option to cancel item",
+                icon: "warning",
+            });
+        }
+    }
+
     function change_mode() {
+    
         // body...
         $.ajax({
             url: "<?php echo \Yii::$app->getUrlManager()->createUrl('booking/get_balance') ?>",
@@ -2821,18 +2934,25 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
             if (type_payment == "Return-Deposit") {
                 refund = +refund + +Number(amount_val);
-            } else if (type_payment == "Cancel-Charge") {
-                cancellation_charges = +cancellation_charges + +Number(amount_val);
-                //paid_amount=+paid_amount + +Number(amount_val);
             } else if (type_payment == "Return-Payment") {
                 return_amount = +return_amount + +Number(amount_val);
                 paid_amount = +paid_amount - +Number(amount_val);
             } else if (type_payment == "Other-Charges") {
                 other_charges = +other_charges + +Number(amount_val);
                 // paid_amount=+paid_amount + +Number(amount_val);
+            }else if (type_payment == "Cancel-Charge") {
+                cancellation_charges = +cancellation_charges + +Number(amount_val);
+                //paid_amount=+paid_amount + +Number(amount_val);
             } else {
                 paid_amount = +paid_amount + +Number(amount_val);
             }
+
+            /*
+            removed cancelation block
+            else if (type_payment == "Cancel-Charge") {
+                cancellation_charges = +cancellation_charges + +Number(amount_val);
+                //paid_amount=+paid_amount + +Number(amount_val);
+            } */
 
             if (type_payment == "Cancel-Charge" || type_payment == "Other-Charges") {
 
@@ -2845,12 +2965,14 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         }
 
         var net_value = Number($("#sub_total").val());
-        var deposit_amount = $("#total_deposite_amount").val()
+        var deposit_amount = $("#total_deposite_amount").val();
+        var deposit_adjsted_amount = Number($("#deposit_adjustment").val());
+
         $("#return_amount").val(return_amount);
-        $("#cancellation_charges").val(cancellation_charges);
+       // $("#cancellation_charges").val(cancellation_charges);    moved cancellation login to item level
         $("#other_charges").val(other_charges);
         $("#paid_amount").val(paid_amount);
-        $("#pending_amount").val(net_value - ((paid_amount) - cancellation_charges));
+        $("#pending_amount").val(net_value - (( paid_amount + deposit_adjsted_amount) - cancellation_charges ));
         $("#display_pending").html("Amount: " + $("#pending_amount").val());
         $("#refunded").val(refund);
         $("#refund_dis").val(refund + '/' + deposit_amount);

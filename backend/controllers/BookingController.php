@@ -585,7 +585,7 @@ class BookingController extends Controller
           if (($model->pending_amount) != 0) {
             return array('errors' => array('Payment not completed. Please complete Payment'));
           }
-          if (($model->deposite_amount - ($model->refunded + $model->other_charges + $model->cancellation_charges)) != 0) {
+          if (($model->deposite_amount - ($model->refunded + $model->other_charges + $model->deposit_adjustment)) != 0) {
             return array('errors' => array('Refund not completed. Please make refund'));
           }
           $model->picked_up = 1;
@@ -599,7 +599,7 @@ class BookingController extends Controller
           $model->return_date = ($model->return_date != '') ? $this->dateFormat($model->return_date) : null;
 
         
-        $model->payment_status = (($model->net_value - $model->paid_amount) == 0);
+        $model->payment_status = ((($model->net_value - $model->deposit_adjustment ) - $model->paid_amount) == 0);
         $model->earning_amount = $model->net_value - $model->deposite_amount;
         // print_r($model);die;
         if (!$flag = $model->save()) {
@@ -666,6 +666,12 @@ class BookingController extends Controller
                 return array('errors' => $payment_retr->errors);
               }
             } else {
+              // Validate new payment entry - Cancel-Charge is not allowed
+              if ($payment_item->type == 'Cancel-Charge') {
+                $transaction->rollBack();
+                return array('errors' => array('Cancel-Charge payment type is not allowed. Please use item cancel option to cancel items.'));
+              }
+              
               $payment_item->booking_id = $model->booking_id;
               // $payment_item->item_no=$item_no;
               //print_r($payment_item);die;
@@ -858,6 +864,7 @@ class BookingController extends Controller
     $cancellation_charges = $_POST['BookingHeader']['cancellation_charges'];
     $other_charges = $_POST['BookingHeader']['other_charges'];
     $pending_amount = $_POST['BookingHeader']['pending_amount'];
+    $deposit_adjustment = $_POST['BookingHeader']['deposit_adjustment'];
     $model = $this->findModel($booking_id);
      if (isset($_POST['BookingHeader']['gpay_number'])) {
       $model->gpay_number = $_POST['BookingHeader']['gpay_number'];
@@ -865,7 +872,7 @@ class BookingController extends Controller
     $old_updated_timestamp = $model->updated_time;
     $payment_models = $model->payment;
     $old_pick_up = $model->pickup_date;
-    $payment_status = (($model->net_value - $paid_amount) == 0);
+    $payment_status = ((($model->net_value - $deposit_adjustment) - $paid_amount) == 0);
     if ($payment_models == null) {
       $payment_models = [new PaymentMaster()];
     }
@@ -899,6 +906,12 @@ class BookingController extends Controller
     if ($no_payment) {
       foreach ($payment_models as $key => $payment_item) {
         if ($payment_item->payment_id != "") {
+          // Validate update - Cancel-Charge is not allowed
+          if ($payment_item->type == 'Cancel-Charge') {
+            $transaction->rollBack();
+            return array('errors' => array('Cancel-Charge payment type is not allowed. Please use item cancel option to cancel items.'));
+          }
+          
           $payment_retr = PaymentMaster::find()->where(['payment_id' => $payment_item->payment_id])->one();
           $payment_retr->date = $payment_item->date;
           $payment_retr->type = $payment_item->type;
@@ -916,6 +929,12 @@ class BookingController extends Controller
           }
         } else {
           /* as no edit option avaible in payment so no need to update */
+          // Validate new payment entry - Cancel-Charge is not allowed
+          if ($payment_item->type == 'Cancel-Charge') {
+            $transaction->rollBack();
+            return array('errors' => array('Cancel-Charge payment type is not allowed. Please use item cancel option to cancel items.'));
+          }
+          
           $payment_item->booking_id = $model->booking_id;
           // $payment_item->item_no=$item_no;
 
@@ -940,9 +959,10 @@ class BookingController extends Controller
     $model->cancellation_charges = $cancellation_charges;
     $model->other_charges = $other_charges;
     $model->pending_amount = $pending_amount;
+    $model->deposit_adjustment = $deposit_adjustment;
 
     if ($status != 'Picked') {
-      $booking_items = BookingItem::find()->where(['booking_id' => $booking_id])->andWhere(['!=', 'item_status', 'Returned'])->all();
+      $booking_items = BookingItem::find()->where(['booking_id' => $booking_id])->andWhere(['NOT IN', 'item_status', ['Returned', 'Cancelled']])->all();
 
       if ($booking_items == null) {
         $temp_pay_status = true;
@@ -950,7 +970,7 @@ class BookingController extends Controller
           $temp_pay_status = false;
           //return array('errors'=>array('Payment not completed. Please complete Payment'));
         }
-        if (($model->deposite_amount - ($model->refunded + $model->other_charges + $model->cancellation_charges)) != 0) {
+        if (($model->deposite_amount - ($model->refunded + $model->other_charges + $model->deposit_adjustment)) != 0) {
           $temp_pay_status = false;
           // return array('errors'=>array('Refund not completed. Please make refund'));
         }
@@ -967,7 +987,7 @@ class BookingController extends Controller
 
       }
     } else {
-      $booking_items = BookingItem::find()->where(['booking_id' => $booking_id])->andWhere(['!=', 'item_status', 'Picked'])->all();
+      $booking_items = BookingItem::find()->where(['booking_id' => $booking_id])->andWhere(['NOT IN', 'item_status', ['Picked', 'Cancelled']])->all();
 
       if ($booking_items == null) {
         $model->status = 'Picked';
@@ -1242,14 +1262,14 @@ class BookingController extends Controller
     $payment_models = $model->payment;
     $old_pick_up = $model->pickup_date;
     $model->cancel_flag = ($model->order_status == "Cancelled") ? 1 : 0;
-    $model->picked_up = ($model->status == 'Picked') ? 1 : 0;
+    //$model->picked_up = ($model->status == 'Picked') ? 1 : 0;
     if ($payment_models == null) {
       $payment_models = [new PaymentMaster()];
     }
     if ($model->load(Yii::$app->request->post())) {
       //print_r($model);die;
       $send_invoice = $_POST['booking_sms'];
-      $picked_status = $model->picked_up;
+      $picked_status = false;
       $complete_order = $model->complete_order;
       Yii::$app->response->format = Response::FORMAT_JSON;
 
@@ -1306,7 +1326,7 @@ class BookingController extends Controller
           if (($model->pending_amount) != 0) {  // Old Logic ($model->net_value-$model->paid_amount)
             return array('errors' => array('Payment not completed. Please complete Payment'));
           }
-          if (($model->deposite_amount - ($model->refunded + $model->other_charges + $model->cancellation_charges)) != 0) {
+          if (($model->deposite_amount - ($model->refunded + $model->other_charges + $model->deposit_adjustment)) != 0) {
             return array('errors' => array('Refund not completed. Please make refund'));
           }
           $model->picked_up = 1;
@@ -1321,7 +1341,7 @@ class BookingController extends Controller
           $model->return_date = ($model->return_date != '') ? $this->dateFormat($model->return_date) : null;
 
         
-        $model->payment_status = (($model->net_value - $model->paid_amount) == 0);
+        $model->payment_status = ((($model->net_value - $model->deposit_adjustment) - $model->paid_amount) == 0);
         $model->earning_amount = $model->net_value - $model->deposite_amount;
         // print_r($model);die;
         if (!$flag = $model->save()) {
@@ -1340,7 +1360,11 @@ class BookingController extends Controller
           $item_errors =[];
         foreach ($booking_items as $key => $booking_item) {
           $booking_item->deposite_charge_status = ($booking_item->deposite_charge_status == null) ? 0 : $booking_item->deposite_charge_status;
-          $booking_item->earning_amount = $booking_item->net_value - $booking_item->deposit_amount;
+          if($booking_item->item_status == "Cancelled"){
+              $booking_item->earning_amount = 0;
+          }else {
+              $booking_item->earning_amount = $booking_item->net_value - $booking_item->deposit_amount;
+          }
           if ($booking_item->item_id == '') {
             $booking_item->booking_id = $model->booking_id;
             $booking_item->item_no = $item_no;
@@ -1370,11 +1394,14 @@ class BookingController extends Controller
               return array('errors' => array_merge($model->errors, $item_errors));
             }
           } else {
+              $item_status = $booking_item->item_status;
+              if($booking_item->item_status != "Cancelled"){
             if ($complete_order) {
               $item_status = 'Returned';
             } else {
 
               $item_status = ($picked_status) ? 'Picked' : $booking_item->item_status;
+            }
             }
             if(!$complete_order) {
               $check_booking_status = Yii::$app->helpercomponent->checkBooking($booking_item->product_id, $model->pickup_date, $model->return_date, $model->booking_id);
@@ -1426,6 +1453,12 @@ class BookingController extends Controller
         if ($no_payment) {
           foreach ($payment_models as $key => $payment_item) {
             if ($payment_item->payment_id != "") {
+              // Validate update - Cancel-Charge is not allowed
+              if ($payment_item->type == 'Cancel-Charge') {
+                $transaction->rollBack();
+                return array('errors' => array('Cancel-Charge payment type is not allowed. Please use item cancel option to cancel items.'));
+              }
+              
               $payment_retr = PaymentMaster::find()->where(['payment_id' => $payment_item->payment_id])->one();
               $payment_retr->date = $payment_item->date;
               $payment_retr->type = $payment_item->type;
@@ -1442,6 +1475,12 @@ class BookingController extends Controller
                 return array('errors' => $payment_retr->errors);
               }
             } else {
+              // Validate new payment entry - Cancel-Charge is not allowed
+              if ($payment_item->type == 'Cancel-Charge') {
+                $transaction->rollBack();
+                return array('errors' => array('Cancel-Charge payment type is not allowed. Please use item cancel option to cancel items.'));
+              }
+              
               $payment_item->booking_id = $model->booking_id;
               // $payment_item->item_no=$item_no;
               //print_r($payment_item);die;
@@ -1724,11 +1763,37 @@ class BookingController extends Controller
           continue;
         }
 
+        // Validate item status - only allow cancellation of 'Booked' items
+        if ($bookingItem->item_status !== 'Booked') {
+          $transaction->rollBack();
+          
+          // Create user-friendly error message based on status
+          $statusMessage = '';
+          switch ($bookingItem->item_status) {
+            case 'Cancelled':
+              $statusMessage = 'This item is already cancelled.';
+              break;
+            case 'Picked':
+              $statusMessage = 'This item has been picked up and cannot be cancelled.';
+              break;
+            case 'Returned':
+              $statusMessage = 'This item has been returned and cannot be cancelled.';
+              break;
+            default:
+              $statusMessage = "This item has status '{$bookingItem->item_status}' and cannot be cancelled.";
+          }
+          
+          return [
+            'success' => false,
+            'message' => "Cannot cancel item: {$originalDescription}. {$statusMessage} Only items with status 'Booked' can be cancelled."
+          ];
+        }
+
         // Update booking item fields
         $bookingItem->item_status = 'Cancelled';
         $bookingItem->earning_amount = 0;
-        $bookingItem->amount = $chargesAmount;
-        $bookingItem->other_amount = 0;
+        $bookingItem->amount = 0;
+        $bookingItem->other_amount = $chargesAmount;
         $bookingItem->deposit_amount = 0;
         $bookingItem->net_value = $chargesAmount;
         $bookingItem->description = 'Cancel ' . $originalDescription;
@@ -1781,6 +1846,9 @@ class BookingController extends Controller
       $extraAmount = 0;
       $netValue = 0;
       $earningAmount = 0; // Start with cancellation charges
+        $picked_count = 0;
+        $booked_count = 0;
+        $returned_count = 0;
 
       foreach ($activeItems as $item) {
         $rentAmount += floatval($item->amount ?? 0);
@@ -1789,6 +1857,34 @@ class BookingController extends Controller
         $extraAmount += (floatval($item->amount ?? 0) * floatval($item->extra_per ?? 0)) / 100;
         $netValue += floatval($item->net_value ?? 0);
         $earningAmount += floatval($item->earning_amount ?? 0);
+        switch ($item->item_status){
+            case "Booked":
+                $booked_count++;
+                break;
+            case "Picked":
+                $picked_count++;
+                break;
+            case "Returned":
+                $returned_count++;
+                break;
+        }
+
+      }
+
+      // Check if all items are cancelled
+      $allItemsCancelled = false;
+      if (empty($activeItems)) {
+        // All items are cancelled, update order status
+        $allItemsCancelled = true;
+        $bookingHeader->status = 'Cancelled';
+
+      }
+      if($booked_count != 0){
+          $bookingHeader->status = 'Booked';
+      }elseif($picked_count !=0){
+          $bookingHeader->status = 'Picked';
+      }elseif($returned_count){
+          $bookingHeader->status = 'Returned';
       }
 
       // Update booking header
@@ -1798,7 +1894,8 @@ class BookingController extends Controller
       $bookingHeader->extra_amount = $extraAmount;
       $bookingHeader->net_value = $netValue;
       $bookingHeader->earning_amount = $earningAmount;
-      $bookingHeader->cancellation_charges = $totalCharges;
+      $bookingHeader->cancellation_charges += $totalCharges;
+      $bookingHeader->net_value = $netValue + $bookingHeader->cancellation_charges;
 
       if (!$bookingHeader->save(false)) {
         $transaction->rollBack();
@@ -1833,14 +1930,21 @@ class BookingController extends Controller
       // Commit transaction
       $transaction->commit();
 
+      $message = count($updatedItems) . ' item(s) cancelled successfully';
+      if ($allItemsCancelled) {
+        $message .= '. All items cancelled - Booking status updated to Cancelled';
+      }
+
       return [
         'success' => true,
-        'message' => count($updatedItems) . ' item(s) cancelled successfully',
+        'message' => $message,
         'data' => [
           'updated_items' => $updatedItems,
           'charge_type' => $chargeType,
           'charge_value' => $chargeValue,
           'total_charges' => $totalCharges,
+          'all_items_cancelled' => $allItemsCancelled,
+          'booking_status' => $bookingHeader->order_status,
           'booking_totals' => [
             'rent_amount' => $bookingHeader->rent_amount,
             'deposite_amount' => $bookingHeader->deposite_amount,

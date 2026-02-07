@@ -78,7 +78,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
           <i class="fab fa-whatsapp"></i>
         </button>
         <?php if($item_status != 'Picked'):
-            $whatsapp_nos = $model->gpay_number ?? $customer_master['contact_nos'];
+            $whatsapp_nos = ($model->gpay_number == "") ? $customer_master['contact_nos']: $model->gpay_number;
             ?>
         <button class="btn btn-info btn-border mt-2" onclick="sendCustomerDetailsWhatsapp('<?= $customer_master['name']; ?>', '<?= $whatsapp_nos; ?>', '<?= $model->deposite_amount - ($model->other_charges + $model->refunded); ?>')">
           <i class="fab fa-whatsapp"></i> Rtr. Dep.
@@ -247,7 +247,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                         <h1><b>
                                 <center>
                                     <div id="deposit_pending" style="background-color: #b4daf1">Balance DP Amt:
-                                      <?= $model->deposite_amount - ($model->other_charges + $model->refunded)
+                                      <?= $model->deposite_amount - ($model->other_charges + $model->refunded + $model->deposit_adjustment)
                                       ?></div>
                                 </center>
                             </b></h1>
@@ -306,6 +306,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                         $payment_models = array_merge($array1, $payment_models);
                         $count_item_payment = count($payment_models);
                         $sub_total = 0;
+                        $payment_cancel_charge  = 0;
                         $readonly_flag = true;
                         $payment_type = ['Advance'
                                     => 'Advance', 'Per-payment' => 'Per-payment', 'Final-Payment' => 'Final-Payment',
@@ -314,6 +315,10 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                             $active_div = ($model->booking_id != '' && $indexHouse != 0) ? '' : 'display:none;';
                             $payment_model['date'] = ($payment_model['date'] == "") ? date('Y-m-d') : $payment_model['date'];
                             $readonly_flag = ($indexHouse != 0);
+                            if($payment_model["type"] == "Cancel-Charge"){
+                                $payment_cancel_charge += $payment_model["amount"];
+                            }
+
                             $during = ($indexHouse != 0)?['Booking' => 'Booking', 'Pickup' => 'Pickup', 'Return' => 'Return', 'Other' => 'Other']: ['Pickup' => 'Pickup'];
                             if($indexHouse != 0){
                                $payment_type = ['Advance'
@@ -359,7 +364,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                 <td>
                                     <?= $form->field($payment_model, "[{$indexHouse}]type")->dropDownList
                                     ($payment_type ,
-                                      ['options' => ['style' => 'font-size:8px;'], 'onchange' => 'add_total_payment()', 'readonly' => $readonly_flag])->label(false) ?>
+                                      ['options' => ['style' => 'font-size:8px;'], 'onchange' => 'check_payment_type(this);  add_total_payment()', 'readonly' => $readonly_flag])->label(false) ?>
 
                                 </td>
                                 <td>
@@ -425,7 +430,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                         <label class="col-md-6 control-label"> Pending </label>
                                         <div class="col-md-6 number">
                                             <input type="text" name="BookingHeader[pending_amount]"
-                                                   value="<?= $model->net_value - ($model->paid_amount - $model->cancellation_charges) ?>"
+                                                   value="<?= ($model->net_value - $model->deposit_adjustment) - ($model->paid_amount - $payment_cancel_charge) ?>"
                                                    class="form-control total"
                                                    style="border:none;background: none !important;" readonly
                                                    id="pending_amount">
@@ -457,6 +462,24 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <div class="row even-strip row_new" style="border-top:1px solid #eee;">
+                                    <div class="form-group col-12">
+                                        <label class="col-md-9 control-label"> Adjst Cancel Charge with Deposit </label>
+                                        <div class="col-md-3 number">
+                                            <input type="text" name="BookingHeader[deposit_adjustment]"
+                                                   value="<?= isset($model->deposit_adjustment) ? $model->deposit_adjustment : '0' ?>"
+                                                   class="form-control total"
+                                                   placeholder="Out of <?= $model->cancellation_charges ?>"
+                                                   style=""  onkeyup="add_total_payment()"
+                                                   id="deposit_adjustment">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="row even-strip row_new" style="border-top:1px solid #eee;">
                                     <div class="form-group col-12">
                                         <label class="col-md-6 control-label"> Other Charge </label>
@@ -580,7 +603,17 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
 
 
     }
+    function check_payment_type(el) {
+        let payment_type = $(el).val();
 
+        if (payment_type == "Cancel-Charge") {
+            swal({
+                title: "Option Deactivated",
+                text: "This functionality is disabled now use item cancel option to cancel item",
+                icon: "warning",
+            });
+        }
+    }
     function back_click() {
         window.location.href = "<?php echo Yii::$app->request->baseUrl . '/index.php?r=booking/update&id=' . $_GET['id'] ?>";
     }
@@ -632,13 +665,14 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
         let deposite_adjustment = other_charges + refund;
         var net_value = Number($("#sub_total").val());
         var deposit_amount = $("#total_deposite_amount").val()
+        var deposit_adjsted_amount = Number($("#deposit_adjustment").val());
         $("#return_amount").val(return_amount);
-        $("#cancellation_charges").val(cancellation_charges);
+        //$("#cancellation_charges").val(cancellation_charges);
         $("#other_charges").val(other_charges);
         $("#paid_amount").val(paid_amount);
-        $("#pending_amount").val(net_value - (paid_amount - cancellation_charges));
+        $("#pending_amount").val(net_value - ((paid_amount +deposit_adjsted_amount) - cancellation_charges));
         $("#display_pending").html("Amount: " + $("#pending_amount").val());
-        $("#deposit_pending").html(`Balance DP Amt: ${deposit_amount-deposite_adjustment}`);
+        $("#deposit_pending").html(`Balance DP Amt: ${deposit_amount-deposite_adjustment-deposit_adjsted_amount}`);
         $("#refunded").val(refund);
         $("#refund_dis").val(deposite_adjustment + '/' + deposit_amount);
     }
@@ -697,7 +731,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
         // window.open('https://api.whatsapp.com/send/?phone='+data["contact_nos"]+'&text='+message, '_blank').focus();
         window.open('https://web.whatsapp.com/send/?phone=' + contact_nos + '&text=' + message, '_blank').focus();
     }
-    
+
     function sendCustomerDetailsWhatsapp(customer_name, contact_nos, deposite_amount) {
         var message = customer_name + "\n" + contact_nos + "\n" + deposite_amount;
         var encodedMessage = encodeURI(message);

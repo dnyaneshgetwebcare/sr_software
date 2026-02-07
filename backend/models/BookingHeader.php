@@ -46,12 +46,18 @@ class BookingHeader extends \yii\db\ActiveRecord
       ]
     ];
   }
-/* test co*/
+/* test
+ALTER TABLE `booking_header`
+ADD COLUMN `deposit_adjustment` INT NULL DEFAULT 0;
+ALTER TABLE `booking_header`
+CHANGE COLUMN `status` `status` ENUM('Booked', 'Picked', 'Pending', 'Returned', 'Cancelled') NULL DEFAULT NULL ;
+
+ co*/
     public static function tableName()
     {
         return 'booking_header';
     }
-    public $diplay_amount,$picked_up,$cancel_flag,$pending_amount,$settl_booking_id,$open_balance, $updated_time_temp;
+    public $diplay_amount,$picked_up,$cancel_flag,$pending_amount,$settl_booking_id,$open_balance, $updated_time_temp, $cancel_amt;
     /**
      * {@inheritdoc}
      */
@@ -62,7 +68,7 @@ class BookingHeader extends \yii\db\ActiveRecord
             [['pickup_date', 'return_date'], 'required','when' => function ($model) { 
               return $model->postpond == 0; 
           }, ],
-            [['booking_date', 'event_date', 'pickup_date', 'picked_date', 'return_date', 'returned_date', 'picked_date', 'returned_date','deposite_amount', 'deposite_status', 'order_status','rent_amount','waist','hip','chest','payment_status','picked_up','complete_order','extra_amount', 'status','cancellation_charges','return_amount','cancel_flag','earning_amount','other_charges','pending_amount','postpond','issues_penalty','issues_reason','carry_frwd_app', 'remark', 'updated_time', 'updated_time_temp', 'gpay_number'], 'safe'],
+            [['booking_date', 'event_date', 'pickup_date', 'picked_date', 'return_date', 'returned_date', 'picked_date', 'returned_date','deposite_amount', 'deposite_status', 'order_status','rent_amount','waist','hip','chest','payment_status','picked_up','complete_order','extra_amount', 'status','cancellation_charges','return_amount','cancel_flag','earning_amount','other_charges','pending_amount','postpond','issues_penalty','issues_reason','carry_frwd_app', 'remark', 'updated_time', 'updated_time_temp', 'gpay_number', 'cancel_amt', 'deposit_adjustment'], 'safe'],
             [['net_value', 'discount', 'deposite_amount'], 'number'],
             [['deposite_applicable',  'customer_id'], 'integer'],
             [['deposite_status', 'order_status', 'status'], 'string'],

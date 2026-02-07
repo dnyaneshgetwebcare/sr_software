@@ -55,7 +55,7 @@
                     </svg>
                   </div>
                   <div class="invo-social-name">
-                    <a href="tel:+918237703030" class="font-sm color-grey">+91-8237703030</a>
+                    <a href="tel:+919860033030" class="font-sm color-grey">+91-9860033030</a>
                   </div>
                 </div>
                 <div class="invo-cont-wrap ">
@@ -284,41 +284,32 @@
                 <li class="font-sm">Renter will return/ship dress(es) back to Soyara with No damage. Any damage to any rental dress(es)
                   will be charged to the Renter. Damage fees will be held from any deposit.
                 </li>
-                <li class="font-sm">Security Deposit :- Soyara dress rentals further stipulates that a security deposit equal to the
-                  amount of the dress. And will be return in next 24 working hours through online process.
+                <li class="font-sm">Security Deposit: Soyara Dress Rentals requires a security deposit equal to the value of the dress. The deposit will be refunded within 24 working hours through an online payment process.
                 </li>
-                <li class="font-sm">ID proof :- ID proof with address is mandatory for booking the outfit/accesories.</li>
-                <li class="font-sm">Appointment :- Prior Appointment is mandatory.Kindly follow office timings 11am to 8pm for pickup
-                  and return. Also make confirmation call for availability of outfit/accesories the day you want to
-                  visit.
+                <li class="font-sm">ID proof:- ID proof with address is mandatory for booking the outfit/ accessories.</li>
+                  <li class="font-sm">Appointment: Prior appointment is mandatory. Please follow our office timings — <b>11:00 AM to 7:30 PM for pickups and 11:00 AM to 5:30 PM for returns</b>. Kindly make a confirmation call on the day of your visit to check the availability of outfits/accessories.
                 </li>
-                <li class="font-sm">Dress(es) will not be altered by the Renter. Do not dry clean the dress for any reason .Professional
-                  cleaning is included in the rental price and no additional cleaning charge will be assessed unless the
-                  dress is returned damaged.
+                <li class="font-sm">Dresses must not be altered by the renter. Please do not dry clean the dress under any circumstances. Professional cleaning is included in the rental price, and no additional charges will apply unless the dress is returned damaged.
                 </li>
-                <li class="font-sm">Booking - Soyara will take 20% of rental amount as booking amount for online/offline bookings which
+                <li class="font-sm">Booking - Soyara will take 40% of rental amount as booking amount for online/offline bookings which
                   is non-refundable if cancelled.
                 </li>
-                <li class="font-sm">Fixed Rent :- Kindly Do not argue with staff members for price matters. Rent and Deposit amount is
-                  fixed.
+                <li class="font-sm">Fixed Rent: We request customers not to discuss or dispute pricing with staff. Both rent and deposit amounts are non-negotiable.
                 </li>
-                <li class="font-sm">Safety :- In terms of cleanliness regular drycleaning is placed, Also we have limited trails allowed
-                  for maintaining purpose.
+                <li class="font-sm">Safety: We ensure regular dry cleaning for all outfits. Additionally, limited trials are allowed to maintain hygiene and garment quality.
                 </li>
                 <li class="font-sm">Renter is responsible for the safe return of the dress(es). Renter is responsible for any theft/loss
                   of dress(es).Bill receipt is mandatory while returning the dress(es).
                 </li>
-                <li class="font-sm">Check your outfits/ accesories at the time of pickup. Soyara will not responsible for any
-                  alterations/misplaced/finishing etc once handover to the client after his/her confirmation about
-                  cross- check.
+                <li class="font-sm">Please check your outfits and accessories at the time of pickup. Soyara will not be responsible for any alterations, missing items, or finishing issues once the items are handed over after your confirmation.
                 </li>
-                <li class="font-sm">Late fees - Dresses/accesories if not returned on or before the specified date 20% of the total rent
-                  will be charged for delayed return per day basis. Amount will immediately deducted from any deposit
-                  held.
-
+                  <li class="font-sm"><b>Late Fees:</b> If dresses or accessories are not returned on or before the specified date, <b>a 20% charge of the total rent per day will apply for delayed returns.</b> The amount will be automatically deducted from the security deposit.
                 </li>
-                <li class="font-sm">Cancellation charges :- Any cancellation after booking will have deduction of 20% of Total Rent</li>
-                <li class="font-sm">Loss/Theft : Loss or Theft of any dress(es) will be charged the full purchase price of the
+                  <li class="font-sm">
+                      <b>Outfit Switching:</b> Changing or switching an outfit will result in a <b>20% charge based on the rental amount.</b>
+                  </li>
+                  <li class="font-sm"><b>Cancellation Policy: All cancellations made post-booking are subject to a 40% deduction from the total rent amount.</b></li>
+                <li class="font-sm">Loss/Theft: Loss or Theft of any dress(es) will be charged the full purchase price of the
                   dress.<br><br>
                   I agree to all terms & conditions & agree to cover the cost of the dress(es) rental(s), shipping & any
                   damages/loss/theft or late charges
