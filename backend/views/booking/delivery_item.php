@@ -543,12 +543,53 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
     var count_item_payment = "<?= $count_item_payment;?>";
 
     function submitForm() {
+        
+        // Check pending amount before submitting
+        var pending_amount = parseFloat($("#pending_amount").val()) || 0;
+        
+        if (pending_amount > 0) {
+            swal({
+                title: "Payment Pending",
+                text: "Pending amount is ₹" + pending_amount.toFixed(2) + ". Are you sure you want to proceed without completing the payment?",
+                icon: "warning",
+                buttons: {
+                    cancel: {
+                        text: "Cancel",
+                        value: null,
+                        visible: true,
+                        className: "btn btn-secondary",
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Proceed Anyway",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-warning",
+                        closeModal: true
+                    }
+                },
+                dangerMode: true,
+            }).then((willProceed) => {
+                if (willProceed) {
+                    // User chose to proceed, submit the form
+                    submitFormAjax();
+                }
+                // If user cancels, do nothing
+            });
+            return false;
+        }
 
+        // If no pending amount, submit directly
+        submitFormAjax();
+    }
+
+    function submitFormAjax() {
         // alert($('#booking_header_form').attr('action'));
 
         $.ajax({
