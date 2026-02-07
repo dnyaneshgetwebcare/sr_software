@@ -858,7 +858,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                         ]) ?>
                                             </td>
                                             <td class="text-center vcenter" style="width: 90px; verti">
-
+                                                <?php if($booking_item['item_status'] != 'Cancelled'){  ?>
                                                 <button type="button" class="remove-house btn btn-danger btn-xs"
                                                         onclick="removeBookingitem()" <?php echo ($item_status) ? 'disabled' : ''; ?>>
                                                     <span class="fa <?= ($item_status) ? 'fa-truck' : 'fa-minus' ?>"></span>
@@ -869,6 +869,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                             onclick="<?php echo ($item_status) ? 'cancel_pickup(' . $model->booking_id . ',' . $booking_item->item_id . ',\'' . $booking_item->item_status . '\')' : ''; ?>"
                                                             title="Cancel Pickup"><span class="fa fa-ban"></span>
                                                     </button>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </td>
                                         </tr>
@@ -1094,10 +1095,17 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                             <td id='<?php echo "paymentmaster-{$indexHouse}-tax_new_id"; ?>'
                                                 style="text-align: center;vertical-align: middle !important;">
 
+                                                <?php 
+                                                // Calculate min date (10 days ago) and max date (today)
+                                                $minDate = date('Y-m-d', strtotime('-10 days'));
+                                                $maxDate = date('Y-m-d');
+                                                ?>
                                                 <input type="date"
                                                        name="<?php echo "PaymentMaster[{$indexHouse}][date]" ?>"
-                                                       id='<?php echo "pricelistassignmentdiscounts-{$indexHouse}-valid_till" ?>'
-                                                       class="valid_till_date form-control"
+                                                       id='<?php echo "paymentmaster-{$indexHouse}-date" ?>'
+                                                       class="valid_till_date form-control payment-date-input"
+                                                       min="<?php echo $minDate; ?>"
+                                                       max="<?php echo $maxDate; ?>"
                                                        value="<?php echo $payment_model['date']; ?>">
                                                 <?= $form->field($payment_model, "[{$indexHouse}]payment_id")->label(false)->hiddenInput(['maxlength' => true,]) ?>
                                                 <?= $form->field($payment_model, "[{$indexHouse}]booking_id")->label(false)->hiddenInput(['maxlength' => true]) ?>
@@ -2919,6 +2927,35 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             }
         });
     }
+
+    // Payment date validation - Allow only current date or past 10 days
+    $(document).on('change', '.payment-date-input', function() {
+        var selectedDate = new Date($(this).val());
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        var tenDaysAgo = new Date();
+        tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
+        tenDaysAgo.setHours(0, 0, 0, 0);
+        
+        if (selectedDate > today) {
+            swal({
+                title: "Invalid Date",
+                text: "Payment date cannot be in the future. Please select today's date or a past date (up to 10 days ago).",
+                icon: "error",
+                button: "OK",
+            });
+            $(this).val('<?php echo date('Y-m-d'); ?>');
+        } else if (selectedDate < tenDaysAgo) {
+            swal({
+                title: "Invalid Date",
+                text: "Payment date cannot be more than 10 days in the past. Please select a date within the last 10 days.",
+                icon: "error",
+                button: "OK",
+            });
+            $(this).val('<?php echo date('Y-m-d'); ?>');
+        }
+    });
 
     function add_total_payment() {
         var paid_amount = 0;

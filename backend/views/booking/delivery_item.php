@@ -346,9 +346,16 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                 <td id='<?php echo "paymentmaster-{$indexHouse}-tax_new_id"; ?>'
                                     style="text-align: center;vertical-align: middle !important;">
 
+                                    <?php 
+                                    // Calculate min date (3 days ago) and max date (today)
+                                    $minDate = date('Y-m-d', strtotime('-3 days'));
+                                    $maxDate = date('Y-m-d');
+                                    ?>
                                     <input type="date" name="<?php echo "PaymentMaster[{$indexHouse}][date]" ?>"
-                                           id='<?php echo "pricelistassignmentdiscounts-{$indexHouse}-valid_till" ?>'
-                                           class="valid_till_date form-control" <?= ($readonly_flag)? 'readonly':'';  ?>
+                                           id='<?php echo "paymentmaster-{$indexHouse}-date" ?>'
+                                           class="valid_till_date form-control payment-date-input" <?= ($readonly_flag)? 'readonly':'';  ?>
+                                           min="<?php echo $minDate; ?>"
+                                           max="<?php echo $maxDate; ?>"
                                            value="<?php echo $payment_model['date']; ?>"
                                            style="width: 150px!important ">
                                     <?= $form->field($payment_model, "[{$indexHouse}]payment_id")->label(false)->hiddenInput(['maxlength' => true,]) ?>
@@ -778,4 +785,34 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
         var encodedMessage = encodeURI(message);
         window.open('https://web.whatsapp.com/send/?phone=918237703030&text=' + encodedMessage, '_blank').focus();
     }
+
+    // Payment date validation - Allow only current date or past 3 days
+    $(document).on('change', '.payment-date-input', function() {
+        var selectedDate = new Date($(this).val());
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        var threeDaysAgo = new Date();
+        threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+        threeDaysAgo.setHours(0, 0, 0, 0);
+        
+        if (selectedDate > today) {
+            swal({
+                title: "Invalid Date",
+                text: "Payment date cannot be in the future. Please select today's date or a past date (up to 3 days ago).",
+                icon: "error",
+                button: "OK",
+            });
+            $(this).val('<?php echo date('Y-m-d'); ?>');
+        } else if (selectedDate < threeDaysAgo) {
+            swal({
+                title: "Invalid Date",
+                text: "Payment date cannot be more than 3 days in the past. Please select a date within the last 3 days.",
+                icon: "error",
+                button: "OK",
+            });
+            $(this).val('<?php echo date('Y-m-d'); ?>');
+        }
+    });
+
 </script>
