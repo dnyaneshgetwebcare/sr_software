@@ -367,7 +367,8 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     <label id="customer_bal" class="control-label text-left col-md-12"
                                            style="padding-right: 0px !important;color: green;font-weight: bold;font-size: large;">
                                         <?php if (isset($bal_amount) && $bal_amount != 0) {
-                                            echo "Available Balance : " . $bal_amount;
+                                            $formatted_balance = number_format($bal_amount, 2);
+                                            echo "Available Balance : ₹ " . $formatted_balance;
                                         } ?>
                                     </label>
 
@@ -1046,7 +1047,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                         'widgetContainer' => 'dynamicform_wrapper_payment',
                                         'widgetBody' => '.container-items-payment',
                                         'widgetItem' => '.payment-item',
-                                        'limit' => 10,
+                                        'limit' => 25,
                                         'min' => 1,
                                         'insertButton' => '.add-payment',
                                         'deleteButton' => '.remove-payment',
@@ -1121,9 +1122,17 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                             <td>
 
                                                 <?php
-                                                $option_array = ($payment_model->type == 'Cancel-Charge' || $payment_model->type == 'Other-Charges') ? ['Deposit' => 'Deposit'] : ['Cash' => 'Cash', 'Google Pay' => 'Google Pay', 'Phone Pe' => 'Phone Pe', 'Bank Transfer' => 'Bank Transfer', 'Paytm' => 'Paytm', 'Other' => 'Other', 'Carry_Frwd' => 'Carry Frwd', 'Credit' => 'Balance'];
+                                                if($payment_model->type == 'Cancel-Charge' || $payment_model->type == 'Other-Charges'){
+                                                    $option_array = ['Deposit' => 'Deposit'];
+                                                }elseif($payment_model->type == 'Return-Deposit' || $payment_model->type == 'Return-Payment'){
+                                                    $option_array = ['Cash' => 'Cash', 'Google Pay' => 'Google Pay', 'Phone Pe' => 'Phone Pe', 'Bank Transfer' => 'Bank Transfer', 'Paytm' => 'Paytm', 'Other' => 'Other', 'Carry_Frwd' => 'Carry Frwd'];
+                                                }else{
+                                                    $option_array = ['Cash' => 'Cash', 'Google Pay' => 'Google Pay', 'Phone Pe' => 'Phone Pe', 'Bank Transfer' => 'Bank Transfer', 'Paytm' => 'Paytm', 'Other' => 'Other',  'Credit' => 'Balance'];
+                                                }
 
-                                                echo $form->field($payment_model, "[{$indexHouse}]mode_of_payment")->dropDownList($option_array, ['onchange' => 'change_mode()'])->label(false) ?>
+                                                //$option_array = ($payment_model->type == 'Cancel-Charge' || $payment_model->type == 'Other-Charges') ? ['Deposit' => 'Deposit'] : ['Cash' => 'Cash', 'Google Pay' => 'Google Pay', 'Phone Pe' => 'Phone Pe', 'Bank Transfer' => 'Bank Transfer', 'Paytm' => 'Paytm', 'Other' => 'Other', 'Carry_Frwd' => 'Carry Frwd', 'Credit' => 'Balance'];
+
+                                                echo $form->field($payment_model, "[{$indexHouse}]mode_of_payment")->dropDownList($option_array, ['onchange' => 'change_mode(this)'])->label(false) ?>
                                             </td>
                                             <td>
                                                 <?= $form->field($payment_model, "[{$indexHouse}]received_by")->dropDownList(['Varsha' => 'Varsha', 'Others' => 'Others',])->label(false) ?>
@@ -1369,9 +1378,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                 <label class="col-md-6 control-label"> Refund </label>
                                                 <div class="col-md-6 number">
                                                     <input type="text"
-                                                           value="<?= $model->refunded . '/' . $model->deposite_amount ?>"
+                                                           value="<?= ($model->refunded + $model->other_charges + $model->deposit_adjustment) . '/' . $model->deposite_amount ?>"
                                                            class="form-control total"
-                                                           style="border:none;background: none !important;" readonly
+                                                           style="border:none; background: none !important;" readonly
                                                            id="refund_dis">
                                                     <input type="hidden" name="BookingHeader[refunded]"
                                                            value="<?= ($model->refunded == '' ? 0 : $model->refunded) ?>"
@@ -2232,7 +2241,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         $("#display_pending").html("Amount: " + $("#pending_amount").val());
 
         var refund = $("#refunded").val();
-        $("#refund_dis").val(Number(refund) + '/' + deposit);
+        $("#refund_dis").val(Number(refund)  + '/' + deposit);
         // $("#total_rent_amount").val(total);
 
         /* new Cleave("#sub_total", {prefix: '',numeral: true,numeralThousandsGroupStyle: 'thousand'});
@@ -2900,16 +2909,20 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         }
     }
 
-    function change_mode() {
-    
+    function change_mode(fl) {
+        var return_amount = 0;
+        if($(fl).val() == "Credit"){
+        
+        var customer_id = $("#customermaster-id").val();
+        let booking_id = $("#bookingheader-booking_id").val();
         // body...
         $.ajax({
-            url: "<?php echo \Yii::$app->getUrlManager()->createUrl('booking/get_balance') ?>",
+            url: "<?php echo \Yii::$app->getUrlManager()->createUrl('booking/get-balance') ?>",
             type: 'post',
             dataType: 'json',
             data: {
                 customer_id: customer_id,
-
+                booking_id: booking_id,
             },
             beforeSend: function () {
                 $(".overlay").show();
@@ -2920,12 +2933,22 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             },
             success: function (data) {
                 console.log(data);
+                if(data['status'] == 1) {
+                    swal({
+                        title: "Balance",
+                        text: "Balance: " + data['data'],
+                        icon: "info",
+                        button: "OK",
+                    });
+                }
+
                 //window.location.reload();
             },
             error: function (jqXhr, textStatus, errorThrown) {
 
             }
         });
+    }
     }
 
     // Payment date validation - Allow only current date or past 10 days
@@ -2963,7 +2986,8 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         var return_amount = 0;
         var cancellation_charges = 0;
         var other_charges = 0;
-        var comman_option = '<option value="Cash" selected="">Cash</option><option value="Google Pay">Google Pay</option><option value="Phone Pe">Phone Pe</option><option value="Bank Transfer">Bank Transfer</option><option value="Paytm">Paytm</option><option value="Other">Other</option>';
+        var comman_option = '<option value="Cash" selected="">Cash</option><option value="Google Pay">Google Pay</option><option value="Phone Pe">Phone Pe</option><option value="Bank Transfer">Bank Transfer</option><option value="Paytm">Paytm</option><option value="Credit">Balance</option>';
+        var carry_frd_option = '<option value="Cash" selected="">Cash</option><option value="Google Pay">Google Pay</option><option value="Phone Pe">Phone Pe</option><option value="Bank Transfer">Bank Transfer</option><option value="Paytm">Paytm</option><option value="Carry_Frwd">Carry Frwd</option> ';
         var deposite_option = '<option value="Deposit" selected="">Deposit</option>';
         for (i = 0; i < count_item_payment; i++) {
             var amount_val = $("#paymentmaster-" + i + "-amount").val();
@@ -2990,13 +3014,26 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                 cancellation_charges = +cancellation_charges + +Number(amount_val);
                 //paid_amount=+paid_amount + +Number(amount_val);
             } */
-
+           let mode_of_payment_select_id = "#paymentmaster-" + i + "-mode_of_payment";
             if (type_payment == "Cancel-Charge" || type_payment == "Other-Charges") {
 
-                $("#paymentmaster-" + i + "-mode_of_payment").empty().append(deposite_option);
+                $(mode_of_payment_select_id).empty().append(deposite_option);
+            }else if (type_payment == "Return-Payment" || type_payment == "Return-Deposit") { 
+                if ($(mode_of_payment_select_id).val() == 'Deposit' ) {
+                    $(mode_of_payment_select_id).empty().append(carry_frd_option);
+                }else{
+                    if ($(mode_of_payment_select_id).find('option[value="Carry_Frwd"]').length === 0) {
+                        $(mode_of_payment_select_id).find('option[value="Credit"]').remove().end().append($('<option>', {value: "Carry_Frwd",text: 'Carry Frwd'}));
+                    }
+                }
             } else {
-                if ($("#paymentmaster-" + i + "-mode_of_payment").val() == 'Deposit') {
-                    $("#paymentmaster-" + i + "-mode_of_payment").empty().append(comman_option);
+                    if ($(mode_of_payment_select_id).val() == 'Deposit') {
+                    $(mode_of_payment_select_id).empty().append(comman_option);
+                }else{
+                    if ($(mode_of_payment_select_id).find('option[value="Credit"]').length === 0) {
+                        $(mode_of_payment_select_id).find('option[value="Carry_Frwd"]').remove().end().append($('<option>', {value: "Credit",text: 'Balance'}));
+                    }
+
                 }
             }
         }
@@ -3004,7 +3041,12 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         var net_value = Number($("#sub_total").val());
         var deposit_amount = $("#total_deposite_amount").val();
         var deposit_adjsted_amount = Number($("#deposit_adjustment").val());
-
+        let can_charge = $("#cancellation_charges").val();
+        if(deposit_adjsted_amount > can_charge){
+            deposit_adjsted_amount = 0;
+            $("#deposit_adjustment").val(0).select();
+            swal(`Adjustment cannot be greater that ${can_charge}`);
+        }
         $("#return_amount").val(return_amount);
        // $("#cancellation_charges").val(cancellation_charges);    moved cancellation login to item level
         $("#other_charges").val(other_charges);
@@ -3012,6 +3054,6 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         $("#pending_amount").val(net_value - (( paid_amount + deposit_adjsted_amount) - cancellation_charges ));
         $("#display_pending").html("Amount: " + $("#pending_amount").val());
         $("#refunded").val(refund);
-        $("#refund_dis").val(refund + '/' + deposit_amount);
+        $("#refund_dis").val(refund + deposit_adjsted_amount + other_charges  + '/' + deposit_amount);
     }
 </script>
