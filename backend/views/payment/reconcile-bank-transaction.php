@@ -88,6 +88,26 @@ $this->title = 'Reconcile Bank Transaction';
                         <div class="col-md-2" style="padding-top: 30px;">
                             <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Total Amount</label>
+                                <h4 style="margin-top: 10px;">
+                                    <span id="selected-amount" style="color: #28a745; font-weight: bold;">0</span> / 
+                                    <span id="total-amount" style="color: #007bff; font-weight: bold;">
+                                        <?php
+                                        $totalAmount = 0;
+                                        if ($dataProvider && $dataProvider->models) {
+                                            foreach ($dataProvider->models as $model) {
+                                                $amount = is_array($model) ? (isset($model['amount']) ? $model['amount'] : 0) : (isset($model->amount) ? $model->amount : 0);
+                                                $totalAmount += $amount;
+                                            }
+                                        }
+                                        echo number_format($totalAmount, 0);
+                                        ?>
+                                    </span>
+                                </h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,7 +120,7 @@ $this->title = 'Reconcile Bank Transaction';
                         <div class="card" style="width: 130%; ">
                             <div class="card-body">
 
-<div class="table-responsive m-t-40">
+<div class="table-responsive">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -109,6 +129,23 @@ $this->title = 'Reconcile Bank Transaction';
 
             //'payment_id',
             //'date',
+            [
+              'header' => Html::checkBox('select_all', false, [
+                  'id' => 'select-all-checkbox',
+                  'class' => 'select-all'
+              ]),
+              'format' => 'raw',
+              'headerOptions' => ['style' => 'width:5%; text-align:center;'],
+              'contentOptions' => ['style' => 'text-align:center;'],
+              'value' => function($model, $key, $index, $grid){
+                $amount = is_array($model) ? (isset($model['amount']) ? $model['amount'] : 0) : (isset($model->amount) ? $model->amount : 0);
+                return Html::checkBox('transaction_select[]', false, [
+                    'class' => 'transaction-checkbox',
+                    'data-amount' => $amount,
+                    'value' => $key
+                ]);
+              },
+            ],
             [
               'attribute'=>'date',
               'headerOptions' => ['style' => 'width:10%'],
@@ -179,3 +216,53 @@ $this->title = 'Reconcile Bank Transaction';
 </div>
 </div>
 
+<script type="text/javascript">
+$(document).ready(function() {
+    // Function to update selected amount
+    function updateSelectedAmount() {
+        var selectedAmount = 0;
+        $('.transaction-checkbox').each(function() {
+            if ($(this).is(':checked')) {
+                var amount = parseFloat($(this).data('amount')) || 0;
+                selectedAmount += amount;
+            }
+        });
+        $('#selected-amount').text(selectedAmount.toLocaleString('en-IN', {maximumFractionDigits: 0}));
+    }
+
+    // Initialize iCheck for checkboxes
+    $('.transaction-checkbox, #select-all-checkbox').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%'
+    });
+
+    // Handle individual checkbox change with iCheck
+    $('.transaction-checkbox').on('ifChanged', function() {
+        updateSelectedAmount();
+        
+        // Update select all checkbox state
+        var totalCheckboxes = $('.transaction-checkbox').length;
+        var checkedCheckboxes = $('.transaction-checkbox:checked').length;
+        if (totalCheckboxes === checkedCheckboxes && totalCheckboxes > 0) {
+            $('#select-all-checkbox').iCheck('check');
+        } else {
+            $('#select-all-checkbox').iCheck('uncheck');
+        }
+    });
+
+    // Handle select all checkbox with iCheck
+    $('#select-all-checkbox').on('ifChanged', function() {
+        var isChecked = $(this).is(':checked');
+        if (isChecked) {
+            $('.transaction-checkbox').iCheck('check');
+        } else {
+            $('.transaction-checkbox').iCheck('uncheck');
+        }
+        updateSelectedAmount();
+    });
+
+    // Initialize on page load
+    updateSelectedAmount();
+});
+</script>
