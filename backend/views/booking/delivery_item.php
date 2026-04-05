@@ -272,7 +272,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                         'widgetContainer' => 'dynamicform_wrapper_payment',
                         'widgetBody' => '.container-items-payment',
                         'widgetItem' => '.payment-item',
-                        'limit' => 10,
+                        'limit' => 25,
                         'min' => 1,
                         'insertButton' => '.add-payment',
                         'deleteButton' => '.remove-payment',
@@ -346,9 +346,16 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                 <td id='<?php echo "paymentmaster-{$indexHouse}-tax_new_id"; ?>'
                                     style="text-align: center;vertical-align: middle !important;">
 
+                                    <?php 
+                                    // Calculate min date (3 days ago) and max date (today)
+                                    $minDate = date('Y-m-d', strtotime('-3 days'));
+                                    $maxDate = date('Y-m-d');
+                                    ?>
                                     <input type="date" name="<?php echo "PaymentMaster[{$indexHouse}][date]" ?>"
-                                           id='<?php echo "pricelistassignmentdiscounts-{$indexHouse}-valid_till" ?>'
-                                           class="valid_till_date form-control" <?= ($readonly_flag)? 'readonly':'';  ?>
+                                           id='<?php echo "paymentmaster-{$indexHouse}-date" ?>'
+                                           class="valid_till_date form-control payment-date-input" <?= ($readonly_flag)? 'readonly':'';  ?>
+                                           min="<?php echo $minDate; ?>"
+                                           max="<?php echo $maxDate; ?>"
                                            value="<?php echo $payment_model['date']; ?>"
                                            style="width: 150px!important ">
                                     <?= $form->field($payment_model, "[{$indexHouse}]payment_id")->label(false)->hiddenInput(['maxlength' => true,]) ?>
@@ -420,7 +427,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                             <input type="text" name="BookingHeader[paid_amount]"
                                                    value="<?= ($model->paid_amount == '' ? 0 : $model->paid_amount) ?>"
                                                    class="form-control total"
-                                                   style="border:none;background: none !important;" readonly
+                                                   style="border:none;background: none !important; text-align: right;" readonly
                                                    id="paid_amount">
                                         </div>
                                     </div>
@@ -432,7 +439,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                             <input type="text" name="BookingHeader[pending_amount]"
                                                    value="<?= ($model->net_value - $model->deposit_adjustment) - ($model->paid_amount - $payment_cancel_charge) ?>"
                                                    class="form-control total"
-                                                   style="border:none;background: none !important;" readonly
+                                                   style="border:none;background: none !important;text-align: right; " readonly;
                                                    id="pending_amount">
                                         </div>
                                     </div>
@@ -445,7 +452,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                         <div class="col-md-6 number">
                                             <input type="text" name="BookingHeader[return_amount]"
                                                    value="<?= $model->return_amount; ?>" class="form-control total"
-                                                   style="border:none;background: none !important;" readonly
+                                                   style="border:none;background: none !important; text-align: right;" readonly
                                                    id="return_amount">
                                         </div>
                                     </div>
@@ -457,7 +464,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                             <input type="text" name="BookingHeader[cancellation_charges]"
                                                    value="<?= $model->cancellation_charges ?>"
                                                    class="form-control total"
-                                                   style="border:none;background: none !important;" readonly
+                                                   style="border:none;background: none !important; text-align: right;" readonly
                                                    id="cancellation_charges">
                                         </div>
                                     </div>
@@ -472,7 +479,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                                    value="<?= isset($model->deposit_adjustment) ? $model->deposit_adjustment : '0' ?>"
                                                    class="form-control total"
                                                    placeholder="Out of <?= $model->cancellation_charges ?>"
-                                                   style=""  onkeyup="add_total_payment()"
+                                                   style="text-align: right;"  onkeyup="add_total_payment()"
                                                    id="deposit_adjustment">
 
                                         </div>
@@ -486,7 +493,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                         <div class="col-md-6 number">
                                             <input type="text" name="BookingHeader[other_charges]"
                                                    value="<?= $model->other_charges ?>" class="form-control total"
-                                                   style="border:none;background: none !important;" readonly
+                                                   style="border:none;background: none !important; text-align: right;" readonly
                                                    id="other_charges">
                                         </div>
                                     </div>
@@ -499,10 +506,10 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                         </label>
                                         <div class="col-md-6 number">
                                             <input type="text"
-                                                   value="<?= ($model->refunded + $model->other_charges ). '/' .
+                                                   value="<?= ($model->refunded + $model->other_charges +$model->deposit_adjustment ). '/' .
                                                    $model->deposite_amount ?>"
                                                    class="form-control total"
-                                                   style="border:none;background: none !important;" readonly
+                                                   style="border:none;background: none !important; text-align: right;" readonly
                                                    id="refund_dis">
 
                                         </div>
@@ -511,7 +518,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                <input type="hidden" name="BookingHeader[refunded]"
                                                    value="<?= ($model->refunded == '' ? 0 : $model->refunded) ?>"
                                                    class="form-control total"
-                                                   style="border:none;background: none !important;" readonly
+                                                   style="border:none;background: none !important; text-align: right;" readonly
                                                    id="refunded">
                             </div>
                         </div>
@@ -707,6 +714,12 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
         var net_value = Number($("#sub_total").val());
         var deposit_amount = $("#total_deposite_amount").val()
         var deposit_adjsted_amount = Number($("#deposit_adjustment").val());
+        let can_charge = $("#cancellation_charges").val();
+        if(deposit_adjsted_amount > can_charge){
+            deposit_adjsted_amount = 0;
+            $("#deposit_adjustment").val(0).select();
+            swal(`Adjustment cannot be greater that ${can_charge}`);
+        }
         $("#return_amount").val(return_amount);
         //$("#cancellation_charges").val(cancellation_charges);
         $("#other_charges").val(other_charges);
@@ -715,7 +728,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
         $("#display_pending").html("Amount: " + $("#pending_amount").val());
         $("#deposit_pending").html(`Balance DP Amt: ${deposit_amount-deposite_adjustment-deposit_adjsted_amount}`);
         $("#refunded").val(refund);
-        $("#refund_dis").val(deposite_adjustment + '/' + deposit_amount);
+        $("#refund_dis").val((deposite_adjustment + deposit_adjsted_amount) + '/' + deposit_amount);
     }
 
     $(document).ready(function () {
@@ -778,4 +791,34 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
         var encodedMessage = encodeURI(message);
         window.open('https://web.whatsapp.com/send/?phone=918237703030&text=' + encodedMessage, '_blank').focus();
     }
+
+    // Payment date validation - Allow only current date or past 3 days
+    $(document).on('change', '.payment-date-input', function() {
+        var selectedDate = new Date($(this).val());
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        var threeDaysAgo = new Date();
+        threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+        threeDaysAgo.setHours(0, 0, 0, 0);
+        
+        if (selectedDate > today) {
+            swal({
+                title: "Invalid Date",
+                text: "Payment date cannot be in the future. Please select today's date or a past date (up to 3 days ago).",
+                icon: "error",
+                button: "OK",
+            });
+            $(this).val('<?php echo date('Y-m-d'); ?>');
+        } else if (selectedDate < threeDaysAgo) {
+            swal({
+                title: "Invalid Date",
+                text: "Payment date cannot be more than 3 days in the past. Please select a date within the last 3 days.",
+                icon: "error",
+                button: "OK",
+            });
+            $(this).val('<?php echo date('Y-m-d'); ?>');
+        }
+    });
+
 </script>

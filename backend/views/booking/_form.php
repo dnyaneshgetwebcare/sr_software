@@ -25,13 +25,13 @@ $is_admin = ($user->user_type == "admin") ? true : false;
     /*  .table-bordered>tbody>tr>td,.table-bordered>thead>tr>th{
   border:1px solid #eee !important;
  }*/
-    @media (min-width: 768px) {
-        #menu_button {
-            position: absolute;
-            top: 0;
-            right: 0;
-            /* add other positioning properties as needed */
-        }
+    .tabs-and-buttons-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .tabs-and-buttons-row #pills-tab {
+        flex: 1;
     }
 
     .close {
@@ -78,7 +78,6 @@ $is_admin = ($user->user_type == "admin") ? true : false;
     .list-main-tab .list-main-tab-heading {
         padding: 0px !important;
         background: #fff !important;
-        /*  box-shadow: 0px 1px 2px #a5a0a0 !important;*/
         border-bottom: 2px solid #aaa !important;
     }
 
@@ -141,7 +140,6 @@ $is_admin = ($user->user_type == "admin") ? true : false;
 
     .glyphicon-pencil,
     .glyphicon-trash {
-        /*color: #c9e4ea;*/
         color: transparent;
 
     }
@@ -151,7 +149,6 @@ $is_admin = ($user->user_type == "admin") ? true : false;
         background: #efd4d4;
         border-left: 3px solid #eed3d7;
         padding: 10px 20px;
-        /*    margin: 0 15px 15px 15px;*/
     }
 
     .ui-widget-content,
@@ -193,7 +190,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
         color: #fff !important;
     }
 
-    .autocomplete {;
+    .autocomplete {
         position: absolute;
         z-index: 3;
         margin-top: -4px
@@ -242,6 +239,262 @@ $is_admin = ($user->user_type == "admin") ? true : false;
     .nav-secondary .nav-link.active:hover {
         color: #000 !important;
     }
+
+    /* ===== iPad / Tablet Responsive (768px - 1024px) ===== */
+    @media (min-width: 768px) and (max-width: 1024px) {
+
+        /* Force customer & date sections side-by-side on iPad */
+        .card-body > .row > .col-lg-8 {
+            flex: 0 0 68%;
+            max-width: 68%;
+        }
+        .card-body > .row > .col-lg-4 {
+            flex: 0 0 32%;
+            max-width: 32%;
+        }
+
+        /* Hide customer field labels on iPad */
+        .customer-field-label {
+            display: none !important;
+        }
+
+        /* Customer fields - expand to full width when labels are hidden */
+        .card-body > .row > .col-lg-8 .form-group.row > .col-md-8.customer-field-input {
+            flex: 0 0 83%;
+            max-width: 83%;
+            margin-left: 0 !important;
+            padding-left: 10px !important;
+        }
+        .card-body > .row > .col-lg-8 .form-group.row > .col-md-9 {
+            flex: 0 0 100%;
+            max-width: 100%;
+            padding-left: 10px !important;
+        }
+
+        /* Date section labels - compact for narrow column */
+        .card-body > .row > .col-lg-4 .form-group.row > .control-label.col-md-4 {
+            flex: 0 0 45%;
+            max-width: 45%;
+            font-size: 10px;
+            text-align: right;
+            padding-right: 3px !important;
+            padding-left: 3px !important;
+        }
+        /* Date fields - narrower inputs */
+        .card-body > .row > .col-lg-4 .form-group.row > .col-md-8 {
+            flex: 0 0 55%;
+            max-width: 55%;
+            padding-left: 2px !important;
+            padding-right: 2px !important;
+        }
+        .card-body > .row > .col-lg-4 .form-control {
+            font-size: 11px !important;
+            padding: 3px 2px !important;
+            height: 28px !important;
+        }
+
+        /* Checkbox row - use flex with wrapping for small widths */
+        .checkbox-options-row .col-md-3 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        /* Tabs + menu buttons on same line */
+        .tabs-and-buttons-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            gap: 8px;
+        }
+        .tabs-and-buttons-row #pills-tab {
+            flex: 1;
+            margin-bottom: 0 !important;
+        }
+        #menu_button {
+            position: relative !important;
+            top: auto !important;
+            right: auto !important;
+            display: flex;
+            gap: 5px;
+            flex-shrink: 0;
+            margin-bottom: 0;
+        }
+        #menu_button button {
+            padding: 10px !important;
+            font-size: 16px !important;
+        }
+
+        /* Tabs - compact spacing */
+        #pills-tab .nav-link {
+            padding: 5px 10px 5px 10px !important;
+            font-size: 11px;
+        }
+
+        /* Items table - hide Net Value, fit without scroll */
+        #sales_items_tab th {
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .col-net-value {
+            display: none !important;
+        }
+
+        /* Payment table - hide Received By and During, fit without scroll */
+        .col-received-by,
+        .col-received-during {
+            display: none !important;
+        }
+        #sales_items_tab_payment th {
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        /* Summary panel - proper width */
+        .col-lg-4.form-total {
+            flex: 0 0 40%;
+            max-width: 40%;
+        }
+        .col-lg-8 > .card {
+            flex: 0 0 100%;
+        }
+
+        /* Bottom section: Remark + Summary side-by-side */
+        #component_pills > .row > .col-lg-8 {
+            flex: 0 0 58%;
+            max-width: 58%;
+        }
+        #component_pills > .row > .col-lg-4.form-total {
+            flex: 0 0 42%;
+            max-width: 42%;
+        }
+
+        /* Summary panels (Items + Payment) - force label+value inline */
+        .form-total .form-group {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            align-items: center;
+        }
+        .form-total .form-group > label,
+        .form-total .form-group > .control-label {
+            flex: 0 0 50%;
+            max-width: 50%;
+            font-size: 11px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 0 !important;
+            padding: 5px 3px !important;
+        }
+        .form-total .form-group > .col-md-6,
+        .form-total .form-group > .number {
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding: 0 3px !important;
+        }
+        .form-total .form-group > label.col-md-9 {
+            flex: 0 0 55%;
+            max-width: 55%;
+            font-size: 9px;
+        }
+        .form-total .form-group > label.col-md-9 + .col-md-3 {
+            flex: 0 0 45%;
+            max-width: 45%;
+        }
+        .form-total .form-control.total {
+            font-size: 12px !important;
+            padding: 3px 2px !important;
+        }
+
+        /* Full-width areas on iPad */
+        .col-lg-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        /* Fix the customer name field negative margin */
+        .card-body > .row > .col-lg-8 .col-md-12 > .form-group.row > .col-md-8 {
+            margin-left: 0 !important;
+            padding-left: 5px !important;
+        }
+
+        /* Compact form controls */
+        .form-control {
+            font-size: 13px;
+            padding: 4px !important;
+        }
+        .control-label {
+            font-size: 11px;
+        }
+
+        /* Fixed bottom bar */
+        .row[style*="position: fixed"] .panel-heading {
+            padding: 8px 10px;
+        }
+        .row[style*="position: fixed"] .btn {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+
+        /* Mobile/Email row - ensure side by side */
+        .card-body > .row > .col-lg-8 > .form-body > .row > .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        /* Checkbox row - prevent overlap */
+        .checkbox-options-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+        }
+        .checkbox-options-row label {
+            font-size: 11px !important;
+            white-space: nowrap;
+        }
+
+        /* Hide "Complete Order" and "Picked Up" on iPad */
+        .checkbox-picked-up,
+        .checkbox-complete-order {
+            display: none !important;
+        }
+    }
+
+    /* iPad Portrait specific (narrower) */
+    @media (min-width: 768px) and (max-width: 834px) {
+        .card-body > .row > .col-lg-8 {
+            flex: 0 0 65%;
+            max-width: 65%;
+        }
+        .card-body > .row > .col-lg-4 {
+            flex: 0 0 35%;
+            max-width: 35%;
+        }
+
+        .form-control {
+            font-size: 12px;
+        }
+
+        /* Date labels even tighter on narrow iPad */
+        .card-body > .row > .col-lg-4 .form-group.row > .control-label.col-md-4 {
+            font-size: 9px;
+            flex: 0 0 43%;
+            max-width: 43%;
+        }
+        .card-body > .row > .col-lg-4 .form-group.row > .col-md-8 {
+            flex: 0 0 57%;
+            max-width: 57%;
+        }
+        .card-body > .row > .col-lg-4 .form-control {
+            font-size: 10px !important;
+            padding: 2px 2px !important;
+            height: 26px !important;
+        }
+
+        .checkbox-options-row label {
+            font-size: 10px !important;
+        }
+    }
 </style>
 
 
@@ -288,9 +541,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group row">
-                                    <label class="control-label text-left col-md-2"
+                                    <label class="control-label text-left col-md-2 customer-field-label"
                                            style="align-self: center">Name</label>
-                                    <div class="col-md-8" style="padding-left: 0px!important; margin-left: -12px;">
+                                    <div class="col-md-8 customer-field-input" style="padding-left: 0px!important; margin-left: -12px;">
                                         <?php
                                         echo $form->field($customer_model, 'name')->textInput(['maxlength' => true, 'class' => 'form-control text_first', 'placeholder' => 'Search by Name/Contact nos or Create New', 'autocomplete' => "off", 'readonly' => true])->label(false); ?>
                                     </div>
@@ -306,7 +559,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="control-label text-left col-md-3"
+                                    <label class="control-label text-left col-md-3 customer-field-label"
                                            style="padding-right: 0px !important;align-self: center">Mobile No.</label>
                                     <div class="col-md-9">
                                         <?php echo $form->field($customer_model, 'contact_nos')->textInput(['maxlength' => true, 'onfocusin' => '$("#customer_autodata").hide();', 'class' => 'form-control text_first', 'placeholder' => $customer_model->attributeLabels()['contact_nos'], 'autocomplete' => "off"])->label(false); ?>
@@ -316,7 +569,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="control-label text-left col-md-3" style="align-self: center">Email
+                                    <label class="control-label text-left col-md-3 customer-field-label" style="align-self: center">Email
                                         ID</label>
                                     <div class="col-md-9">
                                         <?php echo $form->field($customer_model, 'email_id')->textInput(['maxlength' => true, 'class' => 'form-control text_first', 'onfocusin' => '$("#customer_autodata").hide();', 'placeholder' => $customer_model->attributeLabels()['email_id'], 'autocomplete' => "off"])->label(false); ?>
@@ -329,7 +582,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="control-label text-left col-md-3"
+                                    <label class="control-label text-left col-md-3 customer-field-label"
                                            style="padding-right: 0px !important;align-self: center">Reference</label>
                                     <div class="col-md-9">
                                         <!-- --><?php /*= $form->field($customer_model, 'reference')->dropDownList(['None' => 'None', 'FaceBook' => 'FaceBook', 'Instagram' => 'Instagram', 'Google' => 'Google', 'Friend' => 'Friend',], ['class' => 'form-control text_first',])->label(false) */ ?>
@@ -349,7 +602,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="control-label text-left col-md-3"
+                                    <label class="control-label text-left col-md-3 customer-field-label"
                                            style="padding-right: 0px;align-self: center">GPay
                                         Number</label>
                                     <div class="col-md-9">
@@ -367,7 +620,8 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     <label id="customer_bal" class="control-label text-left col-md-12"
                                            style="padding-right: 0px !important;color: green;font-weight: bold;font-size: large;">
                                         <?php if (isset($bal_amount) && $bal_amount != 0) {
-                                            echo "Available Balance : " . $bal_amount;
+                                            $formatted_balance = number_format($bal_amount, 2);
+                                            echo "Available Balance : ₹ " . $formatted_balance;
                                         } ?>
                                     </label>
 
@@ -386,18 +640,13 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                         </div>
                         <!--/row-->
                         <hr class="m-t-0">
-                        <div class="row">
+                        <div class="row checkbox-options-row">
                             <div class="col-md-3">
                                 <div class="form-group row">
 
                                     <div class="col-md-12">
                                         <?php
                                         $image_path = Yii::getAlias('@web') . '/img/no-image.jpg';
-                                        /*if($model->booking_id=="" ){
-                                            // echo $model->deposite_applicable;die;
-                                            $model->deposite_applicable=true;
-
-                                        }*/
                                         $model->deposite_applicable = true;
                                         $model->diplay_amount = true;
                                         ?>
@@ -417,7 +666,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                 </div>
                             </div>
                           <?php if($is_admin){ ?>
-                            <div class="col-md-2">
+                            <div class="col-md-2 checkbox-picked-up">
                                 <div class="form-group row">
                                     <div class="col-md-9">
                                         <?= $form->field($model, 'picked_up')
@@ -426,7 +675,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                 </div>
                             </div>
                           <?php } ?>
-                            <div class="col-md-4">
+                            <div class="col-md-4 checkbox-complete-order">
                                 <div class="form-group row">
                                     <div class="col-md-9">
                                         <?= $form->field($model, 'complete_order')
@@ -621,35 +870,32 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
             </div>
             <div class="col-lg-12" style="padding-left: 0px">
-                <ul class="nav nav-pills nav-secondary  nav-pills-no-bd nav-pills-icons mb-3"
-                    id="pills-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="pills-items-tab" data-bs-toggle="pill"
-                           href="#component_pills" role="tab" aria-controls="pills-home-icon" aria-selected="true">
-                            <i class="flaticon-home"></i>
-                            Items
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-payment-tab" data-bs-toggle="pill" href="#operation-pills"
-                           role="tab" aria-controls="pills-profile-icon" aria-selected="false">
-                            <i class="flaticon-user-4"></i>
-                            Payment
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-measurement-tab" data-bs-toggle="pill" href="#measure-pills"
-                           role="tab" aria-controls="pills-contact-icon" aria-selected="false">
-                            <i class="flaticon-mailbox"></i>
-                            Measurment
-                        </a>
-                    </li>
-                </ul>
-                <div class="tab-content master-main-tab"> <!-- General Tab-->
-                    <div class="tab-pane  show active in" id="component_pills" role="tabpanel"
-                         aria-labelledby="pills-items-tab">
-                        <div class="row">
-                            <div class="col-lg-2" id="menu_button">
+                <div class="tabs-and-buttons-row">
+                    <ul class="nav nav-pills nav-secondary  nav-pills-no-bd nav-pills-icons mb-3"
+                        id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-items-tab" data-bs-toggle="pill"
+                               href="#component_pills" role="tab" aria-controls="pills-home-icon" aria-selected="true">
+                                <i class="flaticon-home"></i>
+                                Items
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-payment-tab" data-bs-toggle="pill" href="#operation-pills"
+                               role="tab" aria-controls="pills-profile-icon" aria-selected="false">
+                                <i class="flaticon-user-4"></i>
+                                Payment
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-measurement-tab" data-bs-toggle="pill" href="#measure-pills"
+                               role="tab" aria-controls="pills-contact-icon" aria-selected="false">
+                                <i class="flaticon-mailbox"></i>
+                                Measurment
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="col-lg-2" id="menu_button">
                                 <button type="button" style="padding: 20px; font-size: 25px" class="btn btn-rounded btn-outline-primary
                            btn-icon btn-border" onclick="openMenucard(1)">
                                     <i class="fa fas fa-chess-king"></i>
@@ -666,6 +912,11 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                     <i class="fa fas fa-medal"></i>
                                 </button>
                             </div>
+                </div>
+                <div class="tab-content master-main-tab"> <!-- General Tab-->
+                    <div class="tab-pane  show active in" id="component_pills" role="tabpanel"
+                         aria-labelledby="pills-items-tab">
+                        <div class="row">
                             <div class="col-lg-12" id="sales_items_tab" style="margin-top: 10px">
                                 <!-- Cancel Item Button (hidden by default) -->
                                 <div id="cancel-item-btn-container" style="display: none; margin-bottom: 10px;">
@@ -699,7 +950,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                         <th style="width: 10%">Discount</th>
                                         <th style="width: 7px;">Extra</th>
 
-                                        <th style="width: 10%">Net Value</th>
+                                        <th class="col-net-value" style="width: 10%">Net Value</th>
                                         <th style="width: 20%">Note</th>
                                         <th class="text-center" style="width: 2%;">
                                             <button type="button" onclick="addBookingitem()"
@@ -847,7 +1098,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                 (false)->textInput(['maxlength' => true, 'onkeyup' => 'add_total(this.id)', 'placeholder' => '0', 'readonly' => $order_status, 'style' => 'text-align : right']) ?>
                                             </td>
 
-                                            <td>
+                                            <td class="col-net-value">
                                                 <?= $form->field($booking_item, "[{$indexHouse}]net_value")->label
                                                 (false)->textInput(['maxlength' => true, 'readonly' => true, 'style' => "border:none;background: none !important; text-align : right"]) ?>
                                             </td>
@@ -858,7 +1109,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                         ]) ?>
                                             </td>
                                             <td class="text-center vcenter" style="width: 90px; verti">
-
+                                                <?php if($booking_item['item_status'] != 'Cancelled'){  ?>
                                                 <button type="button" class="remove-house btn btn-danger btn-xs"
                                                         onclick="removeBookingitem()" <?php echo ($item_status) ? 'disabled' : ''; ?>>
                                                     <span class="fa <?= ($item_status) ? 'fa-truck' : 'fa-minus' ?>"></span>
@@ -869,6 +1120,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                             onclick="<?php echo ($item_status) ? 'cancel_pickup(' . $model->booking_id . ',' . $booking_item->item_id . ',\'' . $booking_item->item_status . '\')' : ''; ?>"
                                                             title="Cancel Pickup"><span class="fa fa-ban"></span>
                                                     </button>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </td>
                                         </tr>
@@ -1045,7 +1297,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                         'widgetContainer' => 'dynamicform_wrapper_payment',
                                         'widgetBody' => '.container-items-payment',
                                         'widgetItem' => '.payment-item',
-                                        'limit' => 10,
+                                        'limit' => 25,
                                         'min' => 1,
                                         'insertButton' => '.add-payment',
                                         'deleteButton' => '.remove-payment',
@@ -1062,9 +1314,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                         <th style="width: 10%">Remark</th>
                                         <th style="width: 15%">Type</th>
                                         <th style="width: 15%">Mode</th>
-                                        <th style="width: 15%">Recived By</th>
+                                        <th class="col-received-by" style="width: 15%">Recived By</th>
                                         <th style="width: 15%">Recived In</th>
-                                        <th style="width: 15%">During</th>
+                                        <th class="col-received-during" style="width: 15%">During</th>
                                         <th style="width: 20%">Amount</th>
                                         <!--<th style="width: 450px;">Quantity</th>-->
                                         <th class="text-center" style="width: 10%;">
@@ -1094,10 +1346,17 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                             <td id='<?php echo "paymentmaster-{$indexHouse}-tax_new_id"; ?>'
                                                 style="text-align: center;vertical-align: middle !important;">
 
+                                                <?php 
+                                                // Calculate min date (10 days ago) and max date (today)
+                                                $minDate = date('Y-m-d', strtotime('-10 days'));
+                                                $maxDate = date('Y-m-d');
+                                                ?>
                                                 <input type="date"
                                                        name="<?php echo "PaymentMaster[{$indexHouse}][date]" ?>"
-                                                       id='<?php echo "pricelistassignmentdiscounts-{$indexHouse}-valid_till" ?>'
-                                                       class="valid_till_date form-control"
+                                                       id='<?php echo "paymentmaster-{$indexHouse}-date" ?>'
+                                                       class="valid_till_date form-control payment-date-input"
+                                                       min="<?php echo $minDate; ?>"
+                                                       max="<?php echo $maxDate; ?>"
                                                        value="<?php echo $payment_model['date']; ?>">
                                                 <?= $form->field($payment_model, "[{$indexHouse}]payment_id")->label(false)->hiddenInput(['maxlength' => true,]) ?>
                                                 <?= $form->field($payment_model, "[{$indexHouse}]booking_id")->label(false)->hiddenInput(['maxlength' => true]) ?>
@@ -1113,11 +1372,19 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                             <td>
 
                                                 <?php
-                                                $option_array = ($payment_model->type == 'Cancel-Charge' || $payment_model->type == 'Other-Charges') ? ['Deposit' => 'Deposit'] : ['Cash' => 'Cash', 'Google Pay' => 'Google Pay', 'Phone Pe' => 'Phone Pe', 'Bank Transfer' => 'Bank Transfer', 'Paytm' => 'Paytm', 'Other' => 'Other', 'Carry_Frwd' => 'Carry Frwd', 'Credit' => 'Balance'];
+                                                if($payment_model->type == 'Cancel-Charge' || $payment_model->type == 'Other-Charges'){
+                                                    $option_array = ['Deposit' => 'Deposit'];
+                                                }elseif($payment_model->type == 'Return-Deposit' || $payment_model->type == 'Return-Payment'){
+                                                    $option_array = ['Cash' => 'Cash', 'Google Pay' => 'Google Pay', 'Phone Pe' => 'Phone Pe', 'Bank Transfer' => 'Bank Transfer', 'Paytm' => 'Paytm', 'Other' => 'Other', 'Carry_Frwd' => 'Carry Frwd'];
+                                                }else{
+                                                    $option_array = ['Cash' => 'Cash', 'Google Pay' => 'Google Pay', 'Phone Pe' => 'Phone Pe', 'Bank Transfer' => 'Bank Transfer', 'Paytm' => 'Paytm', 'Other' => 'Other',  'Credit' => 'Balance'];
+                                                }
 
-                                                echo $form->field($payment_model, "[{$indexHouse}]mode_of_payment")->dropDownList($option_array, ['onchange' => 'change_mode()'])->label(false) ?>
+                                                //$option_array = ($payment_model->type == 'Cancel-Charge' || $payment_model->type == 'Other-Charges') ? ['Deposit' => 'Deposit'] : ['Cash' => 'Cash', 'Google Pay' => 'Google Pay', 'Phone Pe' => 'Phone Pe', 'Bank Transfer' => 'Bank Transfer', 'Paytm' => 'Paytm', 'Other' => 'Other', 'Carry_Frwd' => 'Carry Frwd', 'Credit' => 'Balance'];
+
+                                                echo $form->field($payment_model, "[{$indexHouse}]mode_of_payment")->dropDownList($option_array, ['onchange' => 'change_mode(this)'])->label(false) ?>
                                             </td>
-                                            <td>
+                                            <td class="col-received-by">
                                                 <?= $form->field($payment_model, "[{$indexHouse}]received_by")->dropDownList(['Varsha' => 'Varsha', 'Others' => 'Others',])->label(false) ?>
                                             </td>
 
@@ -1125,7 +1392,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
                                                 <?= $form->field($payment_model, "[{$indexHouse}]sendto")->dropDownList(['Company' => 'Company', 'Varsha' => 'Varsha',])->label(false) ?>
                                             </td>
-                                            <td>
+                                            <td class="col-received-during">
                                                 <?= $form->field($payment_model, "[{$indexHouse}]received_during")->dropDownList(['Booking' => 'Booking', 'Pickup' => 'Pickup', 'Return' => 'Return', 'Other' => 'Other',])->label(false) ?>
                                             </td>
                                             <td>
@@ -1361,9 +1628,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                 <label class="col-md-6 control-label"> Refund </label>
                                                 <div class="col-md-6 number">
                                                     <input type="text"
-                                                           value="<?= $model->refunded . '/' . $model->deposite_amount ?>"
+                                                           value="<?= ($model->refunded + $model->other_charges + $model->deposit_adjustment) . '/' . $model->deposite_amount ?>"
                                                            class="form-control total"
-                                                           style="border:none;background: none !important;" readonly
+                                                           style="border:none; background: none !important;" readonly
                                                            id="refund_dis">
                                                     <input type="hidden" name="BookingHeader[refunded]"
                                                            value="<?= ($model->refunded == '' ? 0 : $model->refunded) ?>"
@@ -2224,7 +2491,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         $("#display_pending").html("Amount: " + $("#pending_amount").val());
 
         var refund = $("#refunded").val();
-        $("#refund_dis").val(Number(refund) + '/' + deposit);
+        $("#refund_dis").val(Number(refund)  + '/' + deposit);
         // $("#total_rent_amount").val(total);
 
         /* new Cleave("#sub_total", {prefix: '',numeral: true,numeralThousandsGroupStyle: 'thousand'});
@@ -2892,16 +3159,20 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         }
     }
 
-    function change_mode() {
-    
+    function change_mode(fl) {
+        var return_amount = 0;
+        if($(fl).val() == "Credit"){
+        
+        var customer_id = $("#customermaster-id").val();
+        let booking_id = $("#bookingheader-booking_id").val();
         // body...
         $.ajax({
-            url: "<?php echo \Yii::$app->getUrlManager()->createUrl('booking/get_balance') ?>",
+            url: "<?php echo \Yii::$app->getUrlManager()->createUrl('booking/get-balance') ?>",
             type: 'post',
             dataType: 'json',
             data: {
                 customer_id: customer_id,
-
+                booking_id: booking_id,
             },
             beforeSend: function () {
                 $(".overlay").show();
@@ -2912,6 +3183,15 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             },
             success: function (data) {
                 console.log(data);
+                if(data['status'] == 1) {
+                    swal({
+                        title: "Balance",
+                        text: "Balance: " + data['data'],
+                        icon: "info",
+                        button: "OK",
+                    });
+                }
+
                 //window.location.reload();
             },
             error: function (jqXhr, textStatus, errorThrown) {
@@ -2919,6 +3199,36 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
             }
         });
     }
+    }
+
+    // Payment date validation - Allow only current date or past 10 days
+    $(document).on('change', '.payment-date-input', function() {
+        var selectedDate = new Date($(this).val());
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        var tenDaysAgo = new Date();
+        tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
+        tenDaysAgo.setHours(0, 0, 0, 0);
+        
+        if (selectedDate > today) {
+            swal({
+                title: "Invalid Date",
+                text: "Payment date cannot be in the future. Please select today's date or a past date (up to 10 days ago).",
+                icon: "error",
+                button: "OK",
+            });
+            $(this).val('<?php echo date('Y-m-d'); ?>');
+        } else if (selectedDate < tenDaysAgo) {
+            swal({
+                title: "Invalid Date",
+                text: "Payment date cannot be more than 10 days in the past. Please select a date within the last 10 days.",
+                icon: "error",
+                button: "OK",
+            });
+            $(this).val('<?php echo date('Y-m-d'); ?>');
+        }
+    });
 
     function add_total_payment() {
         var paid_amount = 0;
@@ -2926,7 +3236,8 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         var return_amount = 0;
         var cancellation_charges = 0;
         var other_charges = 0;
-        var comman_option = '<option value="Cash" selected="">Cash</option><option value="Google Pay">Google Pay</option><option value="Phone Pe">Phone Pe</option><option value="Bank Transfer">Bank Transfer</option><option value="Paytm">Paytm</option><option value="Other">Other</option>';
+        var comman_option = '<option value="Cash" selected="">Cash</option><option value="Google Pay">Google Pay</option><option value="Phone Pe">Phone Pe</option><option value="Bank Transfer">Bank Transfer</option><option value="Paytm">Paytm</option><option value="Credit">Balance</option>';
+        var carry_frd_option = '<option value="Cash" selected="">Cash</option><option value="Google Pay">Google Pay</option><option value="Phone Pe">Phone Pe</option><option value="Bank Transfer">Bank Transfer</option><option value="Paytm">Paytm</option><option value="Carry_Frwd">Carry Frwd</option> ';
         var deposite_option = '<option value="Deposit" selected="">Deposit</option>';
         for (i = 0; i < count_item_payment; i++) {
             var amount_val = $("#paymentmaster-" + i + "-amount").val();
@@ -2953,13 +3264,26 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                 cancellation_charges = +cancellation_charges + +Number(amount_val);
                 //paid_amount=+paid_amount + +Number(amount_val);
             } */
-
+           let mode_of_payment_select_id = "#paymentmaster-" + i + "-mode_of_payment";
             if (type_payment == "Cancel-Charge" || type_payment == "Other-Charges") {
 
-                $("#paymentmaster-" + i + "-mode_of_payment").empty().append(deposite_option);
+                $(mode_of_payment_select_id).empty().append(deposite_option);
+            }else if (type_payment == "Return-Payment" || type_payment == "Return-Deposit") { 
+                if ($(mode_of_payment_select_id).val() == 'Deposit' ) {
+                    $(mode_of_payment_select_id).empty().append(carry_frd_option);
+                }else{
+                    if ($(mode_of_payment_select_id).find('option[value="Carry_Frwd"]').length === 0) {
+                        $(mode_of_payment_select_id).find('option[value="Credit"]').remove().end().append($('<option>', {value: "Carry_Frwd",text: 'Carry Frwd'}));
+                    }
+                }
             } else {
-                if ($("#paymentmaster-" + i + "-mode_of_payment").val() == 'Deposit') {
-                    $("#paymentmaster-" + i + "-mode_of_payment").empty().append(comman_option);
+                    if ($(mode_of_payment_select_id).val() == 'Deposit') {
+                    $(mode_of_payment_select_id).empty().append(comman_option);
+                }else{
+                    if ($(mode_of_payment_select_id).find('option[value="Credit"]').length === 0) {
+                        $(mode_of_payment_select_id).find('option[value="Carry_Frwd"]').remove().end().append($('<option>', {value: "Credit",text: 'Balance'}));
+                    }
+
                 }
             }
         }
@@ -2967,7 +3291,12 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         var net_value = Number($("#sub_total").val());
         var deposit_amount = $("#total_deposite_amount").val();
         var deposit_adjsted_amount = Number($("#deposit_adjustment").val());
-
+        let can_charge = $("#cancellation_charges").val();
+        if(deposit_adjsted_amount > can_charge){
+            deposit_adjsted_amount = 0;
+            $("#deposit_adjustment").val(0).select();
+            swal(`Adjustment cannot be greater that ${can_charge}`);
+        }
         $("#return_amount").val(return_amount);
        // $("#cancellation_charges").val(cancellation_charges);    moved cancellation login to item level
         $("#other_charges").val(other_charges);
@@ -2975,6 +3304,6 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         $("#pending_amount").val(net_value - (( paid_amount + deposit_adjsted_amount) - cancellation_charges ));
         $("#display_pending").html("Amount: " + $("#pending_amount").val());
         $("#refunded").val(refund);
-        $("#refund_dis").val(refund + '/' + deposit_amount);
+        $("#refund_dis").val(refund + deposit_adjsted_amount + other_charges  + '/' + deposit_amount);
     }
 </script>

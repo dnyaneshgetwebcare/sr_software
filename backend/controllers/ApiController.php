@@ -63,8 +63,8 @@ class ApiController extends \yii\web\Controller
        $item_master = $query_item->andWhere(['scrab_status' =>
                 'No' , 'delete_status' => 0 , 'skip_website' =>
                 0])->limit($page_limt)->offset($offset)->asArray()->all();
-        $image_def_path =\Yii::$app->request->BaseUrl.'https://thesoyara.com/app/uploads/';
-        $no_image_path = \Yii::$app->request->BaseUrl.'https://thesoyara.com/app/img/no-image.jpg';
+        $image_def_path ='https://thesoyara.com/app/uploads/';
+        $no_image_path = 'https://thesoyara.com/app/img/no-image.jpg';
 
         return array("item_master" => $item_master,'no_image_path' => $no_image_path, 'image_def_path' =>
             $image_def_path );
@@ -88,8 +88,8 @@ class ApiController extends \yii\web\Controller
                 0])->asArray()->all();
        $image_list = ItemMasterImg::find()->where(['id'=> $item_id, 'status'=> 1])->orderBy(['default_image' => SORT_DESC])
          ->asArray()->all();
-        $image_def_path =\Yii::$app->request->BaseUrl.'https://thesoyara.com/app/uploads/';
-        $no_image_path = \Yii::$app->request->BaseUrl.'https://thesoyara.com/app/img/no-image.jpg';
+        $image_def_path ='https://thesoyara.com/app/uploads/';
+        $no_image_path = 'https://thesoyara.com/app/img/no-image.jpg';
 
         return array("item_master" => $item_master,'no_image_path' => $no_image_path, 'image_def_path' =>
             $image_def_path ,"image_list" => $image_list );

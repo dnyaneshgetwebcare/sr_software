@@ -66,7 +66,7 @@ class BookingController extends Controller
             'allow' => true,
           ],
           [
-            'actions' => ['logout',  'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details',  'delivery-item',  'index-payment',  'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability', 'cancel-items'],
+            'actions' => ['logout',  'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details',  'delivery-item',  'index-payment',  'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability', 'cancel-items', 'get-balance'],
             'allow' => true,
             'roles' => ['@'],
           ],
@@ -1251,7 +1251,8 @@ class BookingController extends Controller
       $booking_items = [new BookingItem()];
     }
     $customer_model = $model->customer;
-    $bal_amount = 0;
+    // Calculate payment balance using the reusable function
+    $bal_amount = $this->calculatePaymentBalance($model->customer_id, $model->booking_id);
     $where_carry = ($model->order_status == 'Open') ? ['status' => 0] : ['settle_with_booking_id' => $model->booking_id];
     $payment_carry_frd = BookingCarryFrd::find()->select(['id', 'carry_return', 'carry_balance', 'total_bal'])->where(['customer_id' => $model->customer_id])->andWhere($where_carry)->asArray()->all();
     if ($model->order_status == 'Closed') {
@@ -1634,19 +1635,60 @@ class BookingController extends Controller
 
   }
 
-  public function actionGetBalance()
+  /**
+   * Calculate balance from payment adjustments for completed orders
+   * @param int $customer_id Customer ID
+   * @param int|null $booking_id Booking ID to exclude (optional)
+   * @return float Calculated balance
+   */
+  protected function calculatePaymentBalance($customer_id, $booking_id = null)
   {
-    $customer_id = $_POST['customer_id'];
-    $pending_bookings = BookingHeader::find()->where(['order_status' => 'Open', 'customer_id' => $customer_id])->all();
-    $pending_amount_array = array();
-    foreach ($pending_bookings as $key => $pending_booking) {
-      # code...
-      $payment_details = PaymentMaster::find()->where(['carry_frwd_bid' => $pending_booking->booking_id])->all();
-      foreach ($payment_details as $key => $payment_detail) {
-        # code...
-
+    // Get booking IDs as a simple array
+    $query = BookingHeader::find()
+      ->select(['booking_id'])
+      ->where(['customer_id' => $customer_id, 'complete_order' => 1]);
+    
+    if ($booking_id !== null) {
+      $query->andWhere(['<>', 'booking_id', $booking_id]);
+    }
+    
+    $booking_ids = $query->column();
+    
+    // If no booking IDs found, return 0
+    if (empty($booking_ids)) {
+      return 0;
+    }
+    
+    // Get payment adjustments grouped by mode of payment
+    $payment_adjustment = PaymentMaster::find()
+      ->select(['sum(amount) as amount', 'mode_of_payment'])
+      ->where(['in', 'mode_of_payment', ['Carry_Frwd', 'Credit']])
+      ->andWhere(['in', 'booking_id', $booking_ids])
+      ->groupBy(['mode_of_payment'])
+      ->asArray()
+      ->all();
+    
+    $bal = 0;
+    foreach ($payment_adjustment as $payment) {
+      if ($payment['mode_of_payment'] == 'Carry_Frwd') {
+        $bal += $payment['amount'];
+      } else {
+        $bal -= $payment['amount'];
       }
     }
+    
+    return $bal;
+  }
+
+  public function actionGetBalance()
+  {
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    $customer_id = isset($_POST['customer_id']) ? $_POST['customer_id'] : '';
+    $booking_id = isset($_POST['booking_id']) ? $_POST['booking_id'] : '';
+    
+    $bal = $this->calculatePaymentBalance($customer_id, $booking_id);
+    
+    return array('status' => 1, 'data' => $bal);
   }
 
   public function getCustomerBal($id)
