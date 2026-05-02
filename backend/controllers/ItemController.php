@@ -9,6 +9,7 @@ use backend\models\OccationMaster;
 use backend\models\TypeMaster;
 use backend\models\VendorMaster;
 use Yii;
+use yii\db\Query;
 use backend\models\ItemMaster;
 use backend\models\BookingItem;
 use backend\models\ColorMaster;
@@ -45,7 +46,7 @@ class ItemController extends Controller
         'class' => AccessControl::className(),
         'rules' => [
           [
-            'actions' => ['login', 'error', 'client-gallery'],
+            'actions' => ['login', 'error', 'client-gallery', 'api-filters', 'api-gallery', 'options'],
             'allow' => true,
           ],
           [
@@ -325,6 +326,210 @@ class ItemController extends Controller
       'model_category' => $model_category,
       'item_master' => $item_master,
     ]);
+  }
+
+  /**
+   * Apply CORS + JSON response headers for public API endpoints.
+   */
+  protected function applyApiHeaders()
+  {
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    $headers = Yii::$app->response->headers;
+    $headers->set('Access-Control-Allow-Origin', '*');
+    $headers->set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    $headers->set('Access-Control-Allow-Headers', 'Content-Type');
+    if (Yii::$app->request->isOptions) {
+      Yii::$app->response->statusCode = 204;
+      Yii::$app->end();
+    }
+  }
+
+  /**
+   * Build a public absolute URL for an uploaded image (or fallback).
+   */
+  protected function buildImageUrl($image_name)
+  {
+    $request = Yii::$app->request;
+    $scheme = $request->getIsSecureConnection() ? 'https' : 'http';
+    $host = $request->getHostName() ?: 'localhost';
+    $port = $request->getServerPort();
+    $portPart = (($scheme === 'http' && $port == 80) || ($scheme === 'https' && $port == 443) || !$port) ? '' : ':' . $port;
+    $base = rtrim($request->getBaseUrl(), '/');
+    $path = ($image_name != '') ? '/uploads/' . $image_name : '/img/no-image.jpg';
+    return $scheme . '://' . $host . $portPart . $base . $path;
+  }
+
+  /**
+   * Public JSON endpoint: returns categories + types for filter pills.
+   */
+  public function actionApiFilters()
+  {
+    $this->applyApiHeaders();
+
+    $categories = CategoryMaster::find()
+      ->select(['id', 'name'])
+      ->orderBy(['id' => SORT_ASC])
+      ->asArray()
+      ->all();
+
+    $types = TypeMaster::find()
+      ->select(['id', 'name', 'category_id'])
+      ->where(['dispaly_main_site' => 1])
+      ->orderBy(['category_id' => SORT_ASC, 'name' => SORT_ASC])
+      ->asArray()
+      ->all();
+
+    $colors = ColorMaster::find()
+      ->select(['id', 'name'])
+      ->orderBy(['name' => SORT_ASC])
+      ->asArray()
+      ->all();
+
+    $sizes = (new Query())
+      ->select('size')
+      ->from('item_master')
+      ->where(['delete_status' => 0, 'scrab_status' => 'No', 'skip_website' => 0])
+      ->andWhere(['!=', 'item_status', 'Discontinue'])
+      ->andWhere(['not', ['size' => null]])
+      ->andWhere(['!=', 'size', ''])
+      ->distinct()
+      ->orderBy(['size' => SORT_ASC])
+      ->column();
+
+    $categories = array_map(function ($c) {
+      return ['id' => (int)$c['id'], 'name' => $c['name']];
+    }, $categories);
+
+    $types = array_map(function ($t) {
+      return [
+        'id' => (int)$t['id'],
+        'name' => $t['name'],
+        'category_id' => (int)$t['category_id'],
+      ];
+    }, $types);
+
+    $colors = array_map(function ($c) {
+      return ['id' => (int)$c['id'], 'name' => $c['name']];
+    }, $colors);
+
+    return [
+      'categories' => $categories,
+      'types' => $types,
+      'colors' => $colors,
+      'sizes' => array_values(array_filter($sizes, function ($s) {
+        return $s !== null && $s !== '';
+      })),
+    ];
+  }
+
+  /**
+   * Public JSON endpoint: paginated gallery items with optional category / type / size /
+   * color / date-range filters.
+   *
+   * Query params:
+   *  - cat_ids   csv of category ids
+   *  - type_ids  csv of type ids
+   *  - color_ids csv of color (colour_cat) ids
+   *  - sizes     csv of size strings (URL-encoded)
+   *  - from_date dd-mm-yyyy (optional)
+   *  - to_date   dd-mm-yyyy (optional)
+   *  - page      default 1
+   *  - page_size default 24 (capped at 100)
+   */
+  public function actionApiGallery()
+  {
+    $this->applyApiHeaders();
+
+    $req = Yii::$app->request;
+    $cat_ids_raw = trim((string)$req->get('cat_ids', ''));
+    $type_ids_raw = trim((string)$req->get('type_ids', ''));
+    $color_ids_raw = trim((string)$req->get('color_ids', ''));
+    $sizes_raw = (string)$req->get('sizes', '');
+    $from_date_raw = trim((string)$req->get('from_date', ''));
+    $to_date_raw = trim((string)$req->get('to_date', ''));
+    $page = max(1, (int)$req->get('page', 1));
+    $page_size = (int)$req->get('page_size', 24);
+    if ($page_size <= 0) {
+      $page_size = 24;
+    }
+    $page_size = min($page_size, 100);
+
+    $cat_ids = array_filter(array_map('intval', explode(',', $cat_ids_raw)));
+    $type_ids = array_filter(array_map('intval', explode(',', $type_ids_raw)));
+    $color_ids = array_filter(array_map('intval', explode(',', $color_ids_raw)));
+    $sizes = array_values(array_filter(array_map(function ($s) {
+      return trim($s);
+    }, explode(',', $sizes_raw)), function ($s) {
+      return $s !== '';
+    }));
+
+    $query = ItemMaster::find()
+      ->where(['delete_status' => 0, 'scrab_status' => 'No'])
+      ->andWhere(['!=', 'item_status', 'Discontinue'])
+      ->andWhere(['skip_website' => 0]);
+
+    if (!empty($cat_ids)) {
+      $query->andWhere(['category_id' => $cat_ids]);
+    }
+    if (!empty($type_ids)) {
+      $query->andWhere(['type_id' => $type_ids]);
+    }
+    if (!empty($color_ids)) {
+      $query->andWhere(['colour_cat' => $color_ids]);
+    }
+    if (!empty($sizes)) {
+      $query->andWhere(['size' => $sizes]);
+    }
+
+    $query->orderBy([
+      'category_id' => SORT_ASC,
+      'type_id' => SORT_ASC,
+      'id' => SORT_DESC,
+    ]);
+
+    $has_date_range = ($from_date_raw !== '' && $to_date_raw !== '');
+    $from_y_m_d = $has_date_range ? $this->dateFormat($from_date_raw) : '';
+    $to_y_m_d = $has_date_range ? $this->dateFormat($to_date_raw) : '';
+
+    $total = (int)(clone $query)->count();
+    $offset = ($page - 1) * $page_size;
+
+    $rows = $query
+      ->select(['id', 'name', 'size', 'type_id', 'category_id', 'images'])
+      ->offset($offset)
+      ->limit($page_size)
+      ->asArray()
+      ->all();
+
+    $availability_map = [];
+    if ($has_date_range && $from_y_m_d !== '' && $to_y_m_d !== '' && !empty($rows)) {
+      $page_ids = array_map('intval', array_column($rows, 'id'));
+      $avail = Yii::$app->helpercomponent->checkBooking($page_ids, $from_y_m_d, $to_y_m_d);
+      $availability_map = $avail['multi_items'] ?? [];
+    }
+
+    $items = array_map(function ($r) use ($availability_map) {
+      $id = (int)$r['id'];
+      $unavail = isset($availability_map[$id]) ? array_values($availability_map[$id]) : [];
+      return [
+        'id' => $id,
+        'name' => $r['name'],
+        'size' => $r['size'],
+        'type_id' => (int)$r['type_id'],
+        'category_id' => (int)$r['category_id'],
+        'image_url' => $this->buildImageUrl($r['images']),
+        'is_available' => empty($unavail),
+        'unavailable_dates' => $unavail,
+      ];
+    }, $rows);
+
+    return [
+      'items' => $items,
+      'page' => $page,
+      'page_size' => $page_size,
+      'total' => $total,
+      'has_more' => ($offset + count($items)) < $total,
+    ];
   }
 
   public function actionMenuItems()
