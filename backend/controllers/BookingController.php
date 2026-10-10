@@ -66,7 +66,7 @@ class BookingController extends Controller
             'allow' => true,
           ],
           [
-            'actions' => ['logout',  'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details',  'delivery-item',  'index-payment',  'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability', 'cancel-items'],
+            'actions' => ['logout',  'customer-autocomplete', 'item-details-popup', 'item-details-autocomplete', 'item-booking-details', 'customer-details',  'delivery-item',  'index-payment',  'item-check-autocomplete', 'item-booking-details', 'item-booking-check', 'cancel-delivery', 'get-whatsapp', 'carry-frd', 'select-item', 'check-availability', 'check-item-availability' , 'check-multiple-items-availability', 'cancel-items'],
             'allow' => true,
             'roles' => ['@'],
           ],
@@ -173,6 +173,43 @@ class BookingController extends Controller
       // Item is available
       return ['available' => true, 'message' => 'Item is available'];
     }
+  }
+
+  public function actionCheckMultipleItemsAvailability()
+  {
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    $item_ids = isset($_POST['item_ids']) ? $_POST['item_ids'] : [];
+    $pickup_date = isset($_POST['pickup_date']) ? $_POST['pickup_date'] : null;
+    $return_date = isset($_POST['return_date']) ? $_POST['return_date'] : null;
+    $booking_id = isset($_POST['booking_id']) ? $_POST['booking_id'] : null;
+
+    if (empty($item_ids) || empty($pickup_date) || empty($return_date)) {
+      return ['success' => false, 'message' => 'Missing required parameters'];
+    }
+
+    // Convert dates to proper format
+    $pickup_date = $this->dateFormat($pickup_date, 'Y-m-d');
+    $return_date = $this->dateFormat($return_date, 'Y-m-d');
+
+    $results = [];
+
+    // Check availability for each item
+    foreach ($item_ids as $item_id) {
+      $result = Yii::$app->helpercomponent->checkBooking($item_id, $pickup_date, $return_date, $booking_id);
+
+      $results[] = [
+        'item_id' => $item_id,
+        'available' => !$result['flag'], // flag = true means NOT available
+        'message' => $result['flag']
+          ? (isset($result['errors'][0]) ? $result['errors'][0] : 'Not available for selected dates')
+          : 'Available'
+      ];
+    }
+
+    return [
+      'success' => true,
+      'results' => $results
+    ];
   }
 
   public function actionIndexSales()
@@ -940,7 +977,9 @@ class BookingController extends Controller
     $model->cancellation_charges = $cancellation_charges;
     $model->other_charges = $other_charges;
     $model->pending_amount = $pending_amount;
-
+    if (isset($_POST['BookingHeader']['gpay_number'])) {
+      $model->gpay_number = $_POST['BookingHeader']['gpay_number'];
+    }
     if ($status != 'Picked') {
       $booking_items = BookingItem::find()->where(['booking_id' => $booking_id])->andWhere(['!=', 'item_status', 'Returned'])->all();
 
@@ -1167,6 +1206,11 @@ class BookingController extends Controller
       $item_id = '';
     }
 
+    // Check if availability check is requested
+    $check_availability = isset($_POST['check_availability']) && $_POST['check_availability'];
+    $pickup_date = isset($_POST['pickup_date']) ? $_POST['pickup_date'] : null;
+    $return_date = isset($_POST['return_date']) ? $_POST['return_date'] : null;
+    $booking_id = isset($_POST['booking_id']) ? $_POST['booking_id'] : null;
 
     //$storage_location = StorageLocation::find()->select(['STORAGE_LOCATION'])->where(['COMPANY_CODE' => $company_code,'Plant' => $plant])->asArray()->one();
     $item_data = ItemMaster::find()->where(['id' => $item_id])->one();
@@ -1180,7 +1224,33 @@ class BookingController extends Controller
     }*/
     //echo "<pre>";print_r($booking_item);die;
     //$product_category = ($material_data['PRODUCT_CATEGORY']!='')?$this->gettreevalupdate($material_data['PRODUCT_CATEGORY']):'';
-    return $this->renderAjax('non_stockable', ['model_attrib' => $model_attrib, 'item_data' => $item_data, 'flag' => $flag, 'booking_item' => $booking_item]);
+
+    // Render the item details HTML
+    $item_details_html = $this->renderAjax('non_stockable', ['model_attrib' => $model_attrib, 'item_data' => $item_data, 'flag' => $flag, 'booking_item' => $booking_item]);
+
+    // If availability check is requested, include it in response
+    if ($check_availability && !empty($pickup_date) && !empty($return_date)) {
+      Yii::$app->response->format = Response::FORMAT_JSON;
+
+      // Convert dates to proper format
+      $pickup_date_formatted = $this->dateFormat($pickup_date, 'Y-m-d');
+      $return_date_formatted = $this->dateFormat($return_date, 'Y-m-d');
+
+      // Check availability using helper component
+      $availability_result = Yii::$app->helpercomponent->checkBooking($item_id, $pickup_date_formatted, $return_date_formatted, $booking_id);
+
+      return [
+        'item_details' => $item_details_html,
+        'availability_check' => true,
+        'available' => !$availability_result['flag'], // flag = true means NOT available
+        'message' => $availability_result['flag']
+          ? (isset($availability_result['errors'][0]) ? $availability_result['errors'][0] : 'Item not available for selected dates')
+          : 'Item is available for selected dates'
+      ];
+    }
+
+    // Return HTML only (backward compatibility)
+    return $item_details_html;
   }
 
   public function actionCustomerDetails()
@@ -1678,12 +1748,12 @@ class BookingController extends Controller
   public function actionCancelItems()
   {
     Yii::$app->response->format = Response::FORMAT_JSON;
-    
+
     $transaction = Yii::$app->db->beginTransaction();
-    
+
     try {
       $request = Yii::$app->request->post();
-      
+
       // Validate required data
       if (!isset($request['booking_id']) || !isset($request['items']) || !is_array($request['items'])) {
         $transaction->rollBack();
@@ -1852,9 +1922,9 @@ class BookingController extends Controller
 
     } catch (\Exception $e) {
       $transaction->rollBack();
-      
+
       Yii::error('Error in actionCancelItems: ' . $e->getMessage(), __METHOD__);
-      
+
       return [
         'success' => false,
         'message' => 'An error occurred while cancelling items',

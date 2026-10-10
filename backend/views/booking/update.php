@@ -83,6 +83,8 @@ $this->title = 'Update Booking: #' . $model->booking_id;
                         <a class="dropdown-item"
                            href="<?php echo Yii::$app->request->baseUrl . '/index.php?r=booking/return-item&id=' . $model->booking_id ?>">Return
                             Item</a>
+                        <a class="dropdown-item" href="javascript:void(0);" 
+                           onclick="openPaymentPopup(<?= $model->booking_id ?>)">Record Payment</a>
                         <!--  <a class="dropdown-item" href="" onclick="cancelBooking('')">Cancel Booking</a> -->
                         <!--  <a class="dropdown-item" href="#">Something else here</a>
                          <div class="dropdown-divider"></div>
@@ -111,3 +113,30 @@ $this->title = 'Update Booking: #' . $model->booking_id;
     ]) ?>
 
 </div>
+
+<script type="text/javascript">
+function openPaymentPopup(booking_id) {
+    $.ajax({
+        url: "<?php echo \Yii::$app->getUrlManager()->createUrl('payment/record-payment') ?>",
+        type: 'get',
+        dataType: 'html',
+        data: {
+            booking_id: booking_id
+        },
+        beforeSend: function() {
+            $(".overlay").show();
+        },
+        complete: function() {
+            $(".overlay").hide();
+        },
+        success: function(data) {
+            $('#pModal').modal('show');
+            $('#modal-title').html('Record Payment');
+            $('#modalContent').html(data);
+        },
+        error: function(jqXhr, textStatus, errorThrown) {
+            alert('Error loading payment form: ' + errorThrown);
+        }
+    });
+}
+</script>

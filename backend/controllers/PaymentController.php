@@ -313,6 +313,57 @@ class PaymentController extends Controller
     }
 
     /**
+     * Displays payment recording form in a popup for a specific booking.
+     * @param integer $booking_id
+     * @return mixed
+     */
+    public function actionRecordPayment($booking_id)
+    {
+        $model = new PaymentMaster();
+        $model->booking_id = $booking_id;
+        $model->date = date('d-m-Y');
+
+        // Get booking details to determine available payment types
+        $booking = \backend\models\BookingHeader::findOne($booking_id);
+
+        return $this->renderAjax('_record_payment_form', [
+            'model' => $model,
+            'booking_id' => $booking_id,
+            'booking' => $booking,
+        ]);
+    }
+
+    /**
+     * Saves a new payment record via AJAX.
+     * @return mixed
+     */
+    public function actionSavePayment()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = new PaymentMaster();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                return [
+                    'success' => true,
+                    'message' => 'Payment recorded successfully!',
+                    'payment_id' => $model->payment_id,
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'errors' => $model->errors,
+                ];
+            }
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Invalid request',
+        ];
+    }
+
+    /**
      * Finds the PaymentMaster model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id

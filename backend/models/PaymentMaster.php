@@ -57,9 +57,30 @@ class PaymentMaster extends \yii\db\ActiveRecord
             'amount' => 'Amount',
             'booking_id' => 'Booking ID',
             'sendto' => 'Sendto',
+            'remark' => 'Remark',
         ];
     }
-     public function getBooking()
+
+    /**
+     * Convert date format from dd-mm-yyyy to Y-m-d before saving
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            // Convert date from dd-mm-yyyy to Y-m-d for database
+            if (!empty($this->date) && strpos($this->date, '-') !== false) {
+                $dateParts = explode('-', $this->date);
+                if (count($dateParts) == 3 && strlen($dateParts[0]) == 2) {
+                    // Format is dd-mm-yyyy, convert to Y-m-d
+                    $this->date = $dateParts[2] . '-' . $dateParts[1] . '-' . $dateParts[0];
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function getBooking()
     {
         return $this->hasOne(BookingHeader::className(), ['booking_id' => 'booking_id']);
     }

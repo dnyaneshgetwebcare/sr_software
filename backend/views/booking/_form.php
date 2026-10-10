@@ -784,6 +784,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                                                         <div style="<?= $active_div; ?>" class="inner_desc"
                                                              id='<?php echo "bookingitem-{$indexHouse}-item_desc"; ?>'>
                                                             <?= $form->field($booking_item, "[{$indexHouse}]description")->textarea(['placeholder' => $booking_items[0]->attributeLabels()['description'], 'maxlength' => true, 'class' => 'form-control txt table-feild', 'style' => 'resize: none; height:34px !important;padding:6px 0px 6px 6px !important;margin-bottom:2px;color:#585b5d;background:none;font-weight:600; height: auto !important', 'onkeyup' => 'changeitemdetails(this.value,this.id)', 'autocomplete' => "off",])->label(false); ?>
+                                                            <div id ="itemavail-<?php echo $indexHouse; ?>-error"></div>
                                                         </div>
 
                                                     </div>
@@ -1553,6 +1554,114 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         });
     }
 
+    var availabilityCheckTimer = null;
+    var isCheckingAvailability = false;
+
+    function checkAllItemsAvailability() {
+        // Clear any pending timer
+        if (availabilityCheckTimer) {
+            clearTimeout(availabilityCheckTimer);
+        }
+
+        // Set a new timer to debounce multiple calls
+        availabilityCheckTimer = setTimeout(function() {
+            executeAvailabilityCheck();
+        }, 300); // Wait 300ms after last date change
+    }
+
+    function executeAvailabilityCheck() {
+        // Prevent multiple simultaneous checks
+        if (isCheckingAvailability) {
+            return;
+        }
+
+        var pickup_date = $('#bookingheader-pickup_date').val();
+        var return_date = $('#bookingheader-return_date').val();
+        var booking_id = $('#bookingheader-booking_id').val();
+
+        if (pickup_date == '' || return_date == '') {
+            return;
+        }
+
+        // Collect all selected items (product_id that are not empty)
+        var item_ids = [];
+        var item_rows = [];
+        
+        for (var i = 1; i < count_item; i++) {
+            var product_id = $("#bookingitem-" + i + "-product_id").val();
+            if (product_id && product_id != '') {
+                item_ids.push(product_id);
+                item_rows.push(i);
+            }
+        }
+
+        if (item_ids.length == 0) {
+            return; // No items to check
+        }
+
+        // Set flag to prevent concurrent checks
+        isCheckingAvailability = true;
+
+        // Clear previous availability messages
+        for (var i = 0; i < item_rows.length; i++) {
+            var row_index = item_rows[i];
+            $("#itemavail-" + row_index + "-error").html('');
+        }
+
+        // Make single AJAX call to check all items
+        $.ajax({
+            url: '<?php echo Yii::$app->request->baseUrl . '/index.php?r=booking/check-multiple-items-availability' ?>',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                item_ids: item_ids,
+                pickup_date: pickup_date,
+                return_date: return_date,
+                booking_id: booking_id
+            },
+            beforeSend: function () {
+                // Show loading indicator in itemavail div for each item
+                for (var i = 0; i < item_rows.length; i++) {
+                    var row_index = item_rows[i];
+                    $("#itemavail-" + row_index + "-error").html('<span style="color: #999; font-size: 11px;"><i class="fa fa-spinner fa-spin"></i> Checking...</span>');
+                }
+            },
+            success: function (data) {
+                if (data.results) {
+                    // Display availability for each item
+                    for (var i = 0; i < item_rows.length; i++) {
+                        var row_index = item_rows[i];
+                        var product_id = $("#bookingitem-" + row_index + "-product_id").val();
+                        var itemavail_div = $("#itemavail-" + row_index + "-error");
+                        
+                        // Clear loading message
+                        itemavail_div.html('');
+                        
+                        // Find result for this item
+                        var item_result = data.results.find(function(r) { return r.item_id == product_id; });
+                        
+                        if (item_result) {
+                            // Only show message if item is NOT available
+                            if (!item_result.available) {
+                                itemavail_div.html('<span style="color: #d9534f; font-size: 11px; font-weight: bold;">⚠ ' + item_result.message + '</span>');
+                            }
+                        }
+                    }
+                }
+                isCheckingAvailability = false;
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log('Error checking availability:', errorThrown);
+                // Clear loading messages
+                for (var i = 0; i < item_rows.length; i++) {
+                    var row_index = item_rows[i];
+                    $("#itemavail-" + row_index + "-error").html('');
+                }
+                isCheckingAvailability = false;
+            }
+        });
+    }
+
     $(document).ready(function () {
         $('.wrapper').addClass('sidebar_minimize');
 
@@ -1665,6 +1774,11 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
 
             }
 
+            // Check availability of all selected items
+            if (pickup_date != "" && return_date != "") {
+                checkAllItemsAvailability();
+            }
+
         });
 
         // Validation for return date changes
@@ -1683,6 +1797,7 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                     alert('Error: Return Date must be greater than or equal to Pickup Date.');
                     // Clear the invalid return date
                     $("#bookingheader-return_date").val('');
+                    return;
                 }
             }
         });
@@ -1767,6 +1882,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                 if (errorThrown == 'Forbidden') {
                     alert(you_dont_have_access_label);
                 }
+                
+                // Check availability of all selected items
+                checkAllItemsAvailability();
             }
         });
 
@@ -2381,6 +2499,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         var n = id.lastIndexOf('-');
         var result = '#' + id.substring(0, n + 1);
 
+        // Save the error message BEFORE clearing it
+        var centralize_error = $('.item_error').html();
+        
         $('.item_error').html('');
 
         var item_status = $(result + 'item_status').val();
@@ -2412,47 +2533,6 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         }
         if (product_id == '') {
             $('.item_error').html('Please select item');
-            return false;
-        }
-
-        // Check item availability before adding
-        var pickup_date = $('#bookingheader-pickup_date').val();
-        var return_date = $('#bookingheader-return_date').val();
-        var booking_id = $('#bookingheader-booking_id').val();
-
-        if (pickup_date == '' || return_date == '') {
-            alert('Please select Pickup Date and Return Date first');
-            return false;
-        }
-
-        // Make AJAX call to check availability
-        var is_available = true;
-        $.ajax({
-            url: '<?php echo Yii::$app->request->baseUrl . '/index.php?r=booking/check-item-availability' ?>',
-            type: 'post',
-            dataType: 'json',
-            data: {
-                item_id: product_id,
-                pickup_date: pickup_date,
-                return_date: return_date,
-                booking_id: booking_id
-            },
-            async: false, // Make synchronous to prevent adding item before check
-            success: function (data) {
-                if (!data.available) {
-                    // alert('Item Not Available: ' + data.message);
-                    $('.item_error').html(data.message);
-                    is_available = false;
-                }
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                alert('Error checking availability. Please try again.');
-                is_available = false;
-            }
-        });
-
-        // If item is not available, return false
-        if (!is_available) {
             return false;
         }
 
@@ -2494,6 +2574,21 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
         // }
         // var id="#salesheader-exchange_rate";
         add_total(id);
+        
+        // Copy availability error from centralize form to item row
+        if (centralize_error && centralize_error.trim() != '') {
+            // Extract row index from id (id format: "bookingitem-X-product_id")
+            // Get the part between "bookingitem-" and the last "-"
+            var id_parts = id.split('-');
+            var row_index = id_parts[1]; // This will be the numeric index
+            
+            // Append error to itemavail div (only copy the error, don't check all items)
+            $("#itemavail-" + row_index + "-error").html(centralize_error);
+        }
+        
+        // Note: We do NOT call checkAllItemsAvailability() here
+        // The availability check was already done in the centralize form popup
+        // We just copy the error message to the main form
     }
 
     function removeDuplicates(json_all) {
@@ -2724,6 +2819,8 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
     }
 
     function setitemsbilling() {
+        var newly_added_items = [];  // Track newly added items for availability check
+        
         $('.menu_item-checkbox:checked').each(function () {
             var value = $(this).val();
             var item_details = $(this).data('itemdetails');
@@ -2735,9 +2832,91 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'booking_h
                 bookingitem_id = `bookingitem-${count_item - 1}-product_id`;
                 console.log('New Elements', `#${bookingitem_id}`);
             }
-            addText(bookingitem_id, item_details)
+            addText(bookingitem_id, item_details);
+            
+            // Track the row index and item_id for availability check
+            var row_index = bookingitem_id.split('-')[1];
+            newly_added_items.push({
+                row_index: row_index,
+                item_id: item_details.id
+            });
         });
+        
         slider_close();
+        
+        // Check availability for all newly added items
+        if (newly_added_items.length > 0) {
+            checkNewItemsAvailability(newly_added_items);
+        }
+    }
+    
+    function checkNewItemsAvailability(newly_added_items) {
+        var pickup_date = $('#bookingheader-pickup_date').val();
+        var return_date = $('#bookingheader-return_date').val();
+        var booking_id = $('#bookingheader-booking_id').val();
+
+        if (pickup_date == '' || return_date == '') {
+            // Show warning for all items
+            for (var i = 0; i < newly_added_items.length; i++) {
+                var row_index = newly_added_items[i].row_index;
+                $("#itemavail-" + row_index + "-error").html('<span style="color: orange; font-size: 11px;">⚠ Select Pickup & Return dates</span>');
+            }
+            return;
+        }
+
+        // Collect item IDs
+        var item_ids = newly_added_items.map(function(item) { return item.item_id; });
+
+        // Make single AJAX call to check all newly added items
+        $.ajax({
+            url: '<?php echo Yii::$app->request->baseUrl . '/index.php?r=booking/check-multiple-items-availability' ?>',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                item_ids: item_ids,
+                pickup_date: pickup_date,
+                return_date: return_date,
+                booking_id: booking_id
+            },
+            beforeSend: function () {
+                // Show loading for all newly added items
+                for (var i = 0; i < newly_added_items.length; i++) {
+                    var row_index = newly_added_items[i].row_index;
+                    $("#itemavail-" + row_index + "-error").html('<span style="color: #999; font-size: 11px;"><i class="fa fa-spinner fa-spin"></i> Checking...</span>');
+                }
+            },
+            success: function (data) {
+                if (data.results) {
+                    // Display availability for each newly added item
+                    for (var i = 0; i < newly_added_items.length; i++) {
+                        var row_index = newly_added_items[i].row_index;
+                        var item_id = newly_added_items[i].item_id;
+                        var itemavail_div = $("#itemavail-" + row_index + "-error");
+                        
+                        // Clear loading message
+                        itemavail_div.html('');
+                        
+                        // Find result for this item
+                        var item_result = data.results.find(function(r) { return r.item_id == item_id; });
+                        
+                        if (item_result) {
+                            // Only show message if item is NOT available
+                            if (!item_result.available) {
+                                itemavail_div.html('<span style="color: #d9534f; font-size: 11px; font-weight: bold;">⚠ ' + item_result.message + '</span>');
+                            }
+                        }
+                    }
+                }
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log('Error checking availability:', errorThrown);
+                // Clear loading messages
+                for (var i = 0; i < newly_added_items.length; i++) {
+                    var row_index = newly_added_items[i].row_index;
+                    $("#itemavail-" + row_index + "-error").html('');
+                }
+            }
+        });
     }
 
     function show_image(imgelement) {

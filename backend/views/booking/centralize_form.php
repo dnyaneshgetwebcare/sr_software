@@ -160,6 +160,9 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'options' => ['cla
 
   });
 
+  var autocompleteXhr = null;
+  var autocompleteTimer = null;
+
   function changeitemdetails(val, id_pass) {
     var value = $("#itemselection-item_type").val();
     // $(label_name).find('.service_name').hide();
@@ -170,50 +173,76 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'options' => ['cla
 
     } else {
 
+      // Clear any pending timer
+      if (autocompleteTimer) {
+        clearTimeout(autocompleteTimer);
+      }
 
-      $.ajax({
-        url: "<?php echo \Yii::$app->getUrlManager()->createUrl('booking/item-details-autocomplete') ?>",
-        dataType: 'json',
-        type: 'get',
-        data: {
-          term: val,
-          id: id_pass,
-          type: value,
-        },
-        success: function (data, textStatus, jQxhr) {
-          var result1 = "#itemselection-suggesstion-itemdetail-box";
-          $(result1).show();
-          var result2 = "#itemselection-description";
-          var data_new = '<ul class="autocomplete add_new">';
-          data_new += "<li value=''>" + '<?= 'SELECT'; ?>' + "</li>";
+      // Abort any ongoing AJAX request
+      if (autocompleteXhr && autocompleteXhr.readyState !== 4) {
+        autocompleteXhr.abort();
+      }
 
-          //data_new+="<li value='Add New' onClick='opencreatepopup(\""+data['id_pass']+"\",\""+data['type']+"\")'><i class='fa fa-plus'></i> "+'<?php // 'ADD_NEW'; ?>'+"</li>";
-          // console.log(data);
-          for (i = 0; i < data['item_details'].length; i++) {
-            var image_name = 'img/no-image.jpg';
-            // alert(data['item_details'][i]['images']!= '');
-            if (data['item_details'][i]['images'] != '') {
-              image_name = 'uploads/' + data['item_details'][i]['images'];
+      // Set a debounce timer (wait 300ms after last keypress)
+      autocompleteTimer = setTimeout(function() {
+        // Show loader in autocomplete dropdown
+        var result1 = "#itemselection-suggesstion-itemdetail-box";
+        $(result1).show();
+        $(result1).html('<div style="padding: 15px; text-align: center;"><i class="fa fa-spinner fa-spin" style="font-size: 20px; color: #999;"></i><br><span style="font-size: 12px; color: #999;">Searching...</span></div>');
+
+        autocompleteXhr = $.ajax({
+          url: "<?php echo \Yii::$app->getUrlManager()->createUrl('booking/item-details-autocomplete') ?>",
+          dataType: 'json',
+          type: 'get',
+          data: {
+            term: val,
+            id: id_pass,
+            type: value,
+          },
+          success: function (data, textStatus, jQxhr) {
+            var result1 = "#itemselection-suggesstion-itemdetail-box";
+            $(result1).show();
+            var result2 = "#itemselection-description";
+            var data_new = '<ul class="autocomplete add_new">';
+            data_new += "<li value=''>" + '<?= 'SELECT'; ?>' + "</li>";
+
+            //data_new+="<li value='Add New' onClick='opencreatepopup(\""+data['id_pass']+"\",\""+data['type']+"\")'><i class='fa fa-plus'></i> "+'<?php // 'ADD_NEW'; ?>'+"</li>";
+            // console.log(data);
+            for (i = 0; i < data['item_details'].length; i++) {
+              var image_name = 'img/no-image.jpg';
+              // alert(data['item_details'][i]['images']!= '');
+              if (data['item_details'][i]['images'] != '') {
+                image_name = 'uploads/' + data['item_details'][i]['images'];
+              }
+
+              var item_name = addslashes(data['item_details'][i]['name']);
+              data_new += '<li onClick="selectgoodservitem(' + data['item_details'][i]['id'] + ',\'' + item_name + '\',\'' + id_pass + '\',\'' + data['item_details'][i]['rent_amount'] + '\',\'' + data['item_details'][i]['deposit_amount'] + '\',\'' + data['item_details'][i]['category_id'] + '\')"><img src="' + image_name + '" style="height: 70px;width: 70px;">' + data['item_details'][i]['id'] + " - " + data['item_details'][i]['name'] + '</li>';
+
             }
+            data_new += '</ul>';
 
-            var item_name = addslashes(data['item_details'][i]['name']);
-            data_new += '<li onClick="selectgoodservitem(' + data['item_details'][i]['id'] + ',\'' + item_name + '\',\'' + id_pass + '\',\'' + data['item_details'][i]['rent_amount'] + '\',\'' + data['item_details'][i]['deposit_amount'] + '\',\'' + data['item_details'][i]['category_id'] + '\')"><img src="' + image_name + '" style="height: 70px;width: 70px;">' + data['item_details'][i]['id'] + " - " + data['item_details'][i]['name'] + '</li>';
+            $(result1).html(data_new);
+            // $(result2).prop('readonly',true);
 
+          },
+          error: function (jqXhr, textStatus, errorThrown) {
+            // Don't show error if request was aborted
+            if (errorThrown === 'abort') {
+              $(result1).hide();
+              return;
+            }
+            
+            // Hide loader and show error
+            $(result1).html('<div style="padding: 15px; text-align: center; color: #d9534f;"><i class="fa fa-exclamation-triangle"></i> Error loading items</div>');
+            
+            //alert(errorThrown);
+            if (errorThrown == 'Forbidden') {
+              alert("<?= 'YOU_DONT_HAVE_ACCESS';?>");
+            }
+            //console.log( errorThrown );
           }
-          data_new += '</ul>';
-
-          $(result1).html(data_new);
-          // $(result2).prop('readonly',true);
-
-        },
-        error: function (jqXhr, textStatus, errorThrown) {
-          //alert(errorThrown);
-          if (errorThrown == 'Forbidden') {
-            alert("<?= 'YOU_DONT_HAVE_ACCESS';?>");
-          }
-          //console.log( errorThrown );
-        }
-      });
+        });
+      }, 300); // Wait 300ms after last keypress
 
     }
 
@@ -313,17 +342,17 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'options' => ['cla
     var result1 = "#itemselection-suggesstion-itemdetail-box";
     $(result1).hide();
 
-    change_display_item_details();
-    if (flag == 1) {
-      $('.add_button').click();
-    }
+    change_display_item_details(flag);
   }
 
-  function change_display_item_details() {
+  function change_display_item_details(flag = 0) {
 
 
     var item_id = $("#itemselection-item_id").val();
     var item_type = $("#itemselection-item_type").val();
+    var pickup_date = $('#bookingheader-pickup_date').val();
+    var return_date = $('#bookingheader-return_date').val();
+    var booking_id = $('#bookingheader-booking_id').val();
     // var plant=$("#itemselection-warehouse").val();
 
     var url = '';
@@ -332,23 +361,71 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'options' => ['cla
 
 
     if (url != '') {
+      // Disable add button and show loading
+      $('.add_button button').prop('disabled', true);
+      $("#itemselection-quantity_details").html('<div style="text-align: center; padding: 20px;"><i class="fa fa-spinner fa-spin" style="font-size: 24px;"></i><br>Loading item details...</div>');
+      $('.item_error').html('');
+
       $.ajax({
         url: url,
         type: 'post',
-        async: false,
+        async: true,
         data: {
           item_id: item_id,
+          pickup_date: pickup_date,
+          return_date: return_date,
+          booking_id: booking_id,
+          check_availability: true
           // plant:plant,
         },
         success: function (data) {
 
           if (data != null) {
-            $("#itemselection-quantity_details").html(data);
+            // Check if data is JSON (contains availability info)
+            if (typeof data === 'object') {
+              // Server returned JSON with availability info
+              if (data.item_details) {
+                $("#itemselection-quantity_details").html(data.item_details);
+              }
+              
+              // Display availability message (only show errors)
+              if (data.availability_check) {
+                if (!data.available) {
+                  $('.item_error').html('<span style="color: #d9534f; font-size: 11px; font-weight: bold;">⚠ ' + data.message + '</span>');
+                } else {
+                  // Don't show "available" message, just clear
+                  $('.item_error').html('');
+                }
+              } else if (pickup_date == '' || return_date == '') {
+                $('.item_error').html('<span style="color: orange; font-size: 11px;">⚠ Select Pickup & Return dates to check availability</span>');
+              }
+            } else {
+              // Server returned HTML only (backward compatibility)
+              $("#itemselection-quantity_details").html(data);
+              
+              // Show warning if dates not selected
+              if (pickup_date == '' || return_date == '') {
+                $('.item_error').html('<span style="color: orange;">⚠ Select Pickup & Return dates to check availability</span>');
+              }
+            }
+          }
+          
+          // Re-enable add button
+          $('.add_button button').prop('disabled', false);
+          
+          // Auto-click add button if flag is set
+          if (flag == 1) {
+            $('.add_button').click();
           }
         },
         error: function (jqXhr, textStatus, errorThrown) {
+          $("#itemselection-quantity_details").html('');
+          $('.add_button button').prop('disabled', false);
+          
           if (errorThrown == 'Forbidden') {
             alert("<?= 'YOU_DONT_HAVE_ACCESS';?>");
+          } else {
+            $('.item_error').html('<span style="color: red;">Error loading item details</span>');
           }
         }
 
