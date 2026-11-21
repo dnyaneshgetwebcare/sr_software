@@ -45,7 +45,7 @@ $this->title = 'Sales Order';
             </div>
               <div class="col-lg-1"></div>
                 <div class="col-lg-2" >      
-                <img id = "itemselection-img" src="<?= (($item_data['images']!='')?('uploads/'.$item_data['images']):'img/no-image.jpg'); ?>" style="height: 100px;width:100px;">
+                <img id = "itemselection-img" src="<?= \common\components\ImageHelper::thumbUrl($item_data['images']); ?>" style="height: 100px;width:100px;">
               </div>
             </div>
           </div>

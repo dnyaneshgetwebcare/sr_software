@@ -190,10 +190,10 @@ $form = ActiveForm::begin(['enableClientValidation' => false, 'options' => ['cla
           //data_new+="<li value='Add New' onClick='opencreatepopup(\""+data['id_pass']+"\",\""+data['type']+"\")'><i class='fa fa-plus'></i> "+'<?php // 'ADD_NEW'; ?>'+"</li>";
           // console.log(data);
           for (i = 0; i < data['item_details'].length; i++) {
-            var image_name = 'img/no-image.jpg';
+            var image_name = '<?= \common\components\ImageHelper::url('') ?>';
             // alert(data['item_details'][i]['images']!= '');
             if (data['item_details'][i]['images'] != '') {
-              image_name = 'uploads/' + data['item_details'][i]['images'];
+              image_name = '<?= \common\components\ImageHelper::baseUrl() ?>/uploads/' + data['item_details'][i]['images'];
             }
 
             var item_name = addslashes(data['item_details'][i]['name']);

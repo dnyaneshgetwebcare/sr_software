@@ -135,7 +135,7 @@ $is_admin = ($user->user_type == "admin") ? true : false;
                       ]], 'options' => ['enctype' => 'multipart/form-data']]); ?>
 
                     <?php if ($model['images']) {
-                      $image_path = Yii::getAlias('@web') . '/uploads/' . $model['images'];
+                      $image_path = \common\components\ImageHelper::url($model['images']);
 
 
                     } else {

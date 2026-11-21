@@ -8,6 +8,7 @@ use backend\models\DisplayType;
 use backend\models\OccationMaster;
 use backend\models\TypeMaster;
 use backend\models\VendorMaster;
+use common\components\ImageHelper;
 use Yii;
 use yii\db\Query;
 use backend\models\ItemMaster;
@@ -55,7 +56,7 @@ class ItemController extends Controller
             'roles' => ['@'],
           ],
           [
-            'actions' => [ 'index', 'index-gallery', 'view', 'create', 'update', 'delete'],
+            'actions' => [ 'index', 'index-gallery', 'view', 'create', 'update', 'delete', 'generate-thumbs'],
             'allow' => true,
             'roles' => ['manage_item_master'],
           ],
@@ -129,7 +130,7 @@ class ItemController extends Controller
     $get_next_imageno = true;
     while ($get_next_imageno) {
       $rand_no = rand(1, 99999);
-      $get_next_imageno = file_exists($path . "\\" . $rand_no . "." . $file_ext);
+      $get_next_imageno = file_exists($path . DIRECTORY_SEPARATOR . $rand_no . "." . $file_ext);
       // $get_next_imageno=$this->getnext_img_id($rand_no);
 
     }
@@ -146,6 +147,7 @@ class ItemController extends Controller
 
     // clean up the file resource
     fclose($ifp);
+    ImageHelper::makeThumb($output_file);
 
     return $output_file;
   }
@@ -193,11 +195,8 @@ class ItemController extends Controller
         }
         $item_master->save();
       }
-      $path = realpath(dirname(__FILE__) . '/../../uploads');
       $item_images->delete();
-      if (file_exists($path . "\\" . $item_images->img_name)) {
-        unlink($path . "\\" . $item_images->img_name);
-      }
+      ImageHelper::delete($item_images->img_name);
     } elseif ($flag == 'change') {
       $item_master->images = $item_images->img_name;
       $item_master->save();
@@ -219,8 +218,8 @@ class ItemController extends Controller
     $flag = isset($_POST['flag']) ? $_POST['flag'] : '';
     $path = realpath(dirname(__FILE__) . '/../../uploads');
     // print_r($path);
-    if ((isset($_POST['old_file']) && $_POST['old_file'] != '') && file_exists($path . "\\" . $_POST['old_file'])) {
-      unlink($path . "\\" . $_POST['old_file']);
+    if (isset($_POST['old_file']) && $_POST['old_file'] != '') {
+      ImageHelper::delete(basename($_POST['old_file']));
     }
 
     $asset_path = realpath(dirname(__FILE__) . '/../../uploads');
@@ -238,15 +237,16 @@ class ItemController extends Controller
           $get_next_imageno = true;
           while ($get_next_imageno) {
             $rand_no = rand(1, 99999);
-            $get_next_imageno = file_exists($path . "\\" . $rand_no . "." . $id);
+            $get_next_imageno = file_exists($path . DIRECTORY_SEPARATOR . $rand_no . "." . $id);
             // $get_next_imageno=$this->getnext_img_id($rand_no);
 
           }
 
-          $targetPath = $asset_path . "\\" . $rand_no . '.' . $id;
+          $targetPath = $asset_path . DIRECTORY_SEPARATOR . $rand_no . '.' . $id;
           // echo move_uploaded_file($sourcePath, $targetPath); die;
           // echo $targetPath;die;
           if (move_uploaded_file($sourcePath, $targetPath)) {
+            ImageHelper::makeThumb($rand_no . '.' . $id);
             return $rand_no . '.' . $id;
             //print_r($targetPath);
           }
@@ -261,7 +261,7 @@ class ItemController extends Controller
           $get_next_imageno = true;
           while ($get_next_imageno) {
             $rand_no = rand(1, 99999);
-            $get_next_imageno = file_exists($path . "\\" . $rand_no . "." . $id);
+            $get_next_imageno = file_exists($path . DIRECTORY_SEPARATOR . $rand_no . "." . $id);
             // $get_next_imageno=$this->getnext_img_id($rand_no);
 
           }
@@ -269,7 +269,7 @@ class ItemController extends Controller
           $targetPath = $path . "/" . $rand_no . '.' . $id;
 
           if (move_uploaded_file($sourcePath, $targetPath)) {
-
+            ImageHelper::makeThumb($rand_no . '.' . $id);
             return $rand_no . '.' . $id;
 
           }
@@ -349,14 +349,44 @@ class ItemController extends Controller
    */
   protected function buildImageUrl($image_name)
   {
-    $request = Yii::$app->request;
-    $scheme = $request->getIsSecureConnection() ? 'https' : 'http';
-    $host = $request->getHostName() ?: 'localhost';
-    $port = $request->getServerPort();
-    $portPart = (($scheme === 'http' && $port == 80) || ($scheme === 'https' && $port == 443) || !$port) ? '' : ':' . $port;
-    $base = rtrim($request->getBaseUrl(), '/');
-    $path = ($image_name != '') ? '/uploads/' . $image_name : '/img/no-image.jpg';
-    return $scheme . '://' . $host . $portPart . $base . $path;
+    return ImageHelper::url($image_name, true);
+  }
+
+  /**
+   * Admin-only backfill: creates missing thumbnails for existing item images in batches.
+   * Call repeatedly with the returned next_offset until done is true.
+   */
+  public function actionGenerateThumbs($offset = 0, $limit = 100)
+  {
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    $offset = max(0, (int)$offset);
+    $limit = min(500, max(1, (int)$limit));
+
+    $names = (new Query())
+      ->select(['name' => 'images'])->from('item_master')->where(['!=', 'images', ''])->andWhere(['IS NOT', 'images', null])
+      ->union((new Query())->select(['name' => 'img_name'])->from('item_master_img')->where(['!=', 'img_name', ''])->andWhere(['IS NOT', 'img_name', null]));
+    $total = (int)(new Query())->from(['t' => $names])->count();
+    $batch = (new Query())->select('name')->from(['t' => $names])->orderBy('name')->offset($offset)->limit($limit)->column();
+
+    $created = 0;
+    $failed = [];
+    foreach ($batch as $name) {
+      if (ImageHelper::makeThumb($name, false)) {
+        $created++;
+      } else {
+        $failed[] = $name;
+      }
+    }
+    $next = $offset + count($batch);
+
+    return [
+      'total' => $total,
+      'processed' => count($batch),
+      'ok' => $created,
+      'failed' => $failed,
+      'next_offset' => $next,
+      'done' => $next >= $total,
+    ];
   }
 
   /**
@@ -518,6 +548,7 @@ class ItemController extends Controller
         'type_id' => (int)$r['type_id'],
         'category_id' => (int)$r['category_id'],
         'image_url' => $this->buildImageUrl($r['images']),
+        'thumb_url' => ImageHelper::thumbUrl($r['images'], true),
         'is_available' => empty($unavail),
         'unavailable_dates' => $unavail,
       ];
@@ -622,6 +653,7 @@ class ItemController extends Controller
       mkdir($target_dir, 0777, true);
     }
     if (move_uploaded_file($_FILES["ItemMaster"]["tmp_name"]['images'][0], $target_file)) {
+      ImageHelper::makeThumb(substr($target_file, strlen('uploads/')));
       $return_array = array();
     } else {
       $return_array = array('error' => "Sorry, there was an error uploading your file.");
@@ -676,7 +708,7 @@ class ItemController extends Controller
             $get_next_imageno = true;
             while ($get_next_imageno) {
               $rand_no = rand(1, 99999);
-              $get_next_imageno = file_exists($path . "\\" . $rand_no . "." . $id);
+              $get_next_imageno = file_exists($path . DIRECTORY_SEPARATOR . $rand_no . "." . $id);
               // $get_next_imageno=$this->getnext_img_id($rand_no);
 
             }
@@ -686,7 +718,7 @@ class ItemController extends Controller
             if (move_uploaded_file($sourcePath, $targetPath)) {
 
               $model->images = $rand_no . '.' . $id;
-
+              ImageHelper::makeThumb($model->images);
             }
           }
         }
@@ -755,7 +787,7 @@ class ItemController extends Controller
               $get_next_imageno = true;
               while ($get_next_imageno) {
                 $rand_no = rand(1, 99999);
-                $get_next_imageno = file_exists($path . "\\" . $rand_no . "." . $id);
+                $get_next_imageno = file_exists($path . DIRECTORY_SEPARATOR . $rand_no . "." . $id);
                 // $get_next_imageno=$this->getnext_img_id($rand_no);
 
               }
@@ -765,7 +797,7 @@ class ItemController extends Controller
               if (move_uploaded_file($sourcePath, $targetPath)) {
 
                 $model->images = $rand_no . '.' . $id;
-
+                ImageHelper::makeThumb($model->images);
               }
             }
           }
@@ -776,13 +808,7 @@ class ItemController extends Controller
         //print_r($model);die;
         $model->purchase_date = $this->dateFormat($model->purchase_date);
         if ($model->save()) {
-          if ($model['images']) {
-            $image_path = Yii::getAlias('@web') . '/uploads/' . $model['images'];
-
-
-          } else {
-            $image_path = Yii::getAlias('@web') . '/img/no-image.jpg';
-          }
+          $image_path = ImageHelper::url($model['images']);
           return array(['flag' => true, 'item_id' => $model->id, 'id' => $id_pass, 'item_details' => $model->name, 'item_category' => $model->category_id, 'item_type' => $model->type_id, 'purchase_amount' => $model->purchase_amount, 'img_path' => $image_path]);
         } else {
           return array(['flag' => fasle, 'id' => 0]);
@@ -850,7 +876,7 @@ class ItemController extends Controller
             $get_next_imageno = true;
             while ($get_next_imageno) {
               $rand_no = rand(1, 99999);
-              $get_next_imageno = file_exists($path . "\\" . $rand_no . "." . $id);
+              $get_next_imageno = file_exists($path . DIRECTORY_SEPARATOR . $rand_no . "." . $id);
               // $get_next_imageno=$this->getnext_img_id($rand_no);
 
             }
@@ -860,7 +886,7 @@ class ItemController extends Controller
             if (move_uploaded_file($sourcePath, $targetPath)) {
 
               $model->images = $rand_no . '.' . $id;
-
+              ImageHelper::makeThumb($model->images);
             }
 
           }

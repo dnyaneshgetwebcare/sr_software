@@ -75,7 +75,7 @@ $this->title = $model->id;
                                                 $total_amount+=$purchase_item->net_value;
                                              ?>
                                             <tr>
-                                               <td><a class="image-popup-vertical-fit" href="<?= $purchase_item->item->imageurl; ?>" ><img src="<?= $purchase_item->item->imageUrl; ?>" width="100" height="80" alt=""></a></td>
+                                               <td><a class="image-popup-vertical-fit" href="<?= $purchase_item->item->imageurl; ?>" ><img src="<?= $purchase_item->item->thumburl; ?>" width="100" height="80" alt=""></a></td>
                                                 
                                                 <td><a  target="_blank" rel="noopener noreferrer" href="index.php?r=item%2Fview&id=<?= $purchase_item->item_code; ?>"><?= $purchase_item->item['name']; ?></a></td>
                                            <td><?= $purchase_item->item->category['name']; ?></td>

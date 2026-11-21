@@ -934,10 +934,10 @@ $is_admin = (isset($user->user_type ) && ($user->user_type == "admin")) ? true :
         data_new += "<li value=''>" + '<?= 'SELECT'; ?>' + "</li>";
 
         for (i = 0; i < data['item_details'].length; i++) {
-          var image_name = 'img/no-image.jpg';
+          var image_name = '<?= \common\components\ImageHelper::url('') ?>';
           // alert(data['item_details'][i]['images']!= '');
           if (data['item_details'][i]['images'] != '') {
-            image_name = 'uploads/' + data['item_details'][i]['images'];
+            image_name = '<?= \common\components\ImageHelper::baseUrl() ?>/uploads/' + data['item_details'][i]['images'];
           }
 
           var item_name = addslashes(data['item_details'][i]['name']);

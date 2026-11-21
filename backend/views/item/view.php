@@ -156,9 +156,9 @@ $is_admin = ($user->user_type == "admin") ? true : false;
 
                                 </div>
                                 <div class="col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px;">
-                                    <?php $columns = [['attribute' => 'images', 'format' => 'html', 'value' => function ($data) { return '<a class="image-popup-vertical-fit" href="' . $data->imageurl . '">' . Html::img($data->imageurl, ['width' => '100', 'height' => '80']) . '</a>';}, ], 'purchase_date:date', 'purchase_amount', 'rent_amount', 'deposit_amount', 'rent_times', 'expense_amount', 'nos_dry_cleaning',];
+                                    <?php $columns = [['attribute' => 'images', 'format' => 'html', 'value' => function ($data) { return '<a class="image-popup-vertical-fit" href="' . $data->imageurl . '">' . Html::img($data->thumburl, ['width' => '100', 'height' => '80']) . '</a>';}, ], 'purchase_date:date', 'purchase_amount', 'rent_amount', 'deposit_amount', 'rent_times', 'expense_amount', 'nos_dry_cleaning',];
                                     if(!$is_admin){
-                                        $columns = [['attribute' => 'images', 'format' => 'html', 'value' => function ($data) { return '<a class="image-popup-vertical-fit" href="' . $data->imageurl . '">' . Html::img($data->imageurl, ['width' => '100', 'height' => '80']) . '</a>';}, ],  'rent_amount', 'deposit_amount', ];
+                                        $columns = [['attribute' => 'images', 'format' => 'html', 'value' => function ($data) { return '<a class="image-popup-vertical-fit" href="' . $data->imageurl . '">' . Html::img($data->thumburl, ['width' => '100', 'height' => '80']) . '</a>';}, ],  'rent_amount', 'deposit_amount', ];
                                     }
 
                                     ?>

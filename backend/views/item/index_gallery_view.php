@@ -154,7 +154,7 @@ $this->title = 'Item Masters';
               align-self:
               center;">
                 <a href="<?= $item_details->imageurl; ?>">
-                  <img src="<?= $item_details->imageurl; ?>" class="img-fluid" style="max-height: 200px;
+                  <img src="<?= $item_details->thumburl; ?>" class="img-fluid" style="max-height: 200px;
 											min-height: 200px; align-content: center">
                 </a>
                 <span class="item_rent"> ₹ <?= $item_details->rent_amount; ?></span>

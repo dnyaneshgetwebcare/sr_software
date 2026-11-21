@@ -109,11 +109,12 @@ class ItemMaster extends \yii\db\ActiveRecord
     }
 public function getImageurl()
 {
-    if($this->images!=''){
-return \Yii::$app->request->BaseUrl.'/uploads/'.$this->images;
-}else{
-    return \Yii::$app->request->BaseUrl.'/img/no-image.jpg';
+    return \common\components\ImageHelper::url($this->images);
 }
+
+public function getThumburl()
+{
+    return \common\components\ImageHelper::thumbUrl($this->images);
 }
     /**
      * @return \yii\db\ActiveQuery

@@ -101,7 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
              'format' => 'html',
               'value' => function($data) { return '<div class="image-gallery"><a class="image-popup-vertical-fit" href="'
                 .$data->imageurl.'"> '
-                .Html::img($data->imageurl, ['width'=>'100','height'=>'80']).'</a> </div>'; },
+                .Html::img($data->thumburl, ['width'=>'100','height'=>'80']).'</a> </div>'; },
               
             ],
             ['attribute'=> 'item_code',  'headerOptions' => ['style' => 'width:5%'],],

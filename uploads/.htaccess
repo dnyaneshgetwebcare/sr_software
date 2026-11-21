@@ -1,0 +1,28 @@
+Options -Indexes
+
+# Uploaded file names are random and never overwritten, so they can be cached for a long time.
+<IfModule mod_headers.c>
+    <FilesMatch "\.(jpe?g|png|gif|webp)$">
+        Header set Cache-Control "public, max-age=2592000, immutable"
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/gif "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+</IfModule>
+
+# Never execute scripts from the uploads folder.
+<FilesMatch "\.(php\d?|phtml|phar|pl|py|cgi|sh)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

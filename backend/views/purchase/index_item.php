@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 /* 'format' => 'image',
              'value'=>function($data) { return $data->imageurl; },*/
              'format' => 'html',
-              'value' => function($data) { return '<a class="image-popup-vertical-fit" href="'.$data->item->imageurl.'">'.Html::img($data->item->imageurl, ['width'=>'100','height'=>'80']).'</a>'; },
+              'value' => function($data) { return '<a class="image-popup-vertical-fit" href="'.$data->item->imageurl.'">'.Html::img($data->item->thumburl, ['width'=>'100','height'=>'80']).'</a>'; },
               
             ],
              [

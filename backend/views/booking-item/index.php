@@ -50,7 +50,7 @@ $this->title = 'Pickup Items';
              'format' => 'html',
               'value' => function($data) { return '<div class="image-gallery"><a class="image-popup-vertical-fit" href="'
                 .$data->item->imageurl.'"> '
-                .Html::img($data->item->imageurl, ['width'=>'100','height'=>'80']).'</a> </div>'; },
+                .Html::img($data->item->thumburl, ['width'=>'100','height'=>'80']).'</a> </div>'; },
               
             ],
            // 'booking.customer.name',
