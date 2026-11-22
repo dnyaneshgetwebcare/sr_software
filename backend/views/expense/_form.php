@@ -308,7 +308,7 @@ $form = ActiveForm::begin(['enableClientValidation'=>false,'id'=>'expense_form',
             if(isset($expense_item->item_code) && $expense_item->item_code!=''){
                 $expense_item->item_name=$expense_item->item->name;
            if($expense_item->item->images){ 
-             $image_path= Yii::getAlias('@web').'/uploads/'.$expense_item->item['images'];
+             $image_path= \common\components\ImageHelper::url($expense_item->item['images']);
            
             
             }
@@ -651,10 +651,10 @@ final_value+=Number(amount_val);
           
             //console.log(data);
               for(i=0; i<data['item_details'].length; i++) {
-                var image_name='img/no-image.jpg';
+                var image_name='<?= \common\components\ImageHelper::url('') ?>';
                // alert(data['item_details'][i]['images']!= '');
                 if(data['item_details'][i]['images']!= ''){
-                    image_name='uploads/'+data['item_details'][i]['images'];
+                    image_name='<?= \common\components\ImageHelper::baseUrl() ?>/uploads/'+data['item_details'][i]['images'];
                 }
                 
                var item_name = addslashes(data['item_details'][i]['name']);

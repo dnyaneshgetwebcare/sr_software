@@ -313,7 +313,7 @@ $form = ActiveForm::begin(['enableClientValidation'=>false,'id'=>'booking_header
             if(isset($purchase_item->item_code) && $purchase_item->item_code!=''){
                 $purchase_item->item_name=$purchase_item->item->name;
            if($purchase_item->item->images){ 
-             $image_path= Yii::getAlias('@web').'/uploads/'.$purchase_item->item['images'];
+             $image_path= \common\components\ImageHelper::url($purchase_item->item['images']);
            
             
             }
@@ -617,10 +617,10 @@ function changeitemdetails(val,id_pass){
             data_new+="<li value='Add New' onClick='addnewItem(\""+data['id_pass']+"\")'><i class='fa fa-plus'></i> "+'<?= 'ADD_NEW'; ?>'+"</li>";
             //console.log(data);
               for(i=0; i<data['item_details'].length; i++) {
-                var image_name='img/no-image.jpg';
+                var image_name='<?= \common\components\ImageHelper::url('') ?>';
                // alert(data['item_details'][i]['images']!= '');
                 if(data['item_details'][i]['images']!= ''){
-                    image_name='uploads/'+data['item_details'][i]['images'];
+                    image_name='<?= \common\components\ImageHelper::baseUrl() ?>/uploads/'+data['item_details'][i]['images'];
                 }
                 
                var item_name = addslashes(data['item_details'][i]['name']);

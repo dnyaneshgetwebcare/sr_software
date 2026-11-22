@@ -8,7 +8,8 @@
 
                 $actual_image_name='';
                 if ($img_details['img_name']) {
-                    $image_path = Yii::getAlias('@web') . '/uploads/' . $img_details['img_name'];
+                    $image_path = \common\components\ImageHelper::url($img_details['img_name']);
+                    $thumb_path = \common\components\ImageHelper::thumbUrl($img_details['img_name']);
                     $image_name_array=explode('/',$img_details['img_name']);
                     if(sizeof($image_name_array)==2){
                         $actual_image_name=$image_name_array[1];
@@ -18,14 +19,14 @@
 
 
                 } else {
-                    $image_path = Yii::getAlias('@web') . '/img/no-image.jpg';
+                    $image_path = $thumb_path = \common\components\ImageHelper::url('');
                 }
                 ?>
                 <div class="col-4 col-lg-4 grid">
                     <div class="card">
                         <div class="card-body">
                             <a class="image-popup-vertical-fit" href="<?= $image_path; ?>">
-                                <img src="<?= $image_path; ?>" style="width: 230px;height: 250px">
+                                <img src="<?= $thumb_path; ?>" style="width: 230px;height: 250px">
                             </a>
                             <div class="row m-t-10">
                                 <div class="col-lg-12">

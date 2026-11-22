@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
    
               
                 <div class="col-lg-2" >      
-                <img src="<?= (($item_data['images']!='')?('uploads/'.$item_data['images']):'img/no-image.jpg'); ?>" style="height: 100px;width:100px;">
+                <img src="<?= \common\components\ImageHelper::thumbUrl($item_data['images']); ?>" style="height: 100px;width:100px;">
               </div>
                <div class="col-lg-10">
       <div class="panel panel-default">

@@ -6,6 +6,7 @@ use app\models\ItemMasterImg;
 use backend\models\CategoryMaster;
 use backend\models\ItemMaster;
 use backend\models\TypeMaster;
+use common\components\ImageHelper;
 use Yii;
 use yii\db\Expression;
 use yii\filters\Cors;
@@ -63,8 +64,9 @@ class ApiController extends \yii\web\Controller
        $item_master = $query_item->andWhere(['scrab_status' =>
                 'No' , 'delete_status' => 0 , 'skip_website' =>
                 0])->limit($page_limt)->offset($offset)->asArray()->all();
-        $image_def_path ='https://thesoyara.com/app/uploads/';
-        $no_image_path = 'https://thesoyara.com/app/img/no-image.jpg';
+        $item_master = $this->withThumbUrls($item_master);
+        $image_def_path = ImageHelper::baseUrl(true) . '/uploads/';
+        $no_image_path = ImageHelper::url('', true);
 
         return array("item_master" => $item_master,'no_image_path' => $no_image_path, 'image_def_path' =>
             $image_def_path );
@@ -88,13 +90,22 @@ class ApiController extends \yii\web\Controller
                 0])->asArray()->all();
        $image_list = ItemMasterImg::find()->where(['id'=> $item_id, 'status'=> 1])->orderBy(['default_image' => SORT_DESC])
          ->asArray()->all();
-        $image_def_path ='https://thesoyara.com/app/uploads/';
-        $no_image_path = 'https://thesoyara.com/app/img/no-image.jpg';
+        $item_master = $this->withThumbUrls($item_master);
+        $image_def_path = ImageHelper::baseUrl(true) . '/uploads/';
+        $no_image_path = ImageHelper::url('', true);
 
         return array("item_master" => $item_master,'no_image_path' => $no_image_path, 'image_def_path' =>
             $image_def_path ,"image_list" => $image_list );
 
     }
+    protected function withThumbUrls(array $rows)
+    {
+        foreach ($rows as &$row) {
+            $row['thumb_url'] = ImageHelper::thumbUrl($row['images'], true);
+        }
+        return $rows;
+    }
+
     public function actionTypeList()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;

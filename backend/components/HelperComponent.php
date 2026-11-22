@@ -65,10 +65,11 @@ class HelperComponent extends Component
 
   public function getImageurl($images)
   {
-    if ($images != '') {
-      return \Yii::$app->request->BaseUrl . '/uploads/' . $images;
-    } else {
-      return \Yii::$app->request->BaseUrl . '/img/no-image.jpg';
-    }
+    return \common\components\ImageHelper::url($images);
+  }
+
+  public function getThumburl($images)
+  {
+    return \common\components\ImageHelper::thumbUrl($images);
   }
 }

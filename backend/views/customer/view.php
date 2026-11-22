@@ -124,7 +124,7 @@ $this->title = $model->name;
                                              ?>
                                             <tr>
                                                 <td><a target="_blank" rel="noopener noreferrer" href="index.php?r=booking%2Fupdate&id=<?= $booking_item->booking_id; ?>">#<?= $booking_item->booking_id; ?></a></td>
-                                                <td><a class="image-popup-vertical-fit" href="<?= $booking_item->item->imageurl; ?>" ><img src="<?= $booking_item->item->imageUrl; ?>" width="100" height="80" alt=""></a></td>
+                                                <td><a class="image-popup-vertical-fit" href="<?= $booking_item->item->imageurl; ?>" ><img src="<?= $booking_item->item->thumburl; ?>" width="100" height="80" alt=""></a></td>
                                                 <td><?= $booking_item->item->name; ?></td>
                                                 <td><span class="text-muted"><i class="fa fa-clock-o"></i> <?= Yii::$app->formatter->asDate($booking_item->pickup_date,'dd-MM-yyyy'); ?></span> </td>
                                                 <td><span class="text-muted"><i class="fa fa-clock-o"></i> <?= Yii::$app->formatter->asDate($booking_item->return_date,'dd-MM-yyyy'); ?></span> </td>

@@ -191,7 +191,7 @@ $this->title = $temp_header . ' of Order #' . $_GET['id'];
                                  'value'=>function($data) { return $data->imageurl; },*/
                                     'format' => 'html',
                                     'value' => function ($data) {
-                                        return '<a class="image-popup-vertical-fit" href="' . $data->item->imageurl . '">' . Html::img($data->item->imageurl, ['width' => '100', 'height' => '80']) . '</a>';
+                                        return '<a class="image-popup-vertical-fit" href="' . $data->item->imageurl . '">' . Html::img($data->item->thumburl, ['width' => '100', 'height' => '80']) . '</a>';
                                     },
 
                                 ],

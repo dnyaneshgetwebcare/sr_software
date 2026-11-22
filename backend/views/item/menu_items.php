@@ -168,7 +168,7 @@ $this->title = 'Item Masters';
                 <div class="card-body card-item_view" id="card_body_<?= $item_details['id']; ?>" style="padding:0;
               align-self:
               center;">
-                  <img src="<?= $img_url; ?>" class="img-fluid" style="max-height: 200px;
+                  <img src="<?= $item_details->thumburl; ?>" loading="lazy" class="img-fluid" style="max-height: 200px;
 											min-height: 200px; align-content: center">
 
                 </div>
